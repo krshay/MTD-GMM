@@ -1,0 +1,131 @@
+\begin{thebibliography}{10}
+
+\bibitem{bendory2019multi}
+Tamir Bendory, Nicolas Boumal, William Leeb, Eitan Levin, and Amit Singer,
+\newblock ``Multi-target detection with application to cryo-electron
+  microscopy,''
+\newblock {\em Inverse Problems}, vol. 35, no. 10, pp. 104003, 2019.
+
+\bibitem{lan2020multi}
+Ti-Yen Lan, Tamir Bendory, Nicolas Boumal, and Amit Singer,
+\newblock ``Multi-target detection with an arbitrary spacing distribution,''
+\newblock {\em IEEE Transactions on Signal Processing}, vol. 68, pp.
+  1589--1601, 2020.
+
+\bibitem{marshall2020image}
+Nicholas~F Marshall, Ti-Yen Lan, Tamir Bendory, and Amit Singer,
+\newblock ``Image recovery from rotational and translational invariants,''
+\newblock in {\em ICASSP 2020-2020 IEEE International Conference on Acoustics,
+  Speech and Signal Processing (ICASSP)}. IEEE, 2020, pp. 5780--5784.
+
+\bibitem{bendory2021multi}
+Tamir Bendory, Ti-Yen Lan, Nicholas~F Marshall, Iris Rukshin, and Amit Singer,
+\newblock ``Multi-target detection with rotations,''
+\newblock {\em arXiv preprint arXiv:2101.07709}, 2021.
+
+\bibitem{kreymer2021two}
+Shay Kreymer and Tamir Bendory,
+\newblock ``Two-dimensional multi-target detection,''
+\newblock {\em arXiv preprint arXiv:2105.06765}, 2021.
+
+\bibitem{bendory2018toward}
+Tamir Bendory, Nicolas Boumal, William Leeb, Eitan Levin, and Amit Singer,
+\newblock ``Toward single particle reconstruction without particle picking:
+  breaking the detection limit,''
+\newblock {\em arXiv preprint arXiv:1810.00226}, 2018.
+
+\bibitem{gogineni2017passive}
+Sandeep Gogineni, Pawan Setlur, Muralidhar Rangaswamy, and Raj~Rao Nadakuditi,
+\newblock ``Passive radar detection with noisy reference channel using
+  principal subspace similarity,''
+\newblock {\em IEEE Transactions on Aerospace and Electronic Systems}, vol. 54,
+  no. 1, pp. 18--36, 2017.
+
+\bibitem{schulz1993multiframe}
+Timothy~J Schulz,
+\newblock ``Multiframe blind deconvolution of astronomical images,''
+\newblock {\em JOSA A}, vol. 10, no. 5, pp. 1064--1073, 1993.
+
+\bibitem{levin2006blind}
+Anat Levin,
+\newblock ``Blind motion deblurring using image statistics,''
+\newblock {\em Advances in Neural Information Processing Systems}, vol. 19, pp.
+  841--848, 2006.
+
+\bibitem{abed1997blind}
+Karim Abed-Meraim, Wanzhi Qiu, and Yingbo Hua,
+\newblock ``Blind system identification,''
+\newblock {\em Proceedings of the IEEE}, vol. 85, no. 8, pp. 1310--1322, 1997.
+
+\bibitem{henderson1995potential}
+Richard Henderson,
+\newblock ``The potential and limitations of neutrons, electrons and {X}-rays
+  for atomic resolution microscopy of unstained biological molecules,''
+\newblock {\em Quarterly Reviews of Biophysics}, vol. 28, no. 2, pp. 171--193,
+  1995.
+
+\bibitem{nogales2016development}
+Eva Nogales,
+\newblock ``The development of cryo-{EM} into a mainstream structural biology
+  technique,''
+\newblock {\em Nature methods}, vol. 13, no. 1, pp. 24--27, 2016.
+
+\bibitem{bai2015cryo}
+Xiao-Chen Bai, Greg McMullan, and Sjors~HW Scheres,
+\newblock ``How cryo-{EM} is revolutionizing structural biology,''
+\newblock {\em Trends in Biochemical Sciences}, vol. 40, no. 1, pp. 49--57,
+  2015.
+
+\bibitem{frank2006three}
+Joachim Frank,
+\newblock {\em Three-dimensional electron microscopy of macromolecular
+  assemblies: visualization of biological molecules in their native state},
+\newblock Oxford University Press, 2006.
+
+\bibitem{heimowitz2020reducing}
+Ayelet Heimowitz, Joakim And{\'e}n, and Amit Singer,
+\newblock ``Reducing bias and variance for {CTF} estimation in single particle
+  cryo-{EM},''
+\newblock {\em Ultramicroscopy}, vol. 212, pp. 112950, 2020.
+
+\bibitem{erickson1971measurement}
+HP~Erickson and Aaron Klug,
+\newblock ``Measurement and compensation of defocusing and aberrations by
+  {F}ourier processing of electron micrographs,''
+\newblock {\em Philosophical Transactions of the Royal Society of London. B,
+  Biological Sciences}, vol. 261, no. 837, pp. 105--118, 1971.
+
+\bibitem{bendory2020single}
+Tamir Bendory, Alberto Bartesaghi, and Amit Singer,
+\newblock ``Single-particle cryo-electron microscopy: Mathematical theory,
+  computational challenges, and opportunities,''
+\newblock {\em IEEE Signal Processing Magazine}, vol. 37, no. 2, pp. 58--76,
+  2020.
+
+\bibitem{scheres2012relion}
+Sjors~HW Scheres,
+\newblock ``{RELION}: implementation of a {B}ayesian approach to cryo-{EM}
+  structure determination,''
+\newblock {\em Journal of Structural Biology}, vol. 180, no. 3, pp. 519--530,
+  2012.
+
+\bibitem{punjani2017cryosparc}
+Ali Punjani, John~L Rubinstein, David~J Fleet, and Marcus~A Brubaker,
+\newblock ``cryo{SPARC}: algorithms for rapid unsupervised cryo-{EM} structure
+  determination,''
+\newblock {\em Nature methods}, vol. 14, no. 3, pp. 290--296, 2017.
+
+\bibitem{aguerrebere2016fundamental}
+Cecilia Aguerrebere, Mauricio Delbracio, Alberto Bartesaghi, and Guillermo
+  Sapiro,
+\newblock ``Fundamental limits in multi-image alignment,''
+\newblock {\em IEEE Transactions on Signal Processing}, vol. 64, no. 21, pp.
+  5707--5722, 2016.
+
+\bibitem{d2021current}
+Edoardo D'Imprima and Werner K{\"u}hlbrandt,
+\newblock ``Current limitations to high-resolution structure determination by
+  single-particle cryo{EM},''
+\newblock {\em Quarterly Reviews of Biophysics}, vol. 54, 2021.
+
+\end{thebibliography}
