@@ -28,18 +28,14 @@ SNR = 0.1
 sigma2 = 1 / (L * SNR)
 y2 = y_clean + np.random.normal(loc=0, scale=np.sqrt(sigma2), size=np.shape(y_clean))
 
-width = 3.487
-height = width * 1.618
 plt.close("all")
-fig = plt.figure()
-plt.plot(y_clean, 'k', linewidth=10)
-fig.set_size_inches(4*width, 4*height)
-plt.savefig(r'paper/figures\y_clean.pdf')
-fig = plt.figure()
-plt.plot(y1, 'k', linewidth=10)
-fig.set_size_inches(4*width, 4*height)
-plt.savefig(r'paper/figures\y_SNR50.pdf')
-fig = plt.figure()
-plt.plot(y2, 'k', linewidth=10)
-fig.set_size_inches(4*width, 4*height)
-plt.savefig(r'paper/figures\y_SNR01.pdf')
+with plt.style.context('ieee'):
+    plt.figure()
+    plt.plot(y_clean, 'k')
+    plt.savefig(r'paper/figures\y_clean.pdf')
+    plt.figure()
+    plt.plot(y1, 'k')
+    plt.savefig(r'paper/figures\y_SNR50.pdf')
+    plt.figure()
+    plt.plot(y2, 'k')
+    plt.savefig(r'paper/figures\y_SNR01.pdf')
