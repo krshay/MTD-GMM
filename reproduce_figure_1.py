@@ -12,7 +12,7 @@ import utils
 
 np.random.seed(10)
 
-L = 21
+L = 17
 N = 200
 gamma = 0.4
 

@@ -18,7 +18,7 @@ import scipy.optimize as optimize
 
 np.random.seed(1)
 
-L = 21
+L = 17
 gamma = 0.2
 SNR = 50
 
@@ -123,9 +123,9 @@ for (idx, _) in enumerate(sizes):
         Number_Iterations_gmm[it, idx] = results_final_gmm[it, idx].nit
 
 plt.figure()
-plt.loglog(sizes, errs_mom)
-plt.loglog(sizes, errs_gmm)
+plt.loglog(sizes, np.mean(errs_mom, axis=0))
+plt.loglog(sizes, np.mean(errs_gmm, axis=0))
 
 plt.figure()
-plt.semilog(sizes, Number_Iterations_mom)
-plt.semilog(sizes, Number_Iterations_gmm)
+plt.semilog(sizes, np.mean(Number_Iterations_mom, axis=0))
+plt.semilog(sizes, np.mean(Number_Iterations_gmm, axis=0))
