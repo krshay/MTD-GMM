@@ -161,6 +161,14 @@ def calc_g_dg(ac1_y, ac2_y, ac3_y, gamma, x, shifts_2nd, shifts_3rd, sigma2):
             dg[-1, 1 + L2 + i] -= sigma2 * ac1(x)
     return g, dg
 
+def calc_W_heuristic(shifts_2nd, shifts_3rd):
+    L2 = len(shifts_2nd)
+    L3 = len(shifts_3rd)
+    W = np.ones((1 + L2 + L3, ))
+    W[1: 1 + L2] = 1 / L2
+    W[1 + L2:] = 1/ L3
+    return np.diag(W)
+
 def calc_f_df(x_gamma, ac1_y, ac2_y, ac3_y, shifts_2nd, shifts_3rd, sigma2, W):
     gamma = x_gamma[-1]
     x = x_gamma[ :-1]
@@ -170,7 +178,7 @@ def calc_f_df(x_gamma, ac1_y, ac2_y, ac3_y, shifts_2nd, shifts_3rd, sigma2, W):
     return f, df
 
 def opt(x_gamma0, ac1_y, ac2_y, ac3_y, shifts_2nd, shifts_3rd, sigma2, W, gtol=1e-12):
-    return minimize(fun=calc_f_df, x0=x_gamma0, method='BFGS', jac=True, options={'disp':True, 'gtol': gtol}, args = (ac1_y, ac2_y, ac3_y, shifts_2nd, shifts_3rd, sigma2, W))
+    return minimize(fun=calc_f_df, x0=x_gamma0, method='BFGS', jac=True, options={'disp':True, 'gtol': gtol, 'maxiter':500}, args = (ac1_y, ac2_y, ac3_y, shifts_2nd, shifts_3rd, sigma2, W))
 
 def calc_err(x, x_est):
     return np.linalg.norm(x - x_est) / np.linalg.norm(x)
