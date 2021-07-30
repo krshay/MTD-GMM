@@ -14,14 +14,14 @@ import utils
 np.random.seed(2)
 
 L = 14
-N = 900000
+N = 10000
 gamma = 0.2
 
 x = np.random.rand(L)
 x = 10 * x / np.linalg.norm(x)
 y_clean = utils.generate_micrograph_1d(x, gamma, L, N)
 
-SNR = 2
+SNR = 100
 sigma2 = (np.linalg.norm(x) ** 2) / (L * SNR)
 y = y_clean + np.random.normal(loc=0, scale=np.sqrt(sigma2), size=np.shape(y_clean))
 

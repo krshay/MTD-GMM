@@ -141,14 +141,54 @@ This is the mean of the measurement. The second-order autocorrelation of~$y$, \m
 \label{eq:AM2}
 A_{y}^2 [\ell_1] := \frac{1}{N} \sum_{i \in \mathbb{Z}} y[i] y[i + \ell_1],
 \end{equation}
-and the third-order autocorrelation~\mbox{$A_{y}^3: \mathbb{Z}y \times \mathbb{Z} \rightarrow \mathbb{R}$} by
+and the third-order autocorrelation~\mbox{$A_{y}^3: \mathbb{Z} \times \mathbb{Z} \rightarrow \mathbb{R}$} by
 \begin{equation}
 \label{eq:AM3}
-A_{M}^3 [\ell_1, \ell_2] := \frac{1}{N} \sum_{i \in \mathbb{Z}} y[i] y[i + \ell_1] y[i + \ell_2].
+A_{y}^3 [\ell_1, \ell_2] := \frac{1}{N} \sum_{i \in \mathbb{Z}} y[i] y[i + \ell_1] y[i + \ell_2].
 \end{equation}
 
 \subsection{Generalized method of moments}
 \label{subsec:gmm}
+
+\subsection{Autocorrelations under the well-separated model}
+\label{subsec:relations}
+We first discuss the \mbox{well-separated} case of the MTD problem, which was studied in~\cite{bendory2019multi}. In this case, we assume that each signal in the measurement~$y$ is separated by at least a full signal length from its neighbors. Specifically, we assume that
+\begin{equation}
+\label{eq:sep}
+|\ell_{i_1} - \ell_{i_2}| \ge 2L - 1, \quad \text{ for all } i_1 \ne i_2.
+\end{equation}
+
+Figure~\ref{fig:Micrograph_shifts}(a) presents an example of a measurement obeying the separation condition~(\ref{eq:sep}). To compute the third-order autocorrelation~(\ref{eq:AM3}), we compute the product of~$y$ with its two shifts. As demonstrated in Figure~\ref{fig:Micrograph_shifts}(b), for~\mbox{$\ell$-s} in the range
+\begin{equation}
+\label{eq:set_L}
+\mathcal{L} = \{0, \ldots, {L - 1}\},
+\end{equation}
+any given occurrence of~$x$ in~$y$ is only ever correlated with itself, and never with another occurrence.
+
+In~\cite{bendory2019multi}, it was shown that under the separation condition~(\ref{eq:sep}), for any fixed level of noise~$\sigma^2$, density~$\gamma$ and signal length~$L$, in the limit~\mbox{$N \rightarrow \infty$} we have that
+\begin{align}
+\label{eq:well_separated_1st}
+A_{y}^1 &\stackrel{\text{a.s.}}{=} \gamma A_{x}^1, \\
+\label{eq:well_separated_2nd}
+A_{y}^2 [\ell_1] &\stackrel{\text{a.s.}}{=} \gamma A_{x}^2 [\ell_1] + \sigma^2\delta[\ell_1], \\
+\label{eq:well_separated_3rd}
+A_{y}^3 [\ell_1, \ell_2] &\stackrel{\text{a.s.}}{=} \gamma A_{X} [\ell_1, \ell_2] \nonumber \\&+ \gamma S_1 \sigma^2 (\delta[\ell_1] + \delta[\ell_2] + \delta[\ell_1 - \ell_2]),
+\end{align}
+for~$\ell_1, \ell_2 \in \mathcal{L}$ (defined in~(\ref{eq:set_L})), where
+\begin{equation}
+\label{eq:delta}
+\delta[\ell] = \begin{cases} 1 \text{ if } \ell = \vec{0}, \\ 0 \text{ otherwise}, \end{cases}
+\end{equation}
+is the Kronecker delta function. Here,~$\gamma$ is the density of the target images in the measurement and is defined by
+\begin{equation}
+\label{eq:gamma}
+\gamma = p \frac{L}{N}.
+\end{equation}
+
+As such,~\mbox{(\ref{eq:well_separated_1st}) -~(\ref{eq:well_separated_3rd})} relate the autocorrelations of the measurement with those of the target signal~$x$. Moreover, the signal $x$ can be identified from its autocorrelations, and thus, potentially, also from the autocorrelations of the measurement. In~\cite{bendory2019multi}, it was shown that~$\gamma$ (respectively~$\sigma$) can be estimated from the first- and second-order autocorrelations of the measurement if~$\sigma$ (respectively~$\gamma$) is known. In particular, if~$\gamma$ and~$\sigma$ are known (or are reliably estimated), we can provably determine the signal from the measurement's autocorrelations. Previous works~\cite{bendory2019multi}, \cite{lan2020multi}, \cite{marshall2020image}, \cite{bendory2021multi}, \cite{kreymer2021two} demonstrated successful signal and image estimations. Importantly, the aforementioned relations between the autocorrelations of~$M$ and~$F$ do not directly depend on the location of individual signal occurrences in the measurement, but only through the density parameter~$\gamma$. Therefore, detecting the signal occurrences is not a prerequisite for signal recovery, and thus signal recovery is possible even in very low SNR regimes.
+
+\subsection{Signal recovery from autocorrelations}
+
 
 \section{Numerical experiments}
 \label{sec:numerical}
