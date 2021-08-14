@@ -18,7 +18,7 @@ import scipy.optimize as optimize
 
 np.random.seed(1)
 
-L = 17
+L = 7
 gamma = 0.2
 SNR = 50
 
@@ -27,22 +27,22 @@ shifts_3rd = utils.shifts_3rd_reduced(L)
 
 gamma0 = 0.18
 x_gamma0s = []
-Nguesses = 5
+Nguesses = 10
 for i in range(Nguesses):
     x0 = np.random.rand(L)
-    x0 = (np.linalg.norm(x0) ** 2) * x0 / np.linalg.norm(x0)
+    x0 = x0 / np.linalg.norm(x0)
     
     x_gamma0 = np.concatenate((x0, np.array([gamma0])))
     x_gamma0s.append(x_gamma0)
 
-Nsizes = 20
-sizes = np.logspace(3, 10, num=Nsizes)
+Nsizes = 12
+sizes = np.logspace(4, 6, num=Nsizes)
 
-Niters = 50
+Niters = 20
 xs = []
 for it in range(Niters):
     x = np.random.rand(L)
-    x = 10 * x / np.linalg.norm(x)
+    x = x / np.linalg.norm(x)
     xs.append(x)
 sigma2 = (np.linalg.norm(x) ** 2) / (L * SNR)
 
@@ -57,6 +57,7 @@ times_final_mom = np.zeros((Niters, Nsizes, Nguesses))
 times_final_gmm = np.zeros((Niters, Nsizes, Nguesses))
 for (idx, N) in enumerate(sizes):
     N = int(N)
+    print(N)
     for it in range(Niters):
         x = xs[it]
         y_clean = utils.generate_micrograph_1d(x, gamma, L, N)
@@ -83,13 +84,15 @@ for (idx, N) in enumerate(sizes):
             start = time.time()
             f_gmm = utils.calc_function_gmm(samples, gamma0, x0, shifts_2nd, shifts_3rd, sigma2)
             cov_f = np.cov(f_gmm)
-            W_gmm = np.linalg.inv(np.sqrt(N) * cov_f)
+            W_gmm = np.linalg.inv(cov_f)
             W_gmm = W_gmm
-            estimation_gmm = utils.opt(x_gamma0, ac1_y, ac2_y, ac3_y, shifts_2nd, shifts_3rd, sigma2, W_gmm)
+            estimation_gmm = utils.opt(x_gamma0s[i], ac1_y, ac2_y, ac3_y, shifts_2nd, shifts_3rd, sigma2, W_gmm)
             times_gmm[it, idx, i] = time.time() - start
             estimations_gmm.append(estimation_gmm)
         results_mom[it, idx, :] = estimations_mom
         results_gmm[it, idx, :] = estimations_gmm
+        
+del y, samples, f_gmm
 
 for (idx, _) in enumerate(sizes):
     for it in range(Niters):
@@ -122,9 +125,17 @@ for (idx, _) in enumerate(sizes):
         errs_gmm[it, idx] = utils.calc_err(xs[it], results_final_gmm[it, idx].x)
         Number_Iterations_gmm[it, idx] = results_final_gmm[it, idx].nit
 
-plt.figure()
-plt.loglog(sizes, np.mean(errs_mom, axis=0))
-plt.loglog(sizes, np.mean(errs_gmm, axis=0))
+with plt.style.context('ieee'):
+    fig = plt.figure()
+    plt.loglog(sizes, np.mean(errs_mom, axis=0), label=r'Method of Moments', lw=2)
+    plt.loglog(sizes, np.mean(errs_gmm, axis=0), label=r'Generalized Method of Moments', lw=2)
+    plt.loglog(sizes, np.mean(errs_mom, axis=0)[0]*(sizes/sizes[0])**(-1/2), 'k--', lw=1)    
+    plt.legend(loc=1)
+    plt.xlabel('SNR')
+    plt.ylabel('Mean estimation error')
+    fig.tight_layout()
+    plt.show()
+
 
 plt.figure()
 plt.semilog(sizes, np.mean(Number_Iterations_mom, axis=0))

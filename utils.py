@@ -178,7 +178,7 @@ def calc_f_df(x_gamma, ac1_y, ac2_y, ac3_y, shifts_2nd, shifts_3rd, sigma2, W):
     return f, df
 
 def opt(x_gamma0, ac1_y, ac2_y, ac3_y, shifts_2nd, shifts_3rd, sigma2, W, gtol=1e-12):
-    return minimize(fun=calc_f_df, x0=x_gamma0, method='BFGS', jac=True, options={'disp':True, 'gtol': gtol, 'maxiter':500}, args = (ac1_y, ac2_y, ac3_y, shifts_2nd, shifts_3rd, sigma2, W))
+    return minimize(fun=calc_f_df, x0=x_gamma0, method='BFGS', jac=True, options={'disp':False, 'gtol': gtol, 'maxiter':500}, args = (ac1_y, ac2_y, ac3_y, shifts_2nd, shifts_3rd, sigma2, W))
 
 def calc_err(x, x_est):
     return np.linalg.norm(x - x_est) / np.linalg.norm(x)
