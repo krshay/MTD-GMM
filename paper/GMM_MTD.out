@@ -3,7 +3,9 @@
 \BOOKMARK [2][-]{subsection.2.1}{ Autocorrelation analysis}{section.2}% 3
 \BOOKMARK [2][-]{subsection.2.2}{ Autocorrelations under the well-separated model}{section.2}% 4
 \BOOKMARK [2][-]{subsection.2.3}{ Signal recovery from autocorrelations}{section.2}% 5
-\BOOKMARK [2][-]{subsection.2.4}{ Generalized method of moments}{section.2}% 6
-\BOOKMARK [1][-]{section.3}{ Numerical experiments}{}% 7
-\BOOKMARK [1][-]{section.4}{ Conclusion}{}% 8
-\BOOKMARK [1][-]{section.5}{ References}{}% 9
+\BOOKMARK [1][-]{section.3}{ Generalized method of moments}{}% 6
+\BOOKMARK [2][-]{subsection.3.1}{ The GMM framework}{section.3}% 7
+\BOOKMARK [2][-]{subsection.3.2}{ Large Sample Properties}{section.3}% 8
+\BOOKMARK [1][-]{section.4}{ Numerical experiments}{}% 9
+\BOOKMARK [1][-]{section.5}{ Conclusion}{}% 10
+\BOOKMARK [1][-]{section.6}{ References}{}% 11

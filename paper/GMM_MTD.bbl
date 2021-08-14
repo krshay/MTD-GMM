@@ -128,4 +128,27 @@ Edoardo D'Imprima and Werner K{\"u}hlbrandt,
   single-particle cryo{EM},''
 \newblock {\em Quarterly Reviews of Biophysics}, vol. 54, 2021.
 
+\bibitem{pearson1894contributions}
+Karl Pearson,
+\newblock ``Contributions to the mathematical theory of evolution,''
+\newblock {\em Philosophical Transactions of the Royal Society of London. A},
+  vol. 185, pp. 71--110, 1894.
+
+\bibitem{Hansen1982}
+Lars~Peter Hansen,
+\newblock ``Large sample properties of generalized method of moments
+  estimators,''
+\newblock {\em Econometrica}, vol. 50, no. 4, pp. 1029, 1982.
+
+\bibitem{abas2021generalized}
+Asaf Abas, Tamir Bendory, and Nir Sharon,
+\newblock ``The generalized method of moments for multi-reference alignment,''
+  2021.
+
+\bibitem{Fan2018}
+Jianqing Fan and Yiqiao Zhong,
+\newblock ``Optimal subspace estimation using overidentifying vectors via
+  generalized method of moments,''
+\newblock {\em arXiv preprint arXiv:1805.02826}, 2018.
+
 \end{thebibliography}
