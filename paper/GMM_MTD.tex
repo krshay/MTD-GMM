@@ -135,7 +135,7 @@ The MTD model was devised in \cite{bendory2018toward} in order to study the reco
 The method of moments is a classical statistical inference technique, tracing back to 1894~\cite{pearson1894contributions}. This work expand n similar estimation to method of moments which is based upon an autocorrelations analysis~\cite{bendory2019multi}, which is described in detail in Section~\ref{subsec:relations}. The estimator results in a set of parameters whose autocorrelations agree with the empirical autocorrelations of the signal~$y$, by minimizing a {least-squares} (LS) objective. {For computing} the autocorrelations, a single pass through the signal is required. This {single-pass requirement} stands in contrast to main-stream parameter estimation techniques, such as  maximum likelihood {estimation}, which usually {iterates} over the data. The method
 
 
-This work studies the application of the estimator \textit{generalized method of moments} (GMM) and its application to the MTD problem. The GMM theory, which was first introduced in~\cite{Hansen1982},  shows that the GMM provides {an} optimal estimator, in compare to others weighted LS objective function (or an equivalent, such as autocorrelations). As shown in previous work, the GMM estimator suggests a significant in the estimation error~\cite{abas2021generalized}.
+This work studies the application of the estimator \textit{generalized method of moments} (GMM) and its application to the MTD problem. The GMM theory, which was first introduced in~\cite{Hansen1982},  shows that the GMM provides {an} optimal estimator, in compare to others weighted LS objective function (or an equivalent, such as autocorrelations). As shown in previous work, the GMM estimator suggests a significant improvement in the estimation error~\cite{abas2021generalized}.
 
 \section{Mathematical framework}
 \label{sec:math}
@@ -223,12 +223,29 @@ As such,~\mbox{(\ref{eq:well_separated_1st}) -~(\ref{eq:well_separated_3rd})} re
 In its most simplified form, the GMM generalizes~\eqref{Eq-2-2} by replacing the LS objective with a weighted LS. In particular, a specific choice of weights guarantees favorable asymptotic statistical properties, such as {the} minimal asymptotic variance of the estimation error.
 
 Let us define the \textit{moment function}, $f(\theta, y)\colon \Theta \times \R^r \to \R^q$. The moment function needs to be chosen such that its expectation value is zero only at a single point $\theta=\theta_0$. Namely,
-\begin{equation}\label{Eq-2-4}
+\begin{equation}\label{Eq-GMM-1}
 	\E\left[f(\theta,y)\right] = 0 \quad \text{if and only if} \quad \theta = \theta_0.
 \end{equation}
-We refer to~\eqref{Eq-2-4} as the \textit{uniqueness of the parameter set} condition.The moment function must satisfy the uniqueness condition and a few additional regularity conditions (which can be found in~\cite{Hansen1982, abas2021generalized}). This flexibility enables the GMM to be applied to a wide range of problems, such as subspace estimation~\cite{Fan2018}.
+We refer to~\eqref{Eq-2-4} as the \textit{uniqueness of the parameter set} condition. The moment function must satisfy the uniqueness condition and a few additional regularity conditions (which can be found in~\cite{Hansen1982, abas2021generalized}). This flexibility enables the GMM to be applied to a wide range of problems, such as subspace estimation~\cite{Fan2018}.
 
-\asaf{TODO: Define the moment function}
+In order to define the moment function for the MTD, we first define the $i$-th observation from the signal~$y$ as follow:
+\begin{equation}
+	y_i := [y[i],\ldots, y[i+L]].
+\end{equation}
+The moment function~$f(\cdot)$ should fulfil \eqref{Eq-GMM-1} using the defined samples. The natural choice of ~$f(\cdot)$ is
+\begin{equation}
+	f(x,\gamma,y_i) := 
+	\begin{bmatrix}
+		&\gamma A_x^1 - A_{y_i}^1\\
+		&\gamma A_x^2[0] +\sigma^2 - A_{y_i}^2[0]\\
+		&\vdots \\
+		&\gamma A_x^2[L-1] - A_{y_i}^2[L-1]\\
+		&\gamma A_x^2[L-1] - A_{y_i}^2[L-1]\\ 
+		&To \ add \  third
+	\end{bmatrix}
+\end{equation}
+
+\asaf{TODO: make it readable}
 
 The estimated sample moment function is the average of~$f$ over~$N$ observations:
 \begin{equation}\label{Eq-2-5}
