@@ -10,13 +10,13 @@
 \usepackage{enumitem}
 \usepackage{amssymb}
 \usepackage{xcolor}
-\usepackage{esvect}
+%\usepackage{esvect}
 \usepackage{url}
 \usepackage{graphicx}
 \usepackage{subcaption}
 \usepackage[ruled,vlined]{algorithm2e}
 \usepackage{xcolor}
-\usepackage[normalem]{ulem} 
+\usepackage[normalem]{ulem}
 \usepackage{amsfonts}
 \usepackage{amsmath}
 \usepackage{amssymb}
@@ -132,7 +132,7 @@ In the current analysis workflow of \mbox{cryo-EM} data \cite{bendory2020single}
 The MTD model was devised in \cite{bendory2018toward} in order to study the recovery of small molecules directly from the micrograph, below the current detection limit of \mbox{cryo-EM}~\cite{henderson1995potential},~\cite{d2021current}. An autocorrelation analysis technique (see Section~\ref{subsec:ac}) was implemented to recover \mbox{low-resolution}~\mbox{3-D} structures from noiseless simulated data under a simplified model. Autocorrelation analysis consists of finding an image that best explains the empirical autocorrelations of the measurement. For any noise level, those autocorrelations can be estimated to any desired accuracy for sufficiently large~$N$. Computing the autocorrelations is straightforward and requires only one pass over the data, which is advantageous for massively large datasets, such as \mbox{cryo-EM} datasets~\cite{bendory2020single}. As such, autocorrelation analysis provides an attractive alternative to other computational methods, such as maximum likelihood estimation, which is intractable for the MTD problem~\cite{lan2020multi}.
 
 
-The method of moments is a classical statistical inference technique, tracing back to 1894~\cite{pearson1894contributions}. This work expand n similar estimation to method of moments which is based upon an autocorrelations analysis~\cite{bendory2019multi}, which is described in detail in Section~\ref{subsec:relations}. The estimator results in a set of parameters whose autocorrelations agree with the empirical autocorrelations of the signal~$y$, by minimizing a {least-squares} (LS) objective. {For computing} the autocorrelations, a single pass through the signal is required. This {single-pass requirement} stands in contrast to main-stream parameter estimation techniques, such as  maximum likelihood {estimation}, which usually {iterates} over the data. The method 
+The method of moments is a classical statistical inference technique, tracing back to 1894~\cite{pearson1894contributions}. This work expand n similar estimation to method of moments which is based upon an autocorrelations analysis~\cite{bendory2019multi}, which is described in detail in Section~\ref{subsec:relations}. The estimator results in a set of parameters whose autocorrelations agree with the empirical autocorrelations of the signal~$y$, by minimizing a {least-squares} (LS) objective. {For computing} the autocorrelations, a single pass through the signal is required. This {single-pass requirement} stands in contrast to main-stream parameter estimation techniques, such as  maximum likelihood {estimation}, which usually {iterates} over the data. The method
 
 
 This work studies the application of the estimator \textit{generalized method of moments} (GMM) and its application to the MTD problem. The GMM theory, which was first introduced in~\cite{Hansen1982},  shows that the GMM provides {an} optimal estimator, in compare to others weighted LS objective function (or an equivalent, such as autocorrelations). As shown in previous work, the GMM estimator suggests a significant in the estimation error~\cite{abas2021generalized}.
@@ -220,7 +220,7 @@ As such,~\mbox{(\ref{eq:well_separated_1st}) -~(\ref{eq:well_separated_3rd})} re
 \label{gmm}
 \subsection{The GMM framework}\label{gmm:framwork}
 
-In its most simplified form, the GMM generalizes~\eqref{Eq-2-2} by replacing the LS objective with a weighted LS. In particular, a specific choice of weights guarantees favorable asymptotic statistical properties, such as {the} minimal asymptotic variance of the estimation error. 
+In its most simplified form, the GMM generalizes~\eqref{Eq-2-2} by replacing the LS objective with a weighted LS. In particular, a specific choice of weights guarantees favorable asymptotic statistical properties, such as {the} minimal asymptotic variance of the estimation error.
 
 Let us define the \textit{moment function}, $f(\theta, y)\colon \Theta \times \R^r \to \R^q$. The moment function needs to be chosen such that its expectation value is zero only at a single point $\theta=\theta_0$. Namely,
 \begin{equation}\label{Eq-2-4}
@@ -234,19 +234,19 @@ The estimated sample moment function is the average of~$f$ over~$N$ observations
 \begin{equation}\label{Eq-2-5}
 	g_N(\theta) = \frac{1}{N} \sum_{i=1}^N f(\theta, y_i).
 \end{equation}
-The GMM estimator is defined as the minimizer of the weighted LS expression, 	
+The GMM estimator is defined as the minimizer of the weighted LS expression,
 \begin{equation} \label{Eq-2-1}
 	\hat{\theta}_N = \arg\min_{\theta \in \Theta} \ g_N(\theta)^T W_N g_N(\theta).
 \end{equation}
-Here, $W_N$ is a fixed positive semi-definite (PSD) matrix. Note that the LS estimator~\eqref{Eq-2-2} is a special case of~\eqref{Eq-2-1}. 
+Here, $W_N$ is a fixed positive semi-definite (PSD) matrix. Note that the LS estimator~\eqref{Eq-2-2} is a special case of~\eqref{Eq-2-1}.
 
 \subsection{Large Sample Properties}\label{gmm:large}
 
-Before presenting the statistical properties of the GMM, we fix notation. We denote by $\overset{p}{\to}$ and $\overset{d}{\to}$ convergence in  probability and in distribution, respectively. Let 
+Before presenting the statistical properties of the GMM, we fix notation. We denote by $\overset{p}{\to}$ and $\overset{d}{\to}$ convergence in  probability and in distribution, respectively. Let
 \begin{equation} \label{eqn:cov_mat_S}
 	S := \lim_{N\to \infty}\Cov\left[\sqrt{N}g_N(\theta_0)\right],
 \end{equation}
-be the covariance matrix of the estimated sample moment function~\eqref{Eq-2-5} at the ground truth~$\theta_0$. We denote by $\{W_N\}_{N=1}^\infty$ a sequence of PSD matrices which converges almost surely to a positive definite (PD) matrix~$W$. Finally, the expectation of the Jacobian of the moment function at the ground truth~$\theta_0$ is denoted by $G_0 = \E\left[\partial f(\theta_0, y) / \partial \theta^T\right]$. 
+be the covariance matrix of the estimated sample moment function~\eqref{Eq-2-5} at the ground truth~$\theta_0$. We denote by $\{W_N\}_{N=1}^\infty$ a sequence of PSD matrices which converges almost surely to a positive definite (PD) matrix~$W$. Finally, the expectation of the Jacobian of the moment function at the ground truth~$\theta_0$ is denoted by $G_0 = \E\left[\partial f(\theta_0, y) / \partial \theta^T\right]$.
 
 %Following~\cite{Hansen1982}, the large sample properties of the GMM estimator under the uniqueness of the parameter set~\eqref{Eq-2-4} are \tamir{as follows.}
 
@@ -257,18 +257,18 @@ The large sample properties of the GMM estimator, were derived in~\cite{Hansen19
 	\begin{enumerate}[label={\Alph*}.]
 		\item  \label{Thm-2-2}
 		\textnormal{(Consistency)} $\hat{\theta}_N \overset{p}{\to} \theta_0$.
-		
+
 		\item \label{Thm-2-3} \textnormal{(Asymptotic normality)}
 		\[\sqrt{N} ( \hat{\theta}_N - \theta_0) \overset{d}{\to} \mathcal{N}(0, M S M^T ),\] where $M =[G_0^T W  G_0]^{-1} G_0^T  W$.
-		
+
 		\item \label{Thm-2-5} \textnormal{(Optimal choice of a weighting matrix)} The minimum asymptotic variance of $\hat{\theta}_N$ is given by $(G_0^T S^{-1} G_0)^{-1}$ and is attained by $W = S^{-1}$.
 	\end{enumerate}
 \end{theorem}
-Theorem~\ref{Thm-2-6} provides a matrix~$W$ {that} guarantees a minimal asymptotic variance of the estimator’s error. 
+Theorem~\ref{Thm-2-6} provides a matrix~$W$ {that} guarantees a minimal asymptotic variance of the estimator’s error.
 
 The covariance matrix~$S$ {of~\eqref{eqn:cov_mat_S}, which plays a central role in Theorem~\ref{Thm-2-6},} is required to be a PD matrix. Therefore, the moment function must be chosen so that~$S$ is full-rank. In this work, we noticed that if we remove the repeating entries of~$f$ (that appear due to the inherent symmetries of the autocorrelations), the covariance is indeed full rank (although, in some cases, ill-conditioned).
 
-It is important to note that in practice, the ground truth~$\theta_0$ is unknown a priori, so we cannot use the optimal weighting matrix. A common heuristic is to replace~\eqref{Eq-2-1} with an iterative scheme, which is named iterative GMM.  
+It is important to note that in practice, the ground truth~$\theta_0$ is unknown a priori, so we cannot use the optimal weighting matrix. A common heuristic is to replace~\eqref{Eq-2-1} with an iterative scheme, which is named iterative GMM.
 \asaf{TODO: rephrase --- However for our choice of the moment function~\eqref{Eq-2-3}, it is enough to apply the covariance on the empirical part,
 	\begin{equation}\label{Eq-2-7}
 		\Cov[g_N(\theta)] = \Cov\left[\left[y_i; \ldots; y_i^{\otimes {k_M}}\right]\right].

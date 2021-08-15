@@ -35,10 +35,10 @@ for i in range(Nguesses):
     x_gamma0 = np.concatenate((x0, np.array([gamma0])))
     x_gamma0s.append(x_gamma0)
 
-Nsizes = 12
+Nsizes = 8
 sizes = np.logspace(4, 6, num=Nsizes)
 
-Niters = 20
+Niters = 50
 xs = []
 for it in range(Niters):
     x = np.random.rand(L)
@@ -82,7 +82,7 @@ for (idx, N) in enumerate(sizes):
             estimations_mom.append(estimation_mom)
             
             start = time.time()
-            f_gmm = utils.calc_function_gmm(samples, gamma0, x0, shifts_2nd, shifts_3rd, sigma2)
+            f_gmm = utils.calc_function_gmm(samples, x_gamma0s[i][-1], x_gamma0s[i][:-1], shifts_2nd, shifts_3rd, sigma2)
             cov_f = np.cov(f_gmm)
             W_gmm = np.linalg.inv(cov_f)
             W_gmm = W_gmm
@@ -120,9 +120,9 @@ errs_gmm = np.zeros((Niters, Nsizes))
 Number_Iterations_gmm = np.zeros((Niters, Nsizes))
 for (idx, _) in enumerate(sizes):
     for it in range(Niters):
-        errs_mom[it, idx] = utils.calc_err(xs[it], results_final_mom[it, idx].x)
+        errs_mom[it, idx] = utils.calc_err(xs[it], results_final_mom[it, idx].x[:-1])
         Number_Iterations_mom[it, idx] = results_final_mom[it, idx].nit
-        errs_gmm[it, idx] = utils.calc_err(xs[it], results_final_gmm[it, idx].x)
+        errs_gmm[it, idx] = utils.calc_err(xs[it], results_final_gmm[it, idx].x[:-1])
         Number_Iterations_gmm[it, idx] = results_final_gmm[it, idx].nit
 
 with plt.style.context('ieee'):
@@ -131,12 +131,16 @@ with plt.style.context('ieee'):
     plt.loglog(sizes, np.mean(errs_gmm, axis=0), label=r'Generalized Method of Moments', lw=2)
     plt.loglog(sizes, np.mean(errs_mom, axis=0)[0]*(sizes/sizes[0])**(-1/2), 'k--', lw=1)    
     plt.legend(loc=1)
-    plt.xlabel('SNR')
+    plt.xlabel('Measurement length [pixels]')
     plt.ylabel('Mean estimation error')
     fig.tight_layout()
     plt.show()
 
-
-plt.figure()
-plt.semilog(sizes, np.mean(Number_Iterations_mom, axis=0))
-plt.semilog(sizes, np.mean(Number_Iterations_gmm, axis=0))
+    fig = plt.figure()
+    plt.semilogx(sizes, np.mean(Number_Iterations_mom, axis=0), label=r'Method of Moments', lw=2)
+    plt.semilogx(sizes, np.mean(Number_Iterations_gmm, axis=0), label=r'Generalized Method of Moments', lw=2)
+    plt.legend(loc=1)
+    plt.xlabel('Measurement length [pixels]')
+    plt.ylabel('Mean number of iterations')
+    fig.tight_layout()
+    plt.show()
