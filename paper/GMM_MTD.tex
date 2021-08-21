@@ -37,11 +37,13 @@
 
 \usepackage{hyperref}
 \newcommand{\asaf}[1]{{\color{blue}{#1}}}
+\newcommand{\asafc}[1]{{\color{blue}{[Asaf: #1]}}}
 
+\newcommand{\A}[0]{\mathcal{A}}
 \newcommand{\Var}[0]{\operatorname{Var}}
 \newcommand{\SNR}[0]{\text{SNR}}
 \newcommand{\E}[0]{\mathbb{E}}
-\newcommand{\A}[0]{{\buildrel _{\circ} \over {\mathrm{A}}}}
+
 \newcommand{\Cov}[0]{\operatorname{Cov}}
 \newcommand{\R}[0]{\mathbb{R}}
 % Title.
@@ -201,6 +203,7 @@ A_{y}^2 [\ell_1] &\stackrel{\text{a.s.}}{=} \gamma A_{x}^2 [\ell_1] + \sigma^2\d
 \label{eq:well_separated_3rd}
 A_{y}^3 [\ell_1, \ell_2] &\stackrel{\text{a.s.}}{=} \gamma A_{X} [\ell_1, \ell_2] \nonumber \\&+ \gamma S_1 \sigma^2 (\delta[\ell_1] + \delta[\ell_2] + \delta[\ell_1 - \ell_2]),
 \end{align}
+\asafc{What is $S_1$ above?}
 for~$\ell_1, \ell_2 \in \mathcal{L}$ (defined in~(\ref{eq:set_L})), where
 \begin{equation}
 \label{eq:delta}
@@ -211,6 +214,19 @@ is the Kronecker delta function. Here,~$\gamma$ is the density of the target ima
 \label{eq:gamma}
 \gamma = p \frac{L}{N}.
 \end{equation}
+Next, we introduce the notations for the second and third autocorrelations:
+\begin{gather*}
+	 \A_y^2 := [A_y^2[\ell
+	] ]_{\ell=0}^{L-1},
+	\\
+	\A_x^2 := [A_x^2[\ell
+	]+ \sigma^2 \delta[\ell]]_{\ell=0}^{L-1},
+	\\
+	\A_y^3 := [A_y^3[\ell_1, \ell_2]]_{\ell_1,\ell_2=0}^{L-1}, 
+	\\
+	\A_x^3 := [A_x^3[\ell_1, \ell_2] + \gamma S_1 \sigma^2 (\delta[\ell_1] + \delta[\ell_2] + \delta[\ell_1 - \ell_2])]_{\ell_1,\ell_2=0}^{L-1}
+\end{gather*}
+Notice, $\A_y^3$ and~$\A_x^3$ are treated as vectors.
 
 As such,~\mbox{(\ref{eq:well_separated_1st}) -~(\ref{eq:well_separated_3rd})} relate the autocorrelations of the measurement with those of the target signal~$x$. Moreover, the signal $x$ can be identified from its autocorrelations, and thus, potentially, also from the autocorrelations of the measurement. In~\cite{bendory2019multi}, it was shown that~$\gamma$ (respectively~$\sigma$) can be estimated from the first- and second-order autocorrelations of the measurement if~$\sigma$ (respectively~$\gamma$) is known. In particular, if~$\gamma$ and~$\sigma$ are known (or are reliably estimated), we can provably determine the signal from the measurement's autocorrelations. Previous works~\cite{bendory2019multi}, \cite{lan2020multi}, \cite{marshall2020image}, \cite{bendory2021multi}, \cite{kreymer2021two} demonstrated successful signal and image estimations. Importantly, the aforementioned relations between the autocorrelations of~$M$ and~$F$ do not directly depend on the location of individual signal occurrences in the measurement, but only through the density parameter~$\gamma$. Therefore, detecting the signal occurrences is not a prerequisite for signal recovery, and thus signal recovery is possible even in very low SNR regimes.
 
@@ -226,30 +242,31 @@ Let us define the \textit{moment function}, $f(\theta, y)\colon \Theta \times \R
 \begin{equation}\label{Eq-GMM-1}
 	\E\left[f(\theta,y)\right] = 0 \quad \text{if and only if} \quad \theta = \theta_0.
 \end{equation}
-We refer to~\eqref{Eq-2-4} as the \textit{uniqueness of the parameter set} condition. The moment function must satisfy the uniqueness condition and a few additional regularity conditions (which can be found in~\cite{Hansen1982, abas2021generalized}). This flexibility enables the GMM to be applied to a wide range of problems, such as subspace estimation~\cite{Fan2018}.
+We refer to~\eqref{Eq-GMM-1} as the \textit{uniqueness of the parameter set} condition. The moment function must satisfy the uniqueness condition and a few additional regularity conditions (which can be found in~\cite{Hansen1982, abas2021generalized}). This flexibility enables the GMM to be applied to a wide range of problems, such as subspace estimation~\cite{Fan2018}.
 
 In order to define the moment function for the MTD, we first define the $i$-th observation from the signal~$y$ as follow:
 \begin{equation}
 	y_i := [y[i],\ldots, y[i+L]].
 \end{equation}
 The moment function~$f(\cdot)$ should fulfil \eqref{Eq-GMM-1} using the defined samples. The natural choice of ~$f(\cdot)$ is
-\begin{equation}
+\begin{equation} \label{Eq-GMM-2}
 	f(x,\gamma,y_i) := 
 	\begin{bmatrix}
 		&\gamma A_x^1 - A_{y_i}^1\\
-		&\gamma A_x^2[0] +\sigma^2 - A_{y_i}^2[0]\\
-		&\vdots \\
-		&\gamma A_x^2[L-1] - A_{y_i}^2[L-1]\\
-		&\gamma A_x^2[L-1] - A_{y_i}^2[L-1]\\ 
-		&To \ add \  third
+		&\A_x^2 - \A_{y_i}^2 \\
+		&\A_x^3 - \A_{y_i}^3
 	\end{bmatrix}
 \end{equation}
 
-\asaf{TODO: make it readable}
+
 
 The estimated sample moment function is the average of~$f$ over~$N$ observations:
 \begin{equation}\label{Eq-2-5}
-	g_N(\theta) = \frac{1}{N} \sum_{i=1}^N f(\theta, y_i).
+	g_N(\theta) = \frac{1}{N} \sum_{i=1}^N f(\theta, y_i) = \begin{bmatrix}
+		&\gamma A_x^1 - A_{y}^1\\
+		&\A_x^2 - \A_{y}^2 \\
+		&\A_x^3 - \A_{y}^3
+	\end{bmatrix}.
 \end{equation}
 The GMM estimator is defined as the minimizer of the weighted LS expression,
 \begin{equation} \label{Eq-2-1}
@@ -286,9 +303,9 @@ Theorem~\ref{Thm-2-6} provides a matrix~$W$ {that} guarantees a minimal asymptot
 The covariance matrix~$S$ {of~\eqref{eqn:cov_mat_S}, which plays a central role in Theorem~\ref{Thm-2-6},} is required to be a PD matrix. Therefore, the moment function must be chosen so that~$S$ is full-rank. In this work, we noticed that if we remove the repeating entries of~$f$ (that appear due to the inherent symmetries of the autocorrelations), the covariance is indeed full rank (although, in some cases, ill-conditioned).
 
 It is important to note that in practice, the ground truth~$\theta_0$ is unknown a priori, so we cannot use the optimal weighting matrix. A common heuristic is to replace~\eqref{Eq-2-1} with an iterative scheme, which is named iterative GMM.
-\asaf{TODO: rephrase --- However for our choice of the moment function~\eqref{Eq-2-3}, it is enough to apply the covariance on the empirical part,
+\asaf{For our choice of the moment function~\eqref{Eq-GMM-2}, it is enough to apply the covariance on the empirical part,
 	\begin{equation}\label{Eq-2-7}
-		\Cov[g_N(\theta)] = \Cov\left[\left[y_i; \ldots; y_i^{\otimes {k_M}}\right]\right].
+		\Cov[g(\theta)] = \Cov\left[\left[A_{y_i}^1;\A_{y_i}^2;\A_{y_i}^3\right]\right].
 	\end{equation}
 	The covariance depends solely on the observations~$\{y_i\}_{i=1}^N$, not on the input of the parameter set~$\theta$. Therefore, in a single pass one can compute the moments estimators~\eqref{Eq-2-6} and the optimal covariance for~\eqref{Eq-2-3}.
 }
