@@ -52,7 +52,8 @@
 %
 % Single address.
 % ---------------
-\name{Authors\thanks{S.K. is supported by the Yitzhak and Chaya Weinstein Research Institute for Signal Processing. T.B. is supported in part by NSF-BSF grant no. 2019752, and the Zimin Institute for Engineering Solutions Advancing Better Lives.}}
+\name{Ye'Ela Shalit*, Ran Weber*, Asaf Abas*, Shay Kreymer*, and Tamir Bendory\thanks{* These four authors have contributed equally to this work. \newline
+S.K. is supported by the Yitzhak and Chaya Weinstein Research Institute for Signal Processing. T.B. is supported in part by NSF-BSF grant no. 2019752, and the Zimin Institute for Engineering Solutions Advancing Better Lives.}}
 \address{School of Electrical Engineering, Tel Aviv University, Tel Aviv, Israel}
 %
 % For example:
@@ -222,7 +223,7 @@ Next, we introduce the notations for the second and third autocorrelations:
 	\A_x^2 := [A_x^2[\ell
 	]+ \sigma^2 \delta[\ell]]_{\ell=0}^{L-1},
 	\\
-	\A_y^3 := [A_y^3[\ell_1, \ell_2]]_{\ell_1,\ell_2=0}^{L-1}, 
+	\A_y^3 := [A_y^3[\ell_1, \ell_2]]_{\ell_1,\ell_2=0}^{L-1},
 	\\
 	\A_x^3 := [A_x^3[\ell_1, \ell_2] + \gamma S_1 \sigma^2 (\delta[\ell_1] + \delta[\ell_2] + \delta[\ell_1 - \ell_2])]_{\ell_1,\ell_2=0}^{L-1}
 \end{gather*}
@@ -250,7 +251,7 @@ In order to define the moment function for the MTD, we first define the $i$-th o
 \end{equation}
 The moment function~$f(\cdot)$ should fulfil \eqref{Eq-GMM-1} using the defined samples. The natural choice of ~$f(\cdot)$ is
 \begin{equation} \label{Eq-GMM-2}
-	f(x,\gamma,y_i) := 
+	f(x,\gamma,y_i) :=
 	\begin{bmatrix}
 		&\gamma A_x^1 - A_{y_i}^1\\
 		&\A_x^2 - \A_{y_i}^2 \\
