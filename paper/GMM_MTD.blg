@@ -1,48 +1,8 @@
-This is BibTeX, Version 0.99d
-Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
-The top-level auxiliary file: GMM_MTD.aux
-Reallocating 'name_of_file' (item size: 1) to 8 items.
+This is BibTeX, Version 0.99dThe top-level auxiliary file: GMM_MTD.aux
 The style file: IEEEbib.bst
-Reallocating 'name_of_file' (item size: 1) to 11 items.
 Database file #1: references.bib
-You've used 25 entries,
-            1838 wiz_defined-function locations,
-            616 strings with 7967 characters,
-and the built_in function-call counts, 5559 in all, are:
-= -- 513
-> -- 240
-< -- 1
-+ -- 91
-- -- 66
-* -- 481
-:= -- 912
-add.period$ -- 26
-call.type$ -- 25
-change.case$ -- 24
-chr.to.int$ -- 0
-cite$ -- 25
-duplicate$ -- 209
-empty$ -- 534
-format.name$ -- 66
-if$ -- 1205
-int.to.chr$ -- 0
-int.to.str$ -- 25
-missing$ -- 25
-newline$ -- 127
-num.names$ -- 25
-pop$ -- 46
-preamble$ -- 1
-purify$ -- 0
-quote$ -- 0
-skip$ -- 62
-stack$ -- 0
-substring$ -- 435
-swap$ -- 37
-text.length$ -- 1
-text.prefix$ -- 0
-top$ -- 0
-type$ -- 0
-warning$ -- 0
-while$ -- 59
-width$ -- 27
-write$ -- 271
+Repeated entry---line 615 of file references.bib
+ : @article{Fan2018
+ :                 ,
+I'm skipping whatever remains of this entry
+(There was 1 error message)

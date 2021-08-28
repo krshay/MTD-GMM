@@ -97,7 +97,7 @@ One, two, three, four, five
 \section{Introduction}
 \label{sec:intro}
 
-We study the multi-target detection (MTD) problem of estimating a target signal~\mbox{$x: \{0, \ldots, L-1\} \rightarrow \mathbb{R}$} from a noisy measurement that contains multiple copies of the signal, each randomly translated~\cite{bendory2019multi}, \cite{lan2020multi}, \cite{marshall2020image}, \cite{bendory2021multi}, \cite{kreymer2021two}, \cite{bendory2018toward}. Specifically, let~\mbox{$y: \{0, \ldots, N-1\} \rightarrow \mathbb{R}$} be a measurement of the form
+We study the multi-target detection (MTD) problem of estimating a target signal~$x\in\R^L$ from a noisy measurement that contains multiple copies of the signal, each randomly translated~\cite{bendory2019multi}, \cite{lan2020multi}, \cite{marshall2020image}, \cite{bendory2021multi}, \cite{kreymer2021two}, \cite{bendory2018toward}. Specifically, let~$x\in\R^L$ be a measurement of the form
 \begin{equation}
 \label{eq:model}
 y[\ell] = \sum_{i=1}^{p} x[\ell - \ell_i] + \varepsilon[\ell],
@@ -132,23 +132,20 @@ The MTD model arises in several scientific applications, such as passive radar~\
 
 In the current analysis workflow of \mbox{cryo-EM} data \cite{bendory2020single}, \cite{scheres2012relion}, \cite{punjani2017cryosparc}, the~\mbox{2-D} projections are first detected and extracted from the micrograph, and later rotationally and translationally aligned to reconstruct the~\mbox{3-D} molecular structure. This approach fails for small molecules, which induce low contrast, and thus low SNR. This makes them difficult to detect and align~\cite{bendory2018toward}, \cite{henderson1995potential}, \cite{bendory2020single}, \cite{aguerrebere2016fundamental}, rendering current \mbox{cryo-EM} algorithmic pipeline ineffective. For example, in the limit~\mbox{$\text{SNR} \rightarrow 0$}, reliable detection of signals' locations within the measurement is impossible~\cite[Proposition~3.1]{bendory2018toward}.
 
-The MTD model was devised in \cite{bendory2018toward} in order to study the recovery of small molecules directly from the micrograph, below the current detection limit of \mbox{cryo-EM}~\cite{henderson1995potential},~\cite{d2021current}. An autocorrelation analysis technique (see Section~\ref{subsec:ac}) was implemented to recover \mbox{low-resolution}~\mbox{3-D} structures from noiseless simulated data under a simplified model. Autocorrelation analysis consists of finding an image that best explains the empirical autocorrelations of the measurement. For any noise level, those autocorrelations can be estimated to any desired accuracy for sufficiently large~$N$. Computing the autocorrelations is straightforward and requires only one pass over the data, which is advantageous for massively large datasets, such as \mbox{cryo-EM} datasets~\cite{bendory2020single}. As such, autocorrelation analysis provides an attractive alternative to other computational methods, such as maximum likelihood estimation, which is intractable for the MTD problem~\cite{lan2020multi}.
+The MTD model was devised in \cite{bendory2018toward} in order to study the recovery of small molecules directly from the micrograph, below the current detection limit of \mbox{cryo-EM}~\cite{henderson1995potential},~\cite{d2021current}. An autocorrelation analysis technique (see Section~\ref{subsec:ac}) was implemented to recover \mbox{low-resolution}~\mbox{3-D} structures from noiseless simulated data under a simplified model. Autocorrelation analysis consists of finding an image that best explains the empirical autocorrelations of the measurement,  by minimizing a {least-squares} (LS) objective. For any noise level, those autocorrelations can be estimated to any desired accuracy for sufficiently large~$N$. Computing the autocorrelations is straightforward and requires only one pass over the data, which is advantageous for massively large datasets, such as \mbox{cryo-EM} datasets~\cite{bendory2020single}. As such, autocorrelation analysis provides an attractive alternative to other computational methods, such as maximum likelihood estimation, which is intractable for the MTD problem~\cite{lan2020multi}.
 
 
-The method of moments is a classical statistical inference technique, tracing back to 1894~\cite{pearson1894contributions}. This work expand n similar estimation to method of moments which is based upon an autocorrelations analysis~\cite{bendory2019multi}, which is described in detail in Section~\ref{subsec:relations}. The estimator results in a set of parameters whose autocorrelations agree with the empirical autocorrelations of the signal~$y$, by minimizing a {least-squares} (LS) objective. {For computing} the autocorrelations, a single pass through the signal is required. This {single-pass requirement} stands in contrast to main-stream parameter estimation techniques, such as  maximum likelihood {estimation}, which usually {iterates} over the data. The method
-
-
-This work studies the application of the estimator \textit{generalized method of moments} (GMM) and its application to the MTD problem. The GMM theory, which was first introduced in~\cite{Hansen1982},  shows that the GMM provides {an} optimal estimator, in compare to others weighted LS objective function (or an equivalent, such as autocorrelations). As shown in previous work, the GMM estimator suggests a significant improvement in the estimation error~\cite{abas2021generalized}.
+Autocorrelations analysis is an variation of the method of moment (MoM), which is a classical statistical inference technique, tracing back to 1894~\cite{pearson1894contributions}. This work studies the application of the estimator \textit{generalized method of moments} (GMM) and its application to the MTD problem. The GMM theory, which was first introduced in~\cite{Hansen1982},  shows that the GMM provides {an} optimal estimator, in compare to others weighted LS objective function. As shown in previous work, the GMM estimator suggests a significant improvement in the estimation error~\cite{Hansen1982, abas2021generalized, Fan2018,roodman2009xtabond2}.
 
 \section{Mathematical framework}
 \label{sec:math}
 \subsection{Autocorrelation analysis}
 \label{subsec:ac}
-The autocorrelation of order~$q$ of a random signal~\mbox{$z \in \mathbb{R}^{N}$} is defined as
+The autocorrelation of order~$q$ of a signal~\mbox{$z \in \mathbb{R}^{N}$} is defined as
 \begin{equation}
 A_z^q[\ell_1, \ldots, \ell_{q-1}] := \mathbb{E}_z\Big[\frac{1}{N^2} \sum_{i \in \mathbb{R}^2} z[i] z[i + \ell_1] \cdots z[i + \ell_{q-1}]\Big],
 \end{equation}
-where~$\ell_1, \ldots, \ell_{q-1}$ are integer shifts. Indexing out of bounds is zero-padded, that is,~\mbox{$z[i] = 0$} out of the range~\mbox{$\{0, \ldots, {N-1}\}$}. In this work, we use the first three autocorrelations which are explicitly given by
+\asafc{Why $N^2$?}where~$\ell_1, \ldots, \ell_{q-1}$ are integer shifts. Indexing out of bounds is zero-padded, that is,~\mbox{$z[i] = 0$} out of the range~\mbox{$\{0, \ldots, {N-1}\}$}. In this work, we use the first three autocorrelations which are explicitly given by
 \begin{align}
 \label{eq:ac1}
 A_z^1 &= \mathbb{E}_z \left[\frac{1}{N} \sum_{i \in \mathbb{Z}} z\left[i\right] \right], \\
@@ -229,15 +226,32 @@ Next, we introduce the notations for the second and third autocorrelations:
 \end{gather*}
 Notice, $\A_y^3$ and~$\A_x^3$ are treated as vectors.
 
-As such,~\mbox{(\ref{eq:well_separated_1st}) -~(\ref{eq:well_separated_3rd})} relate the autocorrelations of the measurement with those of the target signal~$x$. Moreover, the signal $x$ can be identified from its autocorrelations, and thus, potentially, also from the autocorrelations of the measurement. In~\cite{bendory2019multi}, it was shown that~$\gamma$ (respectively~$\sigma$) can be estimated from the first- and second-order autocorrelations of the measurement if~$\sigma$ (respectively~$\gamma$) is known. In particular, if~$\gamma$ and~$\sigma$ are known (or are reliably estimated), we can provably determine the signal from the measurement's autocorrelations. Previous works~\cite{bendory2019multi}, \cite{lan2020multi}, \cite{marshall2020image}, \cite{bendory2021multi}, \cite{kreymer2021two} demonstrated successful signal and image estimations. Importantly, the aforementioned relations between the autocorrelations of~$M$ and~$F$ do not directly depend on the location of individual signal occurrences in the measurement, but only through the density parameter~$\gamma$. Therefore, detecting the signal occurrences is not a prerequisite for signal recovery, and thus signal recovery is possible even in very low SNR regimes.
+\asafc{I'm not sure that this is relevant. We should only mention that 3 auto' are enough in order to recover $x$ and $\gamma$}As such,~\mbox{(\ref{eq:well_separated_1st}) -~(\ref{eq:well_separated_3rd})} relate the autocorrelations of the measurement with those of the target signal~$x$. Moreover, the signal $x$ can be identified from its autocorrelations, and thus, potentially, also from the autocorrelations of the measurement. In~\cite{bendory2019multi}, it was shown that~$\gamma$ (respectively~$\sigma$) can be estimated from the first- and second-order autocorrelations of the measurement if~$\sigma$ (respectively~$\gamma$) is known. In particular, if~$\gamma$ and~$\sigma$ are known (or are reliably estimated), we can provably determine the signal from the measurement's autocorrelations. Previous works~\cite{bendory2019multi}, \cite{lan2020multi}, \cite{marshall2020image}, \cite{bendory2021multi}, \cite{kreymer2021two} demonstrated successful signal and image estimations. Importantly, the aforementioned relations between the autocorrelations of~$M$ and~$F$ do not directly depend on the location of individual signal occurrences in the measurement, but only through the density parameter~$\gamma$. Therefore, detecting the signal occurrences is not a prerequisite for signal recovery, and thus signal recovery is possible even in very low SNR regimes.
 
 \subsection{Signal recovery from autocorrelations}
+In previous work~\cite{bendory2019multi}, in order to recover the signal they applied this LS estimator:
+\begin{align} \label{Eq-MTD:LS}
+	\begin{split}
+	&x_{LS}, \gamma_{LS} = \min_{
+			\scriptscriptstyle{x\in\R^L \gamma \in [0,1]}}
+		 w_1 (A_y^1 - A_x^1)^2 + w_2 \sum_{\ell=1}^{L-1} (a_y^2[\ell] - a_x^2[\ell])^2 + \\
+	& w_3 \sum_{\begin{gathered}
+			\scriptscriptstyle{2 \le \ell_1 \le L-1} \\
+			\scriptscriptstyle{1 \le \ell_2 \ell_1-1}
+		\end{gathered}}  (a_y^3[\ell_1,\ell_2] - a_x^3[\ell_1,\ell_2])^2 = \min_{
+	\scriptscriptstyle{x\in\R^L \gamma \in [0,1]}} w_1 (A_y^1 - A_x^1)^2 + \\
+		&w_2 \left\|\A_y^2 - \A_x^2 \right\|_{fro} + w_3 \left\|\A_y^3 - \A_x^3 \right\|_{fro}. 
+	\end{split}
+\end{align}
+Here, $w_1 = \frac{1}{2}, w_2 = \frac{1}{2n_2}$ and $w_3 = \frac{1}{2n_3}$, where n2, n3 are the number of coefficients used for each
+autocorrelation order: $n_2 = L-1, n_3 = \frac{(L-1)(L-2)}{2}$~\cite{8362313}.
+This LS estimator~\eqref{Eq-MTD:LS} represent the base-benchmark for the GMM estimator.
 
 \section{Generalized method of moments}
 \label{gmm}
 \subsection{The GMM framework}\label{gmm:framwork}
 
-In its most simplified form, the GMM generalizes~\eqref{Eq-2-2} by replacing the LS objective with a weighted LS. In particular, a specific choice of weights guarantees favorable asymptotic statistical properties, such as {the} minimal asymptotic variance of the estimation error.
+In its most simplified form, the GMM generalizes~\eqref{Eq-MTD:LS} by replacing the LS objective with a specific optimal weights. This choice guarantees favorable asymptotic statistical properties, such as {the} minimal asymptotic variance of the estimation error.
 
 Let us define the \textit{moment function}, $f(\theta, y)\colon \Theta \times \R^r \to \R^q$. The moment function needs to be chosen such that its expectation value is zero only at a single point $\theta=\theta_0$. Namely,
 \begin{equation}\label{Eq-GMM-1}
@@ -285,10 +299,10 @@ be the covariance matrix of the estimated sample moment function~\eqref{Eq-2-5} 
 
 %Following~\cite{Hansen1982}, the large sample properties of the GMM estimator under the uniqueness of the parameter set~\eqref{Eq-2-4} are \tamir{as follows.}
 
-The large sample properties of the GMM estimator, were derived in~\cite{Hansen1982}, and are presented in the following theorem.
+The large sample properties of the GMM estimator, were derived in~\cite{Hansen1982}, and are presented in the following theorem. The regularity conditions for this theorem can be found in many papers~\cite{Hansen1982, Hall2005, abas2021generalized}
 
 \begin{theorem}\label{Thm-2-6}
-	Under the uniqueness of the parameter set~\eqref{Eq-2-4}, and {the} regularity conditions {\ref{As-Ap1-1*}-\ref{As-Ap1-8*} of Appendix~\ref{Ap-1}}, the GMM estimator satisfies:
+	Under {the} regularity conditions, the GMM estimator satisfies:
 	\begin{enumerate}[label={\Alph*}.]
 		\item  \label{Thm-2-2}
 		\textnormal{(Consistency)} $\hat{\theta}_N \overset{p}{\to} \theta_0$.
@@ -301,15 +315,13 @@ The large sample properties of the GMM estimator, were derived in~\cite{Hansen19
 \end{theorem}
 Theorem~\ref{Thm-2-6} provides a matrix~$W$ {that} guarantees a minimal asymptotic variance of the estimator’s error.
 
-The covariance matrix~$S$ {of~\eqref{eqn:cov_mat_S}, which plays a central role in Theorem~\ref{Thm-2-6},} is required to be a PD matrix. Therefore, the moment function must be chosen so that~$S$ is full-rank. In this work, we noticed that if we remove the repeating entries of~$f$ (that appear due to the inherent symmetries of the autocorrelations), the covariance is indeed full rank (although, in some cases, ill-conditioned).
+The covariance matrix~$S$ {of~\eqref{eqn:cov_mat_S}, which plays a central role in Theorem~\ref{Thm-2-6},} is required to be a PD matrix. Therefore, the moment function must be chosen so that~$S$ is full-rank. As in~\cite{abas2021generalized},  we remove the repeating entries of~$f$ (that appear due to the inherent symmetries of the autocorrelations).
 
-It is important to note that in practice, the ground truth~$\theta_0$ is unknown a priori, so we cannot use the optimal weighting matrix. A common heuristic is to replace~\eqref{Eq-2-1} with an iterative scheme, which is named iterative GMM.
-\asaf{For our choice of the moment function~\eqref{Eq-GMM-2}, it is enough to apply the covariance on the empirical part,
+It is important to note that in practice, the ground truth~$\theta_0$ is unknown a priori, so we cannot use the optimal weighting matrix. However, for our choice of the moment function~\eqref{Eq-GMM-2}, it is enough to apply the covariance on the empirical part,
 	\begin{equation}\label{Eq-2-7}
 		\Cov[g(\theta)] = \Cov\left[\left[A_{y_i}^1;\A_{y_i}^2;\A_{y_i}^3\right]\right].
 	\end{equation}
-	The covariance depends solely on the observations~$\{y_i\}_{i=1}^N$, not on the input of the parameter set~$\theta$. Therefore, in a single pass one can compute the moments estimators~\eqref{Eq-2-6} and the optimal covariance for~\eqref{Eq-2-3}.
-}
+	The covariance depends solely on the observations~$\{y_i\}_{i=1}^N$, and  not on  the parameter set~$\theta$. 
 
 \section{Numerical experiments}
 \label{sec:numerical}

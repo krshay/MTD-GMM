@@ -612,4 +612,38 @@ doi = {10.1016/j.jsb.2008.12.008}
   year    = {2018},
 }
 
+@Article{Fan2018,
+  author  = {Fan, Jianqing and Zhong, Yiqiao},
+  journal = {arXiv preprint arXiv:1805.02826},
+  title   = {Optimal subspace estimation using overidentifying vectors via generalized method of moments},
+  year    = {2018},
+}
+
+@Article{roodman2009xtabond2,
+  author    = {Roodman, David},
+  journal   = {The stata journal},
+  title     = {How to do xtabond2: An introduction to difference and system {GMM} in Stata},
+  year      = {2009},
+  number    = {1},
+  pages     = {86--136},
+  volume    = {9},
+  publisher = {SAGE Publications Sage CA: Los Angeles, CA},
+}
+
+@InProceedings{8362313,
+  author    = {Boumal, Nicolas and Bendory, Tamir and Lederman, Roy R. and Singer, Amit},
+  booktitle = {2018 52nd Annual Conference on Information Sciences and Systems (CISS)},
+  title     = {Heterogeneous multireference alignment: A single pass approach},
+  year      = {2018},
+  pages     = {1-6},
+  doi       = {10.1109/CISS.2018.8362313},
+}
+
+@Book{Hall2005,
+  author    = {Hall, Alastair R},
+  publisher = {Oxford university press},
+  title     = {Generalized method of moments},
+  year      = {2005},
+}
+
 @Comment{jabref-meta: databaseType:bibtex;}
