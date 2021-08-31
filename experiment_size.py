@@ -151,7 +151,7 @@ with plt.style.context('ieee'):
     fig.tight_layout()
     plt.show()
 
-filename='/home/shaykreymer/Documents/MTD-GMM/DATA//shelve_new.out'
+filename='shelve_31082021.out'
 my_shelf = shelve.open(filename,'n') # 'n' for new
 
 for key in dir():
@@ -164,4 +164,10 @@ for key in dir():
         print('ERROR shelving: {0}'.format(key))
     except AttributeError:
         print('ERROR shelving: {0}'.format(key))
+my_shelf.close()
+
+# %% load
+my_shelf = shelve.open(filename)
+for key in my_shelf:
+    globals()[key]=my_shelf[key]
 my_shelf.close()
