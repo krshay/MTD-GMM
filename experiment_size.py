@@ -131,25 +131,28 @@ for (idx, _) in enumerate(sizes):
         errs_gmm[it, idx] = utils.calc_err(xs[it], results_final_gmm[it, idx].x[:-1])
         Number_Iterations_gmm[it, idx] = results_final_gmm[it, idx].nit
 
+plt.close("all")
 with plt.style.context('ieee'):
     fig = plt.figure()
-    plt.loglog(sizes, np.mean(errs_mom, axis=0), label=r'Method of Moments', lw=2)
-    plt.loglog(sizes, np.mean(errs_gmm, axis=0), label=r'Generalized Method of Moments', lw=2)
-    plt.loglog(sizes, np.mean(errs_mom, axis=0)[0]*(sizes/sizes[0])**(-1/2), 'k--', lw=1)       
-    plt.legend(loc=1)
+    plt.loglog(sizes, np.median(errs_mom, axis=0), label=r'Method of Moments', lw=2)
+    plt.loglog(sizes, np.median(errs_gmm, axis=0), label=r'Generalized Method of Moments', lw=2)
+    plt.loglog(sizes, np.median(errs_mom, axis=0)[0]*(sizes/sizes[0])**(-1/2), 'k--', lw=1)       
+    plt.legend(loc=1, fontsize=6)
     plt.xlabel('Measurement length [pixels]')
-    plt.ylabel('Mean estimation error')
+    plt.ylabel('Median estimation error')
     fig.tight_layout()
     plt.show()
+    plt.savefig(r'C:/Users/kreym/Documents/GitHub/MTD-GMM/paper/figures/experiment_size_err.pdf')
 
     fig = plt.figure()
-    plt.semilogx(sizes, np.mean(Number_Iterations_mom, axis=0), label=r'Method of Moments', lw=2)
-    plt.semilogx(sizes, np.mean(Number_Iterations_gmm, axis=0), label=r'Generalized Method of Moments', lw=2)
-    plt.legend(loc=1)
+    plt.semilogx(sizes, np.median(Number_Iterations_mom, axis=0), label=r'Method of Moments', lw=2)
+    plt.semilogx(sizes, np.median(Number_Iterations_gmm, axis=0), label=r'Generalized Method of Moments', lw=2)
     plt.xlabel('Measurement length [pixels]')
-    plt.ylabel('Mean number of iterations')
+    plt.ylabel('Median number of iterations')
+    plt.yticks(list(range(0,650,100)))
     fig.tight_layout()
     plt.show()
+    plt.savefig(r'C:/Users/kreym/Documents/GitHub/MTD-GMM/paper/figures/experiment_size_iters.pdf')
 
 filename=r'shelve_size.out'
 # my_shelf = shelve.open(filename,'n') # 'n' for new

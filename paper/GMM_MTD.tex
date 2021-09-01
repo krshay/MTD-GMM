@@ -240,7 +240,7 @@ In previous work~\cite{bendory2019multi}, in order to recover the signal they ap
 			\scriptscriptstyle{1 \le \ell_2 \ell_1-1}
 		\end{gathered}}  (a_y^3[\ell_1,\ell_2] - a_x^3[\ell_1,\ell_2])^2 = \min_{
 	\scriptscriptstyle{x\in\R^L \gamma \in [0,1]}} w_1 (A_y^1 - A_x^1)^2 + \\
-		&w_2 \left\|\A_y^2 - \A_x^2 \right\|_{fro} + w_3 \left\|\A_y^3 - \A_x^3 \right\|_{fro}. 
+		&w_2 \left\|\A_y^2 - \A_x^2 \right\|_{fro} + w_3 \left\|\A_y^3 - \A_x^3 \right\|_{fro}.
 	\end{split}
 \end{align}
 Here, $w_1 = \frac{1}{2}, w_2 = \frac{1}{2n_2}$ and $w_3 = \frac{1}{2n_3}$, where n2, n3 are the number of coefficients used for each
@@ -321,18 +321,31 @@ It is important to note that in practice, the ground truth~$\theta_0$ is unknown
 	\begin{equation}\label{Eq-2-7}
 		\Cov[g(\theta)] = \Cov\left[\left[A_{y_i}^1;\A_{y_i}^2;\A_{y_i}^3\right]\right].
 	\end{equation}
-	The covariance depends solely on the observations~$\{y_i\}_{i=1}^N$, and  not on  the parameter set~$\theta$. 
+	The covariance depends solely on the observations~$\{y_i\}_{i=1}^N$, and  not on  the parameter set~$\theta$.
 
 \section{Numerical experiments}
 \label{sec:numerical}
 
-The paper title (on the first page) should begin 1.38 inches (35 mm) from the
-top edge of the page, centered, completely capitalized, and in Times 14-point,
-boldface type.  The authors' name(s) and affiliation(s) appear below the title
-in capital and lower case letters.  Papers with multiple authors and
-affiliations may require two or more lines for this information. Please note
-that papers should not be submitted blind; include the authors' names on the
-PDF.
+\subsection{Recovery error as a function of the measurement size}
+\label{subsec:exp_size}
+
+\begin{figure}[!tb]
+	\begin{subfigure}[ht]{\columnwidth}
+		\centering
+		\includegraphics[width=\columnwidth]{figures/experiment_size_err.pdf}
+	\end{subfigure}
+	\caption{Median estimation error of recovering the signal~$x$, as a function of the measurement size, by: (a)~the method of moments; (b)~the generalized method of moments.}
+\label{fig:err_size_experiment}
+\end{figure}
+
+\begin{figure}[!tb]
+	\begin{subfigure}[ht]{\columnwidth}
+		\centering
+		\includegraphics[width=\columnwidth]{figures/experiment_size_iters.pdf}
+	\end{subfigure}
+	\caption{Median number of optimization iterations in recovering the signal~$x$, as a function of the measurement size, by: (a)~the method of moments; (b)~the generalized method of moments.}
+\label{fig:iters_size_experiment}
+\end{figure}
 
 \section{Conclusion}
 \label{sec:conclusion}
