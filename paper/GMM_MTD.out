@@ -7,6 +7,7 @@
 \BOOKMARK [2][-]{subsection.3.1}{ The GMM framework}{section.3}% 7
 \BOOKMARK [2][-]{subsection.3.2}{ Large Sample Properties}{section.3}% 8
 \BOOKMARK [1][-]{section.4}{ Numerical experiments}{}% 9
-\BOOKMARK [2][-]{subsection.4.1}{ Recovery error as a function of the measurement size}{section.4}% 10
-\BOOKMARK [1][-]{section.5}{ Conclusion}{}% 11
-\BOOKMARK [1][-]{section.6}{ References}{}% 12
+\BOOKMARK [2][-]{subsection.4.1}{ Experimental setting}{section.4}% 10
+\BOOKMARK [2][-]{subsection.4.2}{ Numerical validation of the convergence rate}{section.4}% 11
+\BOOKMARK [1][-]{section.5}{ Conclusion}{}% 12
+\BOOKMARK [1][-]{section.6}{ References}{}% 13

@@ -234,13 +234,13 @@ In previous work~\cite{bendory2019multi}, in order to recover the signal they ap
 	\begin{split}
 	&x_{LS}, \gamma_{LS} = \min_{
 			\scriptscriptstyle{x\in\R^L \gamma \in [0,1]}}
-		 w_1 (A_y^1 - A_x^1)^2 + w_2 \sum_{\ell=1}^{L-1} (a_y^2[\ell] - a_x^2[\ell])^2 + \\
-	& w_3 \sum_{\begin{gathered}
-			\scriptscriptstyle{2 \le \ell_1 \le L-1} \\
-			\scriptscriptstyle{1 \le \ell_2 \ell_1-1}
-		\end{gathered}}  (a_y^3[\ell_1,\ell_2] - a_x^3[\ell_1,\ell_2])^2 = \min_{
-	\scriptscriptstyle{x\in\R^L \gamma \in [0,1]}} w_1 (A_y^1 - A_x^1)^2 + \\
-		&w_2 \left\|\A_y^2 - \A_x^2 \right\|_{fro} + w_3 \left\|\A_y^3 - \A_x^3 \right\|_{fro}.
+		 w_1 (A_y^1 - A_x^1)^2 +  \\
+		  &w_2 \sum_{\ell=1}^{L-1} (a_y^2[\ell] - a_x^2[\ell])^2 + 
+	 w_3 \sum_{\ell_1=2}^{L-1}\sum_{\ell_2 = 1}^{\ell_1-1}  (a_y^3[\ell_1,\ell_2] - a_x^3[\ell_1,\ell_2])^2 \\
+	 &=\min_{
+	\scriptscriptstyle{x\in\R^L \gamma \in [0,1]}} w_1 (A_y^1 - A_x^1)^2 + w_2 \left\|\A_y^2 - \A_x^2 \right\|_{fro} +
+	\\
+	& w_3 \left\|\A_y^3 - \A_x^3 \right\|_{fro}.
 	\end{split}
 \end{align}
 Here, $w_1 = \frac{1}{2}, w_2 = \frac{1}{2n_2}$ and $w_3 = \frac{1}{2n_3}$, where n2, n3 are the number of coefficients used for each
@@ -326,8 +326,15 @@ It is important to note that in practice, the ground truth~$\theta_0$ is unknown
 \section{Numerical experiments}
 \label{sec:numerical}
 
-\subsection{Recovery error as a function of the measurement size}
+\subsection{Experimental setting}
+In our numerical research of the GMM estimator, we implemented the numerical framework for signals estimation. For different SNR and signal's length~$N$, we conducted $10$ trails. In each trail, we drawn the signal~$x\in\R^L$, where $L=5$,  from a normal distribution, and then normalized it such that $\left|x\right|_2=1$. The density variable~$\gamma$ is sampled uniformly between~$\left[0,0.3\right]$ we compared between the GMM and MoM estimations error using the $L_2$-norm. The signal~$y$ is generated according to~\eqref{eq:model}.
+
+We apply the estimator as described in previous section, and the optimization was solved via interior-point algorithm, which was implemented in Scipy.\asafc{I didn't make sure if those are the setting and just put the structure itself}
+
+
+\subsection{Numerical validation of the convergence rate}
 \label{subsec:exp_size}
+From the law of large numbers it is known that both estimators' error should decay as~$N^{-0.5}$. In addition, Theorem~\ref{Thm-2-6} provides the optimiality of the GMM estimator over the MoM estimator. Both properties can be observed in Figure~\ref{fig:err_size_experiment}.
 
 \begin{figure}[!tb]
 	\begin{subfigure}[ht]{\columnwidth}
@@ -349,6 +356,7 @@ It is important to note that in practice, the ground truth~$\theta_0$ is unknown
 
 \section{Conclusion}
 \label{sec:conclusion}
+
 
 
 
