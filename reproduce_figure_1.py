@@ -12,8 +12,8 @@ import utils
 
 np.random.seed(10)
 
-L = 17
-N = 200
+L = 21
+N = 180
 gamma = 0.4
 
 x = np.random.rand(L)

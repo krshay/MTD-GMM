@@ -34,29 +34,6 @@ Tamir Bendory, Nicolas Boumal, William Leeb, Eitan Levin, and Amit Singer,
   breaking the detection limit,''
 \newblock {\em arXiv preprint arXiv:1810.00226}, 2018.
 
-\bibitem{gogineni2017passive}
-Sandeep Gogineni, Pawan Setlur, Muralidhar Rangaswamy, and Raj~Rao Nadakuditi,
-\newblock ``Passive radar detection with noisy reference channel using
-  principal subspace similarity,''
-\newblock {\em IEEE Transactions on Aerospace and Electronic Systems}, vol. 54,
-  no. 1, pp. 18--36, 2017.
-
-\bibitem{schulz1993multiframe}
-Timothy~J Schulz,
-\newblock ``Multiframe blind deconvolution of astronomical images,''
-\newblock {\em JOSA A}, vol. 10, no. 5, pp. 1064--1073, 1993.
-
-\bibitem{levin2006blind}
-Anat Levin,
-\newblock ``Blind motion deblurring using image statistics,''
-\newblock {\em Advances in Neural Information Processing Systems}, vol. 19, pp.
-  841--848, 2006.
-
-\bibitem{abed1997blind}
-Karim Abed-Meraim, Wanzhi Qiu, and Yingbo Hua,
-\newblock ``Blind system identification,''
-\newblock {\em Proceedings of the IEEE}, vol. 85, no. 8, pp. 1310--1322, 1997.
-
 \bibitem{henderson1995potential}
 Richard Henderson,
 \newblock ``The potential and limitations of neutrons, electrons and {X}-rays
@@ -81,19 +58,6 @@ Joachim Frank,
 \newblock {\em Three-dimensional electron microscopy of macromolecular
   assemblies: visualization of biological molecules in their native state},
 \newblock Oxford University Press, 2006.
-
-\bibitem{heimowitz2020reducing}
-Ayelet Heimowitz, Joakim And{\'e}n, and Amit Singer,
-\newblock ``Reducing bias and variance for {CTF} estimation in single particle
-  cryo-{EM},''
-\newblock {\em Ultramicroscopy}, vol. 212, pp. 112950, 2020.
-
-\bibitem{erickson1971measurement}
-HP~Erickson and Aaron Klug,
-\newblock ``Measurement and compensation of defocusing and aberrations by
-  {F}ourier processing of electron micrographs,''
-\newblock {\em Philosophical Transactions of the Royal Society of London. B,
-  Biological Sciences}, vol. 261, no. 837, pp. 105--118, 1971.
 
 \bibitem{bendory2020single}
 Tamir Bendory, Alberto Bartesaghi, and Amit Singer,
@@ -143,9 +107,9 @@ Lars~Peter Hansen,
 \bibitem{abas2021generalized}
 Asaf Abas, Tamir Bendory, and Nir Sharon,
 \newblock ``The generalized method of moments for multi-reference alignment,''
-  2021.
+\newblock {\em arXiv preprint arXiv:2103.02215}, 2021.
 
-\bibitem{Fan2018}
+\bibitem{fan2018optimal}
 Jianqing Fan and Yiqiao Zhong,
 \newblock ``Optimal subspace estimation using overidentifying vectors via
   generalized method of moments,''
@@ -156,12 +120,6 @@ David Roodman,
 \newblock ``How to do xtabond2: An introduction to difference and system {GMM}
   in stata,''
 \newblock {\em The stata journal}, vol. 9, no. 1, pp. 86--136, 2009.
-
-\bibitem{8362313}
-Nicolas Boumal, Tamir Bendory, Roy~R. Lederman, and Amit Singer,
-\newblock ``Heterogeneous multireference alignment: A single pass approach,''
-\newblock in {\em 2018 52nd Annual Conference on Information Sciences and
-  Systems (CISS)}, 2018, pp. 1--6.
 
 \bibitem{Hall2005}
 Alastair~R Hall,

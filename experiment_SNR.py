@@ -1,5 +1,12 @@
 # -*- coding: utf-8 -*-
 """
+Created on Sat Sep  4 18:54:21 2021
+
+@author: Shay Kreymer
+"""
+
+# -*- coding: utf-8 -*-
+"""
 Created on Fri Jul 30 18:08:24 2021
 
 @author: Shay Kreymer
@@ -22,7 +29,7 @@ np.random.seed(1)
 
 L = 21
 gamma = 0.2
-SNR = 50
+N = 10**6
 
 shifts_2nd = utils.shifts_2nd(L)
 shifts_3rd = utils.shifts_3rd_reduced(L)
@@ -37,8 +44,8 @@ for i in range(Nguesses):
     x_gamma0 = np.concatenate((x0, np.array([gamma0])))
     x_gamma0s.append(x_gamma0)
 
-Nsizes = 10
-sizes = np.logspace(4, 7.5, num=Nsizes)
+NSNRs = 10
+SNRs = np.logspace(-3, 3, num=NSNRs)
 
 Niters = 20
 xs = []
@@ -46,25 +53,24 @@ for it in range(Niters):
     x = np.random.rand(L)
     x = x / np.linalg.norm(x)
     xs.append(x)
-sigma2 = (np.linalg.norm(x) ** 2) / (L * SNR)
 
-results_mom = np.zeros((Niters, Nsizes, Nguesses), dtype=optimize.optimize.OptimizeResult)
-results_gmm = np.zeros((Niters, Nsizes, Nguesses), dtype=optimize.optimize.OptimizeResult)
-times_mom = np.zeros((Niters, Nsizes, Nguesses))
-times_gmm = np.zeros((Niters, Nsizes, Nguesses))
+results_mom = np.zeros((Niters, NSNRs, Nguesses), dtype=optimize.optimize.OptimizeResult)
+results_gmm = np.zeros((Niters, NSNRs, Nguesses), dtype=optimize.optimize.OptimizeResult)
+times_mom = np.zeros((Niters, NSNRs, Nguesses))
+times_gmm = np.zeros((Niters, NSNRs, Nguesses))
 
-results_final_mom = np.zeros((Niters, Nsizes), dtype=optimize.optimize.OptimizeResult)
-results_final_gmm = np.zeros((Niters, Nsizes), dtype=optimize.optimize.OptimizeResult)
-times_final_mom = np.zeros((Niters, Nsizes, Nguesses))
-times_final_gmm = np.zeros((Niters, Nsizes, Nguesses))
+results_final_mom = np.zeros((Niters, NSNRs), dtype=optimize.optimize.OptimizeResult)
+results_final_gmm = np.zeros((Niters, NSNRs), dtype=optimize.optimize.OptimizeResult)
+times_final_mom = np.zeros((Niters, NSNRs, Nguesses))
+times_final_gmm = np.zeros((Niters, NSNRs, Nguesses))
 for it in range(Niters):
     print(it)
     x = xs[it]
-    for (idx, N) in enumerate(sizes):
-        N = int(N)
-        print(N)
+    y_clean = utils.generate_micrograph_1d(x, gamma, L, N)
+    for (idx, SNR) in enumerate(SNRs):
+        print(SNR)
+        sigma2 = (np.linalg.norm(x) ** 2) / (L * SNR)
 
-        y_clean = utils.generate_micrograph_1d(x, gamma, L, N)
         y = y_clean + np.random.normal(loc=0, scale=np.sqrt(sigma2), size=np.shape(y_clean))
         del y_clean
         ac1_y = utils.ac1(y)
@@ -100,7 +106,7 @@ for it in range(Niters):
         results_mom[it, idx, :] = estimations_mom
         results_gmm[it, idx, :] = estimations_gmm
 
-for (idx, _) in enumerate(sizes):
+for (idx, _) in enumerate(SNRs):
     for it in range(Niters):
         estimations_mom = results_mom[it, idx, :]
         estimations_gmm = results_gmm[it, idx, :]
@@ -120,11 +126,11 @@ for (idx, _) in enumerate(sizes):
         results_final_gmm[it, idx] = estimation_gmm
         times_final_gmm[it, idx] = time_gmm
         
-errs_mom = np.zeros((Niters, Nsizes))
-Number_Iterations_mom = np.zeros((Niters, Nsizes))
-errs_gmm = np.zeros((Niters, Nsizes))
-Number_Iterations_gmm = np.zeros((Niters, Nsizes))
-for (idx, _) in enumerate(sizes):
+errs_mom = np.zeros((Niters, NSNRs))
+Number_Iterations_mom = np.zeros((Niters, NSNRs))
+errs_gmm = np.zeros((Niters, NSNRs))
+Number_Iterations_gmm = np.zeros((Niters, NSNRs))
+for (idx, _) in enumerate(SNRs):
     for it in range(Niters):
         errs_mom[it, idx] = utils.calc_err(xs[it], results_final_mom[it, idx].x[:-1])
         Number_Iterations_mom[it, idx] = results_final_mom[it, idx].nit
@@ -134,20 +140,18 @@ for (idx, _) in enumerate(sizes):
 plt.close("all")
 with plt.style.context('ieee'):
     fig = plt.figure()
-    plt.loglog(sizes, np.median(errs_mom, axis=0), 'b', label=r'Method of Moments', lw=2)
-    plt.loglog(sizes, np.median(errs_gmm, axis=0), 'r', label=r'Generalized Method of Moments', lw=2)
-    plt.loglog(sizes, np.median(errs_mom, axis=0)[0]*(sizes/sizes[0])**(-1/2), 'k--', lw=1)
-    plt.loglog(sizes, np.median(errs_gmm, axis=0)[0]*(sizes/sizes[0])**(-1/2), 'k--', lw=1)
+    plt.loglog(SNRs, np.median(errs_mom, axis=0), 'b', label=r'Method of Moments', lw=2)
+    plt.loglog(SNRs, np.median(errs_gmm, axis=0), 'r', label=r'Generalized Method of Moments', lw=2)
     plt.legend(loc=1, fontsize=6)
-    plt.xlabel('Measurement length [pixels]')
+    plt.xlabel('SNR')
     plt.ylabel('Median estimation error')
     fig.tight_layout()
     plt.show()
-    plt.savefig(r'C:/Users/kreym/Documents/GitHub/MTD-GMM/paper/figures/experiment_size_err.pdf')
+    # plt.savefig(r'C:/Users/kreym/Documents/GitHub/MTD-GMM/paper/figures/experiment_size_err.pdf')
 
     # fig = plt.figure()
-    # plt.semilogx(sizes, np.median(Number_Iterations_mom, axis=0), label=r'Method of Moments', lw=2)
-    # plt.semilogx(sizes, np.median(Number_Iterations_gmm, axis=0), label=r'Generalized Method of Moments', lw=2)
+    # plt.semilogx(SNRs, np.median(Number_Iterations_mom, axis=0), label=r'Method of Moments', lw=2)
+    # plt.semilogx(SNRs, np.median(Number_Iterations_gmm, axis=0), label=r'Generalized Method of Moments', lw=2)
     # plt.xlabel('Measurement length [pixels]')
     # plt.ylabel('Median number of iterations')
     # plt.yticks(list(range(0,650,100)))
@@ -155,23 +159,25 @@ with plt.style.context('ieee'):
     # plt.show()
     # plt.savefig(r'C:/Users/kreym/Documents/GitHub/MTD-GMM/paper/figures/experiment_size_iters.pdf')
 
-filename=r'shelve_size.out'
-# my_shelf = shelve.open(filename,'n') # 'n' for new
+filename=r'shelve_SNR.out'
 
-# for key in dir():
-#     try:
-#         my_shelf[key] = globals()[key]
-#     except TypeError:
-#         #
-#         # __builtins__, my_shelf, and imported modules can not be shelved.
-#         #
-#         print('ERROR shelving: {0}'.format(key))
-#     except AttributeError:
-#         print('ERROR shelving: {0}'.format(key))
-# my_shelf.close()
+
+my_shelf = shelve.open(filename,'n') # 'n' for new
+
+for key in dir():
+    try:
+        my_shelf[key] = globals()[key]
+    except TypeError:
+        #
+        # __builtins__, my_shelf, and imported modules can not be shelved.
+        #
+        print('ERROR shelving: {0}'.format(key))
+    except AttributeError:
+        print('ERROR shelving: {0}'.format(key))
+my_shelf.close()
 
 # %% load
-my_shelf = shelve.open(filename)
-for key in my_shelf:
-    globals()[key]=my_shelf[key]
-my_shelf.close()
+# my_shelf = shelve.open(filename)
+# for key in my_shelf:
+#     globals()[key]=my_shelf[key]
+# my_shelf.close()
