@@ -52,9 +52,9 @@
 %
 % Single address.
 % ---------------
-\name{Ye'Ela Shalit*, Ran Weber*, Asaf Abas*, Shay Kreymer*, and Tamir Bendory\thanks{* These four authors have contributed equally to this work. \newline
+\name{Ye'Ela Shalit*, Ran Weber*, Asaf Abas*, Shay Kreymer*, and Tamir Bendory\thanks{* These four authors have contributed equally to this work.  \newline
 S.K. is supported by the Yitzhak and Chaya Weinstein Research Institute for Signal Processing. T.B. is supported in part by NSF-BSF grant no. 2019752, and the Zimin Institute for Engineering Solutions Advancing Better Lives.}}
-\address{School of Electrical Engineering, Tel Aviv University, Tel Aviv, Israel}
+%\address{School of Electrical Engineering, Tel Aviv University, Tel Aviv, Israel}
 %
 % For example:
 % ------------
@@ -64,16 +64,14 @@ S.K. is supported by the Yitzhak and Chaya Weinstein Research Institute for Sign
 %
 % Two addresses (uncomment and modify for two-address case).
 % ----------------------------------------------------------
-%\twoauthors
-%  {A. Author-one, B. Author-two\sthanks{Thanks to XYZ agency for funding.}}
-%	{School A-B\\
-%	Department A-B\\
-%	Address A-B}
-%  {C. Author-three, D. Author-four\sthanks{The fourth author performed the work
-%	while at ...}}
-%	{School C-D\\
-%	Department C-D\\
-%	Address C-D}
+\twoauthors
+  {Y. Shalit*, R. Werber*, S. Kreymer* and T. Bendory}
+	{School of Electrical Engineering \\
+	Tel Aviv University, Israel}
+  {Asaf Abas*}
+	{School Mathematical Sciences\\ 
+	Department Applied Mathematics\\
+	Tel Aviv University, Israel}
 
 \begin{document}
 %\ninept
@@ -81,11 +79,11 @@ S.K. is supported by the Yitzhak and Chaya Weinstein Research Institute for Sign
 \maketitle
 %
 \begin{abstract}
-We consider the one-dimensional multi-target detection problem of recovering a target signal from a noisy measurement that contains multiple copies of the signal, each randomly translated. Motivated by the structure reconstruction problem in single-particle cryo-electron microscopy, we focus on the high noise regime, where the noise hampers accurate detection of the image occurrences. We develop a generalized method of moments framework to estimate the image directly from a measurement, and compare the framework to the method of moments through numerical experiments. We demonstrate signal recovery in highly noisy environments, and prove numerically the optimality of the generalized method of moments.
+We consider the one-dimensional multi-target detection (MTD) problem of recovering a target signal from a noisy measurement that contains multiple copies of the signal, each randomly translated. Motivated by the structure reconstruction problem in single-particle cryo-electron microscopy, we focus on the high noise regime, where the noise hampers accurate detection of the signal occurrences. We develop a generalized method of moments framework to estimate the image directly from a measurement, and compare the framework to the method of moments through numerical experiments. We demonstrate signal recovery in highly noisy environments, and prove numerically the optimality of the generalized method of moments.
 \end{abstract}
 %
 \begin{keywords}
-Autocorrelation analysis, generalized method of moments, multi-target detection, cryo-electron microscopy
+Autocorrelation analysis, generalized method of moments, multi-target detection, cryo-electron microscopy, signal processing
 \end{keywords}
 %
 \section{Introduction}
@@ -95,7 +93,7 @@ We study the multi-target detection (MTD) problem of estimating a target signal~
 \label{eq:model}
 y[\ell] = \sum_{i=1}^{p} x[\ell - \ell_i] + \varepsilon[\ell],
 \end{equation}
-where \mbox{$\{\ell_i\}_{i=1}^{p} \in \{L + 1, \ldots, N-L\}$} are arbitrary translations, and~$\varepsilon[\ell]$ is i.i.d. Gaussian noise with zero mean and \mbox{variance~$\sigma^2$}. The translations and the number of occurrences of~$x$ in~$y$ are unknown. Figure~\ref{fig:measurements} presents an example of a measurement~$y$ at different signal-to-noise ratios (SNRs). We define~\mbox{$\text{SNR} := \frac{\|x\|_\text{F}^2}{L \sigma^2}$}, where~$L$ is the length of~$x$ (in pixels), and~$\sigma^2$ is the noise variance.
+where \mbox{$\{\ell_i\}_{i=1}^{p} \in \{L + 1, \ldots, N-L\}$} are arbitrary translations, and~$\varepsilon[\ell]\overset{i.i.d.}{\sim} \mathcal{N}(0,\sigma^2)$. The translations and the number of occurrences of~$x$ in~$y$ are unknown. Figure~\ref{fig:measurements} presents examples of a measurement~$y$ at different signal-to-noise ratios (SNRs). 
 
 \begin{figure}[!tb]
 %	\begin{subfigure}[ht]{0.30\columnwidth}
@@ -137,7 +135,7 @@ The autocorrelation of order~$q$ of a signal~\mbox{$z \in \mathbb{R}^{N}$} is de
 \begin{equation}
 A_z^q[\ell_1, \ldots, \ell_{q-1}] := \mathbb{E}_z\Big[\frac{1}{N} \sum_{i \in \mathbb{R}^2} z[i] z[i + \ell_1] \cdots z[i + \ell_{q-1}]\Big],
 \end{equation}
-where~$\ell_1, \ldots, \ell_{q-1}$ are integer shifts. Indexing out of bounds is zero-padded, that is,~\mbox{$z[i] = 0$} out of the range~\mbox{$\{0, \ldots, {N-1}\}$}. In this work, we use the first three autocorrelations.
+\asafc{why $i\in\R^2$?}where~$\ell_1, \ldots, \ell_{q-1}$ are integer shifts. Indexing out of bounds is zero-padded, that is,~\mbox{$z[i] = 0$} out of the range~\mbox{$\{0, \ldots, {N-1}\}$}. In this work, we use the first three autocorrelations.
 
 As~$N$ grows indefinitely, the empirical autocorrelations of~$z$ almost surely (a.s.) converge to the population autocorrelations of~$z$:
 \begin{equation}
@@ -183,15 +181,12 @@ A_{y}^2 [\ell_1] &\stackrel{\text{a.s.}}{=} \gamma A_{x}^2 [\ell_1] + \sigma^2\d
 A_{y}^3 [\ell_1, \ell_2] &\stackrel{\text{a.s.}}{=} \gamma A_{x} [\ell_1, \ell_2] \nonumber \\&+ \gamma A_{x}^1 \sigma^2 (\delta[\ell_1] + \delta[\ell_2] + \delta[\ell_1 - \ell_2]),
 \end{align}
 for~$\ell_1, \ell_2 \in \mathcal{L}$, where
-\begin{equation}
-\label{eq:delta}
+\begin{equation*}
+%\label{eq:delta}
 \delta[\ell] = \begin{cases} 1 \text{ if } \ell = \vec{0}, \\ 0 \text{ otherwise}, \end{cases}
-\end{equation}
-is the Kronecker delta function. Here,~$\gamma$ is the density of the target images in the measurement and is defined by
-\begin{equation}
-\label{eq:gamma}
-\gamma = p \frac{L}{N}.
-\end{equation}
+\end{equation*}
+is the Kronecker delta function. Here,~$\gamma$ is the density of the target images in the measurement and is defined by~$\gamma = p \frac{L}{N}$.
+
 
 
 As such,~\mbox{(\ref{eq:well_separated_1st}) -~(\ref{eq:well_separated_3rd})} relate the autocorrelations of the measurement with those of the target signal~$x$. Importantly, the aforementioned relations between the autocorrelations of~$y$ and~$x$ do not directly depend on the location of individual signal occurrences in the measurement, but only through the density parameter~$\gamma$. Therefore, detecting the signal occurrences is not a prerequisite for signal recovery, and thus signal recovery is possible even in very low SNR regimes.
@@ -206,13 +201,13 @@ Next, we introduce the following notations
 such that equations~(\ref{eq:well_separated_1st}) -~(\ref{eq:well_separated_3rd}) can be written as
 \begin{align}
 \label{eq:1st}
-\A_y^1 &= \A_x^1,\\
+\A_y^1 &\stackrel{\text{a.s.}}{=} \A_x^1,\\
 \label{eq:2nd}
-\A_y^2 &= \A_x^2,\\
+\A_y^2 &\stackrel{\text{a.s.}}{=} \A_x^2,\\
 \label{eq:3rd}
-\A_y^3 &= \A_x^3.
+\A_y^3 &\stackrel{\text{a.s.}}{=} \A_x^3.
 \end{align}
-
+\asafc{This is a bit problematic to introduce it like that. I added the a.s but still. I think we should remove 11-13, it is clear from the text}
 
 \subsection{Signal recovery from autocorrelations}
 Following~\cite{bendory2019multi}, \cite{lan2020multi}, \cite{marshall2020image}, \cite{bendory2021multi}, \cite{kreymer2021two} and based on~\mbox{(\ref{eq:1st}) -~(\ref{eq:3rd})}, we formulate a non-convex least squares problem for estimating the signal~$x$ from the autocorrelations of the measurement~$y$:
@@ -220,7 +215,7 @@ Following~\cite{bendory2019multi}, \cite{lan2020multi}, \cite{marshall2020image}
 \label{eq:optimization}
 \min_{x, \gamma > 0} &w_1 (\A_y^1 - \A_x^1)^2 \nonumber\\ +& w_2 \|\A_y^2 - \A_x^2\|_F^2 + w_3 \|\A_y^3 - \A_x^3\|_F^2,
 \end{align}
-where the weights were chosen such that each term is equally weighted. This LS estimator serves as a benchmark to the generalized method of moments estimator, which is developed in the following section.
+where the weights were chosen such that each term is equally weighted, as suggested by~\cite{bendory2019multi}. This LS estimator serves as a benchmark to the GMM estimator, which is developed in the following section.
 
 \subsection{Generalized method of moments}
 \label{gmm}
@@ -231,22 +226,22 @@ Let us define the \textit{moment function},~\mbox{$f(\theta, y)\colon \Theta \ti
 \begin{equation}\label{Eq-GMM-1}
 	\E\left[f(\theta,y)\right] = 0 \quad \text{if and only if} \quad \theta = \theta_0.
 \end{equation}
-We refer to~(\ref{Eq-GMM-1}) as the \textit{uniqueness of the parameter set} condition. The moment function must satisfy the uniqueness condition and a few additional regularity conditions (which can be found in~\cite{Hansen1982}, \cite{abas2021generalized}). This flexibility enables the GMM to be applied to a wide range of problems, such as subspace estimation~\cite{fan2018optimal}.
+The moment function must satisfy this uniqueness condition~\eqref{Eq-GMM-1} and a few additional regularity conditions (which can be found in~\cite{Hansen1982}, \cite{abas2021generalized}). This flexibility enables the GMM to be applied to a wide range of problems, such as subspace estimation~\cite{fan2018optimal}.
 
 In order to define the moment function for the MTD problem, we first define the $i$-th observation from the signal~$y$ as follows:
 \begin{equation}
 	y_i := [y[i],\ldots, y[i+L]].
 \end{equation}
-The moment function~$f(\cdot)$ should fulfill~(\ref{Eq-GMM-1}) using the defined samples. The natural choice of ~$f(\cdot)$ is
+The choice of the moment function~$f(\cdot)$ must fulfill~(\ref{Eq-GMM-1}) using the defined samples~$y_i$. The natural choice of ~$f(\cdot)$ is
 \begin{equation} \label{Eq-GMM-2}
-	f(x,\gamma,y_i) :=
+	f(\theta,y_i) :=
 	\begin{bmatrix}
 		&\A_x^1 - \A_{y_i}^1\\
 		&\A_x^2 - \A_{y_i}^2 \\
 		&\A_x^3 - \A_{y_i}^3
-	\end{bmatrix}.
+	\end{bmatrix},
 \end{equation}
-
+where $\theta := [x, \gamma]$.
 The estimated sample moment function is the average of~$f$ over~$N$ observations:
 \begin{equation}\label{Eq-2-5}
 	g_N(\theta) = \frac{1}{N} \sum_{i=1}^N f(\theta, y_i) = \begin{bmatrix}
@@ -287,31 +282,30 @@ The large sample properties of the GMM estimator were derived in~\cite{Hansen198
 \end{theorem}
 Theorem~\ref{Thm-2-6} provides a matrix~$W$ {that} guarantees a minimal asymptotic variance of the estimator’s error. The covariance matrix~$S$ {of~(\ref{eqn:cov_mat_S}), which plays a central role in Theorem~\ref{Thm-2-6},} is required to be a PD matrix. Therefore, the moment function must be chosen so that~$S$ is full-rank. As in~\cite{abas2021generalized},  we remove the repeating entries of~$f$ (that appear due to the inherent symmetries of the autocorrelations).
 
-It is important to note that in practice, the ground truth~$\theta_0$ is unknown a priori, so we cannot use the optimal weighting matrix. However, for our choice of the moment function~(\ref{Eq-GMM-2}), it is enough to apply the covariance on the empirical part,
+It is important to note that in practice, the ground truth~$\theta_0$ is unknown a priori, so we cannot use the optimal weighting matrix. However as suggested in~\cite{abas2021generalized}, for our choice of the moment function~(\ref{Eq-GMM-2}), it is enough to apply the covariance on the empirical part,
 	\begin{equation}\label{Eq-2-7}
 		\Cov[g(\theta)] = \Cov\left[\left[A_{y_i}^1;\A_{y_i}^2;\A_{y_i}^3\right]\right].
 	\end{equation}
-The covariance depends solely on the observations~$\{y_i\}_{i=1}^N$, and  not on  the parameter set~$\theta$.
 
 \section{Numerical experiments}
 \label{sec:numerical}
-In this section, we present numerical results for the recovery procedure described in Section~\ref{sec:math}, for both the MoM and GMM estimators. The optimization problem~(\ref{eq:optimization}) was minimized using the~\mbox{Broyden-Fletcher-Goldfarb-Shanno}~(BFGS) algorithm, while ignoring the positivity constraint on~$\gamma$ (namely, treating it as an unconstrained problem).  We measure the estimation error by
+In this section, we present numerical comparisons for the estimators which was described in Section~\ref{sec:math}, the MoM and GMM estimators. The optimization problem~(\ref{eq:optimization}) was minimized using the~\mbox{Broyden-Fletcher-Goldfarb-Shanno}~(BFGS) algorithm, while ignoring the positivity constraint on~$\gamma$ (namely, treating it as an unconstrained problem).  We measure the estimation error by
 \begin{equation}
-\text{relative error}_x = \frac{\|x - x^*\|_F}{\|x^*\|_F},
+\text{relative error}(x) = \frac{\|x - x^*\|_2}{\|x^*\|_2},
 \end{equation}
-where~$x^*$ is the true signal, and~$x$ is the estimated signal. The code to reproduce all experiments is publicly available at~\url{https://github.com/krshay/MTD-GMM}.
+where~$x^*$ is the true signal, and~$x$ is the estimated signal. We define~\mbox{$\text{SNR} := \frac{\|x\|_\text{2}^2}{L \sigma^2}$}, where~$x\in\R^L$, and~$\sigma^2$ is the noise variance. The code to reproduce all experiments is publicly available at~\url{https://github.com/krshay/MTD-GMM}.
 
 
 \subsection{Recovery error as a function of the measurement length}
 \label{subsec:exp_size}
-Figure~\ref{fig:err_size_experiment} presents recovery error as a function of the measurement size. We consider measurements with~\mbox{$\text{SNR} = 50$} in different sizes. The measurements are generated according to~(\ref{eq:model}) with density~$\gamma = 0.2$. The target signals in the measurements are of length~\mbox{$L = 21 \text{ pixels}$}. We try to estimate the signal from 5 random initial guesses, and calculate the estimation error for the estimate whose final objective function is minimal. We then calculate the median over 20 trials. As expected from the law of large numbers, both estimators' errors  decay as~$N^{-1/2}$. In addition, Theorem~\ref{Thm-2-6} provides the optimality of the GMM estimator over the MoM estimator, and indeed the median error of the GMM estimator is smaller than the error of the MoM estimator for all sizes.
+Figure~\ref{fig:err_size_experiment} presents recovery error as a function of the measurement size. We consider measurements with~\mbox{$\text{SNR} = 50$} in different sizes. The measurements are generated according to~(\ref{eq:model}) with density~$\gamma = 0.2$. The target signals in the measurements are of length~\mbox{$L = 21$}. We try to estimate the signal from 5 random initial guesses, and calculate the estimation error for the estimate whose final objective function is minimal. Then, we  calculate the median over 20 trials. As expected from the law of large numbers, both estimators' errors  decay as~$N^{-1/2}$. In addition, Theorem~\ref{Thm-2-6} provides the optimality of the GMM estimator over the MoM estimator, and indeed the median error of the GMM estimator is smaller than the error of the MoM estimator for all sizes.
 
 \begin{figure}[!tb]
 	\begin{subfigure}[ht]{\columnwidth}
 		\centering
 		\includegraphics[width=\columnwidth]{figures/experiment_size_err.pdf}
 	\end{subfigure}
-	\caption{Median estimation error of recovering the signal~$x$, as a function of the measurement size, by: (a)~the method of moments; (b)~the generalized method of moments.}
+	\caption{The median estimation error of recovering the signal~$x$, as a function of the measurement length~$N$, by: (a)~the MoM estimator; (b)~the GMM estimator.}
 \label{fig:err_size_experiment}
 \end{figure}
 
