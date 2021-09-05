@@ -140,14 +140,14 @@ for (idx, _) in enumerate(SNRs):
 plt.close("all")
 with plt.style.context('ieee'):
     fig = plt.figure()
-    plt.loglog(SNRs, np.median(errs_mom, axis=0), 'b', label=r'Method of Moments', lw=2)
-    plt.loglog(SNRs, np.median(errs_gmm, axis=0), 'r', label=r'Generalized Method of Moments', lw=2)
+    plt.loglog(SNRs[2:], np.median(errs_mom[:, 2:], axis=0), 'b', label=r'Method of Moments', lw=2)
+    plt.loglog(SNRs[2:], np.median(errs_gmm[:, 2:], axis=0), 'r', label=r'Generalized Method of Moments', lw=2)
     plt.legend(loc=1, fontsize=6)
     plt.xlabel('SNR')
     plt.ylabel('Median estimation error')
     fig.tight_layout()
     plt.show()
-    # plt.savefig(r'C:/Users/kreym/Documents/GitHub/MTD-GMM/paper/figures/experiment_size_err.pdf')
+    plt.savefig(r'C:/Users/kreym/Documents/GitHub/MTD-GMM/paper/figures/experiment_SNR_err.pdf')
 
     # fig = plt.figure()
     # plt.semilogx(SNRs, np.median(Number_Iterations_mom, axis=0), label=r'Method of Moments', lw=2)
@@ -162,22 +162,22 @@ with plt.style.context('ieee'):
 filename=r'shelve_SNR.out'
 
 
-my_shelf = shelve.open(filename,'n') # 'n' for new
+# my_shelf = shelve.open(filename,'n') # 'n' for new
 
-for key in dir():
-    try:
-        my_shelf[key] = globals()[key]
-    except TypeError:
-        #
-        # __builtins__, my_shelf, and imported modules can not be shelved.
-        #
-        print('ERROR shelving: {0}'.format(key))
-    except AttributeError:
-        print('ERROR shelving: {0}'.format(key))
-my_shelf.close()
+# for key in dir():
+#     try:
+#         my_shelf[key] = globals()[key]
+#     except TypeError:
+#         #
+#         # __builtins__, my_shelf, and imported modules can not be shelved.
+#         #
+#         print('ERROR shelving: {0}'.format(key))
+#     except AttributeError:
+#         print('ERROR shelving: {0}'.format(key))
+# my_shelf.close()
 
 # %% load
-# my_shelf = shelve.open(filename)
-# for key in my_shelf:
-#     globals()[key]=my_shelf[key]
-# my_shelf.close()
+my_shelf = shelve.open(filename)
+for key in my_shelf:
+    globals()[key]=my_shelf[key]
+my_shelf.close()

@@ -139,7 +139,7 @@ with plt.style.context('ieee'):
     plt.loglog(sizes, np.median(errs_mom, axis=0)[0]*(sizes/sizes[0])**(-1/2), 'k--', lw=1)
     plt.loglog(sizes, np.median(errs_gmm, axis=0)[0]*(sizes/sizes[0])**(-1/2), 'k--', lw=1)
     plt.legend(loc=1, fontsize=6)
-    plt.xlabel('Measurement length [pixels]')
+    plt.xlabel('Measurement length')
     plt.ylabel('Median estimation error')
     fig.tight_layout()
     plt.show()
