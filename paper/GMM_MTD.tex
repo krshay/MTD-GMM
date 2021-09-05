@@ -52,9 +52,11 @@
 %
 % Single address.
 % ---------------
-\name{Ye'Ela Shalit*, Ran Weber*, Asaf Abas*, Shay Kreymer*, and Tamir Bendory\thanks{* These four authors have contributed equally to this work.  \newline
+\name{Ye'Ela Shalit$^\dagger$*, Ran Weber$^\dagger$*, Asaf Abas$^\ddagger$*, Shay Kreymer$^\dagger$*, and Tamir Bendory$^\dagger$
+\thanks{* These four authors have contributed equally to this work.  \newline
 S.K. is supported by the Yitzhak and Chaya Weinstein Research Institute for Signal Processing. T.B. is supported in part by NSF-BSF grant no. 2019752, and the Zimin Institute for Engineering Solutions Advancing Better Lives.}}
-%\address{School of Electrical Engineering, Tel Aviv University, Tel Aviv, Israel}
+\address{$^\dagger$School of Electrical Engineering, Tel Aviv University, Tel Aviv, Israel\\
+$^\ddagger$Department of Applied Mathematics, Tel Aviv University, Tel Aviv, Israel}
 %
 % For example:
 % ------------
@@ -64,14 +66,15 @@ S.K. is supported by the Yitzhak and Chaya Weinstein Research Institute for Sign
 %
 % Two addresses (uncomment and modify for two-address case).
 % ----------------------------------------------------------
-\twoauthors
-  {Y. Shalit*, R. Werber*, S. Kreymer* and T. Bendory}
-	{School of Electrical Engineering \\
-	Tel Aviv University, Israel}
-  {Asaf Abas*}
-	{School Mathematical Sciences\\ 
-	Department Applied Mathematics\\
-	Tel Aviv University, Israel}
+%\twoauthors
+%  {Ye'Ela Shalit*, Ran Weber*, Shay Kreymer* and Tamir Bendory\thanks{* These four authors have contributed equally to this work.  \newline
+%S.K. is supported by the Yitzhak and Chaya Weinstein Research Institute for Signal Processing. T.B. is supported in part by NSF-BSF grant no. 2019752, and the Zimin Institute for Engineering Solutions Advancing Better Lives.}}
+%	{School of Electrical Engineering \\
+%	Tel Aviv University, Israel}
+%  {Asaf Abas*}
+%	{School of Mathematical Sciences\\
+%	Department of Applied Mathematics\\
+%	Tel Aviv University, Israel}
 
 \begin{document}
 %\ninept
@@ -93,7 +96,7 @@ We study the multi-target detection (MTD) problem of estimating a target signal~
 \label{eq:model}
 y[\ell] = \sum_{i=1}^{p} x[\ell - \ell_i] + \varepsilon[\ell],
 \end{equation}
-where \mbox{$\{\ell_i\}_{i=1}^{p} \in \{L + 1, \ldots, N-L\}$} are arbitrary translations, and~$\varepsilon[\ell]\overset{i.i.d.}{\sim} \mathcal{N}(0,\sigma^2)$. The translations and the number of occurrences of~$x$ in~$y$ are unknown. Figure~\ref{fig:measurements} presents examples of a measurement~$y$ at different signal-to-noise ratios (SNRs). 
+where \mbox{$\{\ell_i\}_{i=1}^{p} \in \{L + 1, \ldots, N-L\}$} are arbitrary translations, and~$\varepsilon[\ell]\overset{i.i.d.}{\sim} \mathcal{N}(0,\sigma^2)$. The translations and the number of occurrences of~$x$ in~$y$ are unknown. Figure~\ref{fig:measurements} presents examples of a measurement~$y$ at different signal-to-noise ratios (SNRs).
 
 \begin{figure}[!tb]
 %	\begin{subfigure}[ht]{0.30\columnwidth}
@@ -133,9 +136,9 @@ The main contribution of this paper is in extending the MoM framework introduced
 \label{subsec:ac}
 The autocorrelation of order~$q$ of a signal~\mbox{$z \in \mathbb{R}^{N}$} is defined as
 \begin{equation}
-A_z^q[\ell_1, \ldots, \ell_{q-1}] := \mathbb{E}_z\Big[\frac{1}{N} \sum_{i \in \mathbb{R}^2} z[i] z[i + \ell_1] \cdots z[i + \ell_{q-1}]\Big],
+A_z^q[\ell_1, \ldots, \ell_{q-1}] := \mathbb{E}_z\Big[\frac{1}{N} \sum_{i \in \mathbb{Z}} z[i] z[i + \ell_1] \cdots z[i + \ell_{q-1}]\Big],
 \end{equation}
-\asafc{why $i\in\R^2$?}where~$\ell_1, \ldots, \ell_{q-1}$ are integer shifts. Indexing out of bounds is zero-padded, that is,~\mbox{$z[i] = 0$} out of the range~\mbox{$\{0, \ldots, {N-1}\}$}. In this work, we use the first three autocorrelations.
+where~$\ell_1, \ldots, \ell_{q-1}$ are integer shifts. Indexing out of bounds is zero-padded, that is,~\mbox{$z[i] = 0$} out of the range~\mbox{$\{0, \ldots, {N-1}\}$}. In this work, we use the first three autocorrelations.
 
 As~$N$ grows indefinitely, the empirical autocorrelations of~$z$ almost surely (a.s.) converge to the population autocorrelations of~$z$:
 \begin{equation}
@@ -196,21 +199,11 @@ Next, we introduce the following notations
 \A_y^1 &:= A_y^1, \quad \A_x^1 := \gamma A_x^1, \nonumber\quad
 	 \A_y^2 := \Big\{A_y^2[\ell]\Big\}_{\ell=0}^{L-1},\nonumber \\ 	\A_x^2 &:= \Big\{\gamma A_x^2[\ell]+ \sigma^2 \delta[\ell]\Big\}_{\ell=0}^{L-1},\nonumber\quad
 	\A_y^3 := \Big\{A_y^3[\ell_1, \ell_2]\Big\}_{\ell_1,\ell_2=0}^{L-1},\nonumber \\
-	\A_x^3 &:= \Big\{\gamma A_x^3[\ell_1, \ell_2] \nonumber\\&+ \gamma A_{x}^1 \sigma^2 (\delta[\ell_1] + \delta[\ell_2] + \delta[\ell_1 - \ell_2])\Big\}_{\ell_1,\ell_2=0}^{L-1}, \nonumber
+	\A_x^3 &:= \Big\{\gamma A_x^3[\ell_1, \ell_2] \nonumber\\&+ \gamma A_{x}^1 \sigma^2 (\delta[\ell_1] + \delta[\ell_2] + \delta[\ell_1 - \ell_2])\Big\}_{\ell_1,\ell_2=0}^{L-1}. \nonumber
 \end{align}
-such that equations~(\ref{eq:well_separated_1st}) -~(\ref{eq:well_separated_3rd}) can be written as
-\begin{align}
-\label{eq:1st}
-\A_y^1 &\stackrel{\text{a.s.}}{=} \A_x^1,\\
-\label{eq:2nd}
-\A_y^2 &\stackrel{\text{a.s.}}{=} \A_x^2,\\
-\label{eq:3rd}
-\A_y^3 &\stackrel{\text{a.s.}}{=} \A_x^3.
-\end{align}
-\asafc{This is a bit problematic to introduce it like that. I added the a.s but still. I think we should remove 11-13, it is clear from the text}
 
 \subsection{Signal recovery from autocorrelations}
-Following~\cite{bendory2019multi}, \cite{lan2020multi}, \cite{marshall2020image}, \cite{bendory2021multi}, \cite{kreymer2021two} and based on~\mbox{(\ref{eq:1st}) -~(\ref{eq:3rd})}, we formulate a non-convex least squares problem for estimating the signal~$x$ from the autocorrelations of the measurement~$y$:
+Following~\cite{bendory2019multi}, \cite{lan2020multi}, \cite{marshall2020image}, \cite{bendory2021multi}, \cite{kreymer2021two} and based on the notations presented above, we formulate a non-convex least squares problem for estimating the signal~$x$ from the autocorrelations of the measurement~$y$:
 \begin{align}
 \label{eq:optimization}
 \min_{x, \gamma > 0} &w_1 (\A_y^1 - \A_x^1)^2 \nonumber\\ +& w_2 \|\A_y^2 - \A_x^2\|_F^2 + w_3 \|\A_y^3 - \A_x^3\|_F^2,
@@ -316,8 +309,9 @@ Figure~\ref{fig:err_size_experiment} presents recovery error as a function of th
 
 
 
-
-\vfill \newpage
+\newpage
+\vfill
+\newpage
 
 \bibliographystyle{IEEEbib}
 \bibliography{references}
