@@ -120,7 +120,7 @@ where \mbox{$\{\ell_i\}_{i=1}^{p} \in \{L + 1, \ldots, N-L\}$} are arbitrary tra
 \label{fig:measurements}
 \end{figure}
 
-The MTD model serves as a mathematical abstraction of the cryo-electron microscopy~(\mbox{cryo-EM}) technology for macromolecular structure determination~\cite{henderson1995potential},~\cite{nogales2016development},~\cite{bai2015cryo}. In a \mbox{cryo-EM} experiment \cite{frank2006three}, biological macromolecules suspended in a liquid solution are rapidly frozen into a thin ice layer. An electron beam then passes through the sample, and a two-dimensional tomographic projection is recorded. Importantly, the \mbox{2-D} location and \mbox{3-D} orientation of particles within the ice are random and unknown. This measurement, called \textit{micrograph}, is further affected by high noise levels and the optical configuration of the microscope.
+The MTD model serves as a mathematical abstraction of the cryo-electron microscopy~(\mbox{cryo-EM}) technology for macromolecular structure determination~\cite{henderson1995potential},~\cite{nogales2016development},~\cite{bai2015cryo}. In a \mbox{cryo-EM} experiment \cite{frank2006three}, biological macromolecules suspended in a liquid solution are rapidly frozen into a thin ice layer. An electron beam then passes through the sample, and a two-dimensional tomographic projection is recorded. Importantly, the \mbox{2-D} location and \mbox{3-D} orientation of particles within the ice are random and unknown. This measurement is further affected by high noise levels and the optical configuration of the microscope.
 
 In the current analysis workflow of \mbox{cryo-EM} data \cite{bendory2020single}, \cite{scheres2012relion}, \cite{punjani2017cryosparc}, the~\mbox{2-D} projections are first detected and extracted from the micrograph, and later rotationally and translationally aligned to reconstruct the~\mbox{3-D} molecular structure. This approach fails for small molecules, which induce low contrast, and thus low SNR. This makes them difficult to detect and align~\cite{bendory2018toward}, \cite{henderson1995potential}, \cite{bendory2020single}, \cite{aguerrebere2016fundamental}, rendering current \mbox{cryo-EM} algorithmic pipeline ineffective. For example, in the limit~\mbox{$\text{SNR} \rightarrow 0$}, reliable detection of signals' locations within the measurement is impossible~\cite[Proposition~3.1]{bendory2018toward}.
 
@@ -183,24 +183,18 @@ A_{y}^2 [\ell_1] &\stackrel{\text{a.s.}}{=} \gamma A_{x}^2 [\ell_1] + \sigma^2\d
 \label{eq:well_separated_3rd}
 A_{y}^3 [\ell_1, \ell_2] &\stackrel{\text{a.s.}}{=} \gamma A_{x} [\ell_1, \ell_2] \nonumber \\&+ \gamma A_{x}^1 \sigma^2 (\delta[\ell_1] + \delta[\ell_2] + \delta[\ell_1 - \ell_2]),
 \end{align}
-for~$\ell_1, \ell_2 \in \mathcal{L}$, where
-\begin{equation*}
-%\label{eq:delta}
-\delta[\ell] = \begin{cases} 1 \text{ if } \ell = \vec{0}, \\ 0 \text{ otherwise}, \end{cases}
-\end{equation*}
-is the Kronecker delta function. Here,~$\gamma$ is the density of the target images in the measurement and is defined by
-\begin{equation}
-\gamma = p \frac{L}{N}.
-\end{equation}
+for~$\ell_1, \ell_2 \in \mathcal{L}$, where~$\delta[\ell] = \begin{cases} 1 \text{ if } \ell = \vec{0}, \\ 0 \text{ otherwise}, \end{cases}$ is the Kronecker delta function. Here,~$\gamma$ is the density of the target images in the measurement and is defined by
+\begin{equation}\gamma = p \frac{L}{N}.\end{equation}
 
-
-
-As such,~\mbox{(\ref{eq:well_separated_1st}) -~(\ref{eq:well_separated_3rd})} relate the autocorrelations of the measurement with those of the target signal~$x$. Importantly, the aforementioned relations between the autocorrelations of~$y$ and~$x$ do not directly depend on the location of individual signal occurrences in the measurement, but only through the density parameter~$\gamma$. Therefore, detecting the signal occurrences is not a prerequisite for signal recovery, and thus signal recovery is possible even in very low SNR regimes.
+Importantly, the relations between the autocorrelations of~$y$ and~$x$ do not directly depend on the location of individual signal occurrences in the measurement, but only through the density parameter~$\gamma$. Therefore, detecting the signal occurrences is not a prerequisite for signal recovery, and thus signal recovery is possible even in very low SNR regimes.
 
 Next, we introduce the following notations
 \begin{align}
 \A_y^1 &:= A_y^1, \quad \A_x^1 := \gamma A_x^1, \nonumber\quad
-	 \A_y^2 := \Big\{A_y^2[\ell]\Big\}_{\ell=0}^{L-1},\nonumber \\ 	\A_x^2 &:= \Big\{\gamma A_x^2[\ell]+ \sigma^2 \delta[\ell]\Big\}_{\ell=0}^{L-1},\nonumber\quad
+	 \A_y^2 := \Big\{A_y^2[\ell]\Big\}_{\ell=0}^{L-1},\nonumber
+\end{align}
+\begin{align}
+	\A_x^2 &:= \Big\{\gamma A_x^2[\ell]+ \sigma^2 \delta[\ell]\Big\}_{\ell=0}^{L-1},\nonumber\quad
 	\A_y^3 := \Big\{A_y^3[\ell_1, \ell_2]\Big\}_{\ell_1,\ell_2=0}^{L-1},\nonumber \\
 	\A_x^3 &:= \Big\{\gamma A_x^3[\ell_1, \ell_2] \nonumber\\&+ \gamma A_{x}^1 \sigma^2 (\delta[\ell_1] + \delta[\ell_2] + \delta[\ell_1 - \ell_2])\Big\}_{\ell_1,\ell_2=0}^{L-1}. \nonumber
 \end{align}
@@ -275,25 +269,23 @@ The large sample properties of the GMM estimator were derived in~\cite{Hansen198
 		\item \label{Thm-2-5} \textnormal{(Optimal choice of a weighting matrix)} The minimum asymptotic variance of $\hat{\theta}_N$ is given by $(G_0^T S^{-1} G_0)^{-1}$ and is attained by $W = S^{-1}$.
 	\end{enumerate}
 \end{theorem}
-Theorem~\ref{Thm-2-6} provides a matrix~$W$ {that} guarantees a minimal asymptotic variance of the estimator’s error. The covariance matrix~$S$ {of~(\ref{eqn:cov_mat_S}), which plays a central role in Theorem~\ref{Thm-2-6},} is required to be a PD matrix. Therefore, the moment function must be chosen so that~$S$ is full-rank. As in~\cite{abas2021generalized},  we remove the repeating entries of~$f$ (that appear due to the inherent symmetries of the autocorrelations).
-
-It is important to note that in practice, the ground truth~$\theta_0$ is unknown a priori, so we cannot use the optimal weighting matrix. However as suggested in~\cite{abas2021generalized}, for our choice of the moment function~(\ref{Eq-GMM-2}), it is enough to apply the covariance on the empirical part,
+Theorem~\ref{Thm-2-6} provides a matrix~$W$ {that} guarantees a minimal asymptotic variance of the estimator’s error. The covariance matrix~$S$ {of~(\ref{eqn:cov_mat_S}), which plays a central role in Theorem~\ref{Thm-2-6},} is required to be a PD matrix. Therefore, the moment function must be chosen so that~$S$ is full-rank. As in~\cite{abas2021generalized},  we remove the repeating entries of~$f$ (that appear due to the inherent symmetries of the autocorrelations). Moreover, in practice, the ground truth~$\theta_0$ is unknown a priori, so we cannot use the optimal weighting matrix. However as suggested in~\cite{abas2021generalized}, for our choice of the moment function~(\ref{Eq-GMM-2}), it is enough to apply the covariance on the empirical part,
 	\begin{equation}\label{Eq-2-7}
 		\Cov[g(\theta)] = \Cov\left[\left[A_{y_i}^1;\A_{y_i}^2;\A_{y_i}^3\right]\right].
 	\end{equation}
 
 \section{Numerical experiments}
 \label{sec:numerical}
-In this section, we present numerical comparisons for the estimators which was described in Section~\ref{sec:math}, the MoM and GMM estimators. The optimization problem~(\ref{eq:optimization}) was minimized using the~\mbox{Broyden-Fletcher-Goldfarb-Shanno}~(BFGS) algorithm, while ignoring the positivity constraint on~$\gamma$ (namely, treating it as an unconstrained problem).  We measure the estimation error by
+In this section, we present numerical comparisons for the estimators which were described in Section~\ref{sec:math}, the MoM and GMM estimators. The optimization problem~(\ref{eq:optimization}) was minimized using the~\mbox{Broyden-Fletcher-Goldfarb-Shanno}~(BFGS) algorithm, while ignoring the positivity constraint on~$\gamma$ (namely, treating it as an unconstrained problem).  We measure the estimation error by
 \begin{equation}
 \text{relative error}(x) = \frac{\|x - x^*\|_2}{\|x^*\|_2},
 \end{equation}
-where~$x^*$ is the true signal, and~$x$ is the estimated signal. The code to reproduce all experiments is publicly available at~\url{https://github.com/krshay/MTD-GMM}.
+where~$x^*$ is the true signal, and~$x$ is the estimated signal. In each experiment, the measurements were generated according to~(\ref{eq:model}) with density~\mbox{$\gamma = 0.2$}, and the target signals in the measurements are of length~\mbox{$L = 21$}. We try to estimate the signal from~$5$ random initial guesses, and calculate the estimation error for the estimate whose final objective function is minimal. Then, we  calculate the median over \textbf{20} trials. The code to reproduce all experiments is publicly available at~\url{https://github.com/krshay/MTD-GMM}.
 
 
 \subsection{Recovery error as a function of the measurement length}
 \label{subsec:exp_size}
-Figure~\ref{fig:err_size_experiment} presents recovery error as a function of the measurement size. We consider measurements with~\mbox{$\text{SNR} = 50$} in different sizes. The measurements are generated according to~(\ref{eq:model}) with density~$\gamma = 0.2$. The target signals in the measurements are of length~\mbox{$L = 21$}. We try to estimate the signal from 5 random initial guesses, and calculate the estimation error for the estimate whose final objective function is minimal. Then, we  calculate the median over 20 trials. As expected from the law of large numbers, both estimators' errors  decay as~$N^{-1/2}$. In addition, Theorem~\ref{Thm-2-6} provides the optimality of the GMM estimator over the MoM estimator, and indeed the median error of the GMM estimator is smaller than the error of the MoM estimator for all sizes.
+Figure~\ref{fig:err_size_experiment} presents recovery error as a function of the measurement size. We consider measurements with~\mbox{$\text{SNR} = 50$} in different sizes. As expected from the law of large numbers, both estimators' errors  decay as~$N^{-1/2}$. In addition, Theorem~\ref{Thm-2-6} provides the optimality of the GMM estimator over the MoM estimator, and indeed the median error of the GMM estimator is smaller than the error of the MoM estimator for all sizes.
 
 \begin{figure}[!tb]
 	\begin{subfigure}[ht]{\columnwidth}
@@ -305,7 +297,8 @@ Figure~\ref{fig:err_size_experiment} presents recovery error as a function of th
 \end{figure}
 
 \subsection{Recovery error as a function of SNR}
-Figure~\ref{fig:err_noise_experiment} presents recovery error as a function of SNR. We consider measurements of length~$1 \cdot 10^6$ with different SNRs. As in Section~\ref{subsec:exp_size}, the measurements are generated according to~(\ref{eq:model}) with density~$\gamma = 0.2$, the target signals in the measurements are of length~\mbox{$L = 21$}, and we try to estimate the signal from 5 random initial guesses and calculate the estimation error for the estimate whose final objective function is minimal. Then, we  calculate the \textbf{median} over \textbf{20} trials.
+Figure~\ref{fig:err_noise_experiment} presents recovery error as a function of SNR. We consider measurements of length~$1 \cdot 10^6$ with different SNRs. For all levels of SNR, the recovery error using the GMM is smaller than the error using the regular MoM estimator.
+
 \begin{figure}[!tb]
 	\begin{subfigure}[ht]{\columnwidth}
 		\centering
