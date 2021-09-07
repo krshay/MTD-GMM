@@ -116,7 +116,7 @@ where \mbox{$\{\ell_i\}_{i=1}^{p} \in \{L + 1, \ldots, N-L\}$} are arbitrary tra
 		\includegraphics[width=\columnwidth]{figures/y_SNR01.pdf}
 		\caption{$\text{SNR} = 0.1$.}
 	\end{subfigure}
-	\caption{Two measurements at different noise levels:~\mbox{$\text{SNR} = 50$} (left);~\mbox{$\text{SNR} = 0.1$} (right). Each measurement contains multiple copies of the target signal in arbitrary locations. In this work, our goal is to estimate the target signal directly from~$y$. We focus on the low SNR regime~(e.g., panel~(b)) in which the signal occurrences are swamped by the noise, and the locations of the signal occurrences cannot be detected reliably.}
+	\caption{Two measurements at different noise levels:~\mbox{$\text{SNR} = 50$} (left);~\mbox{$\text{SNR} = 0.1$} (right). Each measurement contains multiple copies of the target signal. In this work, our goal is to estimate the target signal directly from~$y$. We focus on the low SNR regime~(e.g., panel~(b)) in which the signal occurrences are swamped by the noise, and the locations of the signal occurrences cannot be detected reliably.}
 \label{fig:measurements}
 \end{figure}
 
@@ -188,7 +188,10 @@ for~$\ell_1, \ell_2 \in \mathcal{L}$, where
 %\label{eq:delta}
 \delta[\ell] = \begin{cases} 1 \text{ if } \ell = \vec{0}, \\ 0 \text{ otherwise}, \end{cases}
 \end{equation*}
-is the Kronecker delta function. Here,~$\gamma$ is the density of the target images in the measurement and is defined by~$\gamma = p \frac{L}{N}$.
+is the Kronecker delta function. Here,~$\gamma$ is the density of the target images in the measurement and is defined by
+\begin{equation}
+\gamma = p \frac{L}{N}.
+\end{equation}
 
 
 
@@ -250,7 +253,6 @@ The GMM estimator is defined as the minimizer of the weighted LS expression
 Here, $W_N$ is a fixed positive semi-definite (PSD) matrix. Note that the LS estimator~(\ref{eq:optimization}) is a special case of~(\ref{Eq-2-1}).
 
 \subsubsection{Large Sample Properties}\label{gmm:large}
-
 Before presenting the statistical properties of the GMM, we fix notation. We denote by $\overset{p}{\to}$ and $\overset{d}{\to}$ convergence in  probability and in distribution, respectively. Let
 \begin{equation} \label{eqn:cov_mat_S}
 	S := \lim_{N\to \infty}\Cov\left[\sqrt{N}g_N(\theta_0)\right],
@@ -303,6 +305,7 @@ Figure~\ref{fig:err_size_experiment} presents recovery error as a function of th
 \end{figure}
 
 \subsection{Recovery error as a function of SNR}
+Figure~\ref{fig:err_noise_experiment} presents recovery error as a function of SNR. We consider measurements of length~$1 \cdot 10^6$ with different SNRs. As in Section~\ref{subsec:exp_size}, the measurements are generated according to~(\ref{eq:model}) with density~$\gamma = 0.2$, the target signals in the measurements are of length~\mbox{$L = 21$}, and we try to estimate the signal from 5 random initial guesses and calculate the estimation error for the estimate whose final objective function is minimal. Then, we  calculate the \textbf{median} over \textbf{20} trials.
 \begin{figure}[!tb]
 	\begin{subfigure}[ht]{\columnwidth}
 		\centering
