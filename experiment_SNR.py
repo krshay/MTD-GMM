@@ -1,12 +1,5 @@
 # -*- coding: utf-8 -*-
 """
-Created on Sat Sep  4 18:54:21 2021
-
-@author: Shay Kreymer
-"""
-
-# -*- coding: utf-8 -*-
-"""
 Created on Fri Jul 30 18:08:24 2021
 
 @author: Shay Kreymer
@@ -36,7 +29,7 @@ shifts_3rd = utils.shifts_3rd_reduced(L)
 
 gamma0 = 0.18
 x_gamma0s = []
-Nguesses = 5
+Nguesses = 10
 for i in range(Nguesses):
     x0 = np.random.rand(L)
     x0 = x0 / np.linalg.norm(x0)
@@ -44,10 +37,10 @@ for i in range(Nguesses):
     x_gamma0 = np.concatenate((x0, np.array([gamma0])))
     x_gamma0s.append(x_gamma0)
 
-NSNRs = 10
-SNRs = np.logspace(-3, 3, num=NSNRs)
+NSNRs = 8
+SNRs = np.logspace(-1.5, 2, num=NSNRs)
 
-Niters = 20
+Niters = 50
 xs = []
 for it in range(Niters):
     x = np.random.rand(L)
@@ -64,15 +57,14 @@ results_final_gmm = np.zeros((Niters, NSNRs), dtype=optimize.optimize.OptimizeRe
 times_final_mom = np.zeros((Niters, NSNRs, Nguesses))
 times_final_gmm = np.zeros((Niters, NSNRs, Nguesses))
 for it in range(Niters):
-    print(it)
+    print(f'iter #{it}')
     x = xs[it]
     y_clean = utils.generate_micrograph_1d(x, gamma, L, N)
     for (idx, SNR) in enumerate(SNRs):
-        print(SNR)
+        print(f'SNR = {SNR}')
         sigma2 = (np.linalg.norm(x) ** 2) / (L * SNR)
 
         y = y_clean + np.random.normal(loc=0, scale=np.sqrt(sigma2), size=np.shape(y_clean))
-        del y_clean
         ac1_y = utils.ac1(y)
         ac2_y = np.zeros((len(shifts_2nd), ))
         for (i, shift) in enumerate(shifts_2nd):
@@ -81,7 +73,6 @@ for it in range(Niters):
         for (i, shifts) in enumerate(shifts_3rd):
             ac3_y[i] = utils.ac3(y, shifts[0], shifts[1])
         
-
         W = utils.calc_W_heuristic(shifts_2nd, shifts_3rd)
         samples = utils.sample(y, L)
         del y
@@ -92,6 +83,7 @@ for it in range(Niters):
             estimation_mom = utils.opt(x_gamma0s[i], ac1_y, ac2_y, ac3_y, shifts_2nd, shifts_3rd, sigma2, W)
             times_mom[it, idx, i] = time.time() - start
             estimations_mom.append(estimation_mom)
+            print(estimation_mom.fun)
             
             start = time.time()
             f_gmm = utils.calc_function_gmm(samples, x_gamma0s[i][-1], x_gamma0s[i][:-1], shifts_2nd, shifts_3rd, sigma2)
@@ -101,6 +93,7 @@ for it in range(Niters):
             estimation_gmm = utils.opt(x_gamma0s[i], ac1_y, ac2_y, ac3_y, shifts_2nd, shifts_3rd, sigma2, W_gmm)
             times_gmm[it, idx, i] = time.time() - start
             estimations_gmm.append(estimation_gmm)
+            print(estimation_gmm.fun)
         del samples
         del f_gmm
         results_mom[it, idx, :] = estimations_mom
@@ -140,14 +133,14 @@ for (idx, _) in enumerate(SNRs):
 plt.close("all")
 with plt.style.context('ieee'):
     fig = plt.figure()
-    plt.loglog(SNRs[2:], np.median(errs_mom[:, 2:], axis=0), 'b', label=r'Method of Moments', lw=2)
-    plt.loglog(SNRs[2:], np.median(errs_gmm[:, 2:], axis=0), 'r', label=r'Generalized Method of Moments', lw=2)
+    plt.loglog(SNRs[1:], np.median(errs_mom[:, 1:], axis=0), 'b', label=r'Method of Moments', lw=2)
+    plt.loglog(SNRs[1:], np.median(errs_gmm[:, 1:], axis=0), 'r', label=r'Generalized Method of Moments', lw=2)
     plt.legend(loc=1, fontsize=6)
     plt.xlabel('SNR')
     plt.ylabel('Median estimation error')
     fig.tight_layout()
     plt.show()
-    plt.savefig(r'C:/Users/kreym/Documents/GitHub/MTD-GMM/paper/figures/experiment_SNR_err.pdf')
+    # plt.savefig(r'C:/Users/kreym/Documents/GitHub/MTD-GMM/paper/figures/experiment_size_err.pdf')
 
     # fig = plt.figure()
     # plt.semilogx(SNRs, np.median(Number_Iterations_mom, axis=0), label=r'Method of Moments', lw=2)
@@ -159,25 +152,25 @@ with plt.style.context('ieee'):
     # plt.show()
     # plt.savefig(r'C:/Users/kreym/Documents/GitHub/MTD-GMM/paper/figures/experiment_size_iters.pdf')
 
-filename=r'shelve_SNR.out'
+filename=r'shelve_SNR_05092021.out'
 
 
-# my_shelf = shelve.open(filename,'n') # 'n' for new
+my_shelf = shelve.open(filename,'n') # 'n' for new
 
-# for key in dir():
-#     try:
-#         my_shelf[key] = globals()[key]
-#     except TypeError:
-#         #
-#         # __builtins__, my_shelf, and imported modules can not be shelved.
-#         #
-#         print('ERROR shelving: {0}'.format(key))
-#     except AttributeError:
-#         print('ERROR shelving: {0}'.format(key))
-# my_shelf.close()
+for key in dir():
+    try:
+        my_shelf[key] = globals()[key]
+    except TypeError:
+        #
+        # __builtins__, my_shelf, and imported modules can not be shelved.
+        #
+        print('ERROR shelving: {0}'.format(key))
+    except AttributeError:
+        print('ERROR shelving: {0}'.format(key))
+my_shelf.close()
 
 # %% load
-my_shelf = shelve.open(filename)
-for key in my_shelf:
-    globals()[key]=my_shelf[key]
-my_shelf.close()
+# my_shelf = shelve.open(filename)
+# for key in my_shelf:
+#     globals()[key]=my_shelf[key]
+# my_shelf.close()
