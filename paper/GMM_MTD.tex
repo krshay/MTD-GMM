@@ -166,16 +166,15 @@ A_{y}^3 [\ell_1, \ell_2] := \frac{1}{N} \sum_{i \in \mathbb{Z}} y[i] y[i + \ell_
 
 \subsection{Autocorrelations under the well-separated model}
 \label{subsec:relations}
-We discuss the \mbox{well-separated} case of the MTD problem, which was studied in~\cite{bendory2019multi}. In this case, we assume that each signal in the measurement~$y$ is separated by at least a full signal length from its neighbors. Specifically, we assume that
-\begin{equation*}
+We discuss the \mbox{well-separated} case of the MTD problem, which was studied in~\cite{bendory2019multi}. In this case, we assume that each occurrence of~$x$ in the measurement~$y$ is separated by at least a full signal length~$L$ from its neighbors. Specifically, we assume that
+\begin{equation}
 \label{eq:sep}
 |\ell_{i_1} - \ell_{i_2}| \ge 2L - 1, \quad \text{ for all } i_1 \ne i_2.
-\end{equation*}
+\end{equation}
 
 %Figure~\ref{fig:Micrograph_shifts}(a) presents an example of a measurement obeying the separation condition~(\ref{eq:sep}).
-To compute the third-order autocorrelation~(\ref{eq:AM3}), we compute the product of~$y$ with its two shifts. Importantly, for~\mbox{$\ell$-s} in the range~$\mathcal{L} = \{0, \ldots, {L - 1}\}$, any given occurrence of~$x$ in~$y$ is only ever correlated with itself, and never with another occurrence.
-
-In~\cite{bendory2019multi}, it was shown that under the separation condition~(\ref{eq:sep}), for any fixed level of noise~$\sigma^2$, density~$\gamma$ and signal length~$L$, in the limit~\mbox{$N \rightarrow \infty$} we have that
+To compute the third-order autocorrelation~(\ref{eq:AM3}), we compute the product of~$y$ with its two shifts. Importantly, for~\mbox{$\ell$-s} in the range~$\mathcal{L} = \{0, \ldots, {L - 1}\}$, any given occurrence of~$x$ in~$y$ is only ever correlated with itself, and never with another occurrence.\asafc{This section can be simply to something like: ''Under this condition, the autocorrelation analysis is simplified. Due to that, any given occurrence of~$x$ in~$y$ is only ever correlated with itself, and never with another occurrence. ''}
+In~\cite{bendory2019multi}, it was shown that under the well-separated condition~(\ref{eq:sep}), for any fixed level of noise~$\sigma^2$, density~$\gamma$ and signal length~$L$, in the limit~\mbox{$N \rightarrow \infty$} we have that
 \begin{align}
 \label{eq:well_separated_1st}
 A_{y}^1 &\stackrel{\text{a.s.}}{=} \gamma A_{x}^1, \\
@@ -193,7 +192,7 @@ is the Kronecker delta function. Here,~$\gamma$ is the density of the target ima
 \begin{equation*}
 \gamma = p \frac{L}{N}.
 \end{equation*}
-
+\asafc{I don't think that this equation worth ths space...}
 
 
 As such,~\mbox{(\ref{eq:well_separated_1st}) -~(\ref{eq:well_separated_3rd})} relate the autocorrelations of the measurement with those of the target signal~$x$. Importantly, the aforementioned relations between the autocorrelations of~$y$ and~$x$ do not directly depend on the location of individual signal occurrences in the measurement, but only through the density parameter~$\gamma$. Therefore, detecting the signal occurrences is not a prerequisite for signal recovery, and thus signal recovery is possible even in very low SNR regimes.
@@ -205,14 +204,14 @@ Next, we introduce the following notations
 	\A_y^3 := \Big\{A_y^3[\ell_1, \ell_2]\Big\}_{\ell_1,\ell_2=0}^{L-1},\nonumber \\
 	\A_x^3 &:= \Big\{\gamma A_x^3[\ell_1, \ell_2] \nonumber\\&+ \gamma A_{x}^1 \sigma^2 (\delta[\ell_1] + \delta[\ell_2] + \delta[\ell_1 - \ell_2])\Big\}_{\ell_1,\ell_2=0}^{L-1}. \nonumber
 \end{align}
-
+Note, $\A_x^3$ and $\A_y^3$ are treated as vectors.
 \subsection{Signal recovery from autocorrelations}
 Following~\cite{bendory2019multi}, \cite{lan2020multi}, \cite{marshall2020image}, \cite{bendory2021multi}, \cite{kreymer2021two} and based on the notations presented above, we formulate a non-convex least squares problem for estimating the signal~$x$ and the density~$\gamma$ from the autocorrelations of the measurement~$y$:
 \begin{align}
 \label{eq:optimization}
 \min_{x, \gamma > 0} &w_1 (\A_y^1 - \A_x^1)^2 \nonumber\\ +& w_2 \|\A_y^2 - \A_x^2\|_2^2 + w_3 \|\A_y^3 - \A_x^3\|_2^2,
 \end{align}
-where the weights were chosen such that each term is equally weighted, as suggested by~\cite{bendory2019multi}. This LS estimator serves as a benchmark to the GMM estimator, which is developed in the following section.
+where the weights were chosen such that each term is equally weighted, as suggested by~\cite{bendory2019multi}. This LS estimator serves as a benchmark to the GMM estimator.
 
 \subsection{Generalized method of moments}
 \label{gmm}
@@ -289,12 +288,12 @@ In this section, we present numerical comparisons for the estimators which was d
 \begin{equation*}
 \text{relative error}(x) = \frac{\|x - x^*\|_2}{\|x^*\|_2},
 \end{equation*}
-where~$x^*$ is the true signal, and~$x$ is the estimated signal. The code to reproduce all experiments is publicly available at~\url{https://github.com/krshay/MTD-GMM}.
+where~$x^*$ is the true signal, and~$x$ is the estimated signal. In all experiments, the measurements are generated according to~(\ref{eq:model}) with density~$\gamma = 0.2$. The target signals in the measurements are of length~\mbox{$L = 21$}. In addition, in each trail, we initiate the optimization from~$5$ random guesses and choose the one whose final objective function is minimal.  The code to reproduce all experiments is publicly available at~\url{https://github.com/krshay/MTD-GMM}.
 
 
 \subsection{Recovery error as a function of the measurement length}
 \label{subsec:exp_size}
-Figure~\ref{fig:err_size_experiment} presents recovery error as a function of the measurement size, for a fixed noise level ($\text{SNR} = 50$). The measurements are generated according to~(\ref{eq:model}) with density~$\gamma = 0.2$. The target signals in the measurements are of length~\mbox{$L = 21$}. We try to estimate the signal from 5 random initial guesses, and calculate the estimation error for the estimate whose final objective function is minimal. Then, we  calculate the median error over 20 trials. As expected from the law of large numbers, both estimators' errors  decay as~$N^{-1/2}$. In addition, Theorem~\ref{Thm-2-6} provides the optimality of the GMM estimator over the MoM estimator, and indeed the median error of the GMM estimator is smaller than the error of the MoM estimator for all sizes. \ asafc{I'm not sure if it is relevant to talk about the optimality here}
+Figure~\ref{fig:err_size_experiment} presents recovery error as a function of the measurement length, for a fixed noise level ($\text{SNR} = 50$). We preform~$20$ trails for each measurement length,. As expected from the law of large numbers, both estimators' errors  decay as~$N^{-1/2}$. In addition, Theorem~\ref{Thm-2-6} provides the optimality of the GMM estimator over the MoM estimator, and indeed the median error of the GMM estimator is smaller than the error of the MoM estimator for all sizes. \asafc{I'm not sure if it is relevant to talk about the optimality here}
 
 \begin{figure}[!tb]
 	\begin{subfigure}[ht]{\columnwidth}
@@ -306,7 +305,7 @@ Figure~\ref{fig:err_size_experiment} presents recovery error as a function of th
 \end{figure}
 
 \subsection{Recovery error as a function of SNR}
-Next, we compared the recovery errors as a function of SNR, the results are in Figure~\ref{fig:err_noise_experiment}. The signal length~$y$ is $N = 10^6$. As in Section~\ref{subsec:exp_size}, the measurements are generated according to~(\ref{eq:model}) with density~$\gamma = 0.2$, the target signals in the measurements are of length~\mbox{$L = 21$}, and we try to estimate the signal from 5 random initial guesses and calculate the estimation error for the estimate whose final objective function is minimal. Then, we  calculate the \textbf{median} over \textbf{20} trials.
+Next, we compared the recovery errors as a function of SNR, the results are in Figure~\ref{fig:err_noise_experiment}. The signal length~$y$ is fixed, $N = 10^6$. We  calculate the \textbf{median} over \textbf{20} trials.
 \begin{figure}[!tb]
 	\begin{subfigure}[ht]{\columnwidth}
 		\centering
@@ -318,7 +317,7 @@ Next, we compared the recovery errors as a function of SNR, the results are in F
 
 \section{Conclusion}
 \label{sec:conclusion}
-
+This work in part as an on going research to improve the reconstruction results of cryo-EM, specifically without the need to locate the particles. Alongside with~\cite{bendory2018toward,abas2021generalized, kreymer2021two}, this work suggests a mathematical framework and a tempting estimator. In future work, we intend to apply the GMM of the 2D model of the problem in order to accelerate and improve the initial reconstruction phase.
 
 
 \vfill
