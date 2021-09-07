@@ -96,7 +96,7 @@ We study the multi-target detection (MTD) problem of estimating a target signal~
 \label{eq:model}
 y[\ell] = \sum_{i=1}^{p} x[\ell - \ell_i] + \varepsilon[\ell],
 \end{equation}
-where \mbox{$\{\ell_i\}_{i=1}^{p} \in \{L + 1, \ldots, N-L\}$} are arbitrary translations, and~$\varepsilon[\ell]\overset{i.i.d.}{\sim} \mathcal{N}(0,\sigma^2)$. The translations and the number of occurrences of~$x$ in~$y$ are unknown. Figure~\ref{fig:measurements} presents examples of a measurement~$y$ at different signal-to-noise ratios (SNRs). We define~\mbox{$\text{SNR} := \frac{\|x\|_2^2}{L \sigma^2}$}. \asafc{The definition of the SNR isn't relevant here - I think it would be better at numerical exp'}
+where \mbox{$\{\ell_i\}_{i=1}^{p} \in \{L + 1, \ldots, N-L\}$} are arbitrary translations, and~$\varepsilon[\ell]\overset{i.i.d.}{\sim} \mathcal{N}(0,\sigma^2)$. The translations and the number of occurrences of~$x$ in~$y$ are unknown. Figure~\ref{fig:measurements} presents examples of a measurement~$y$ at different signal-to-noise ratios (SNRs). We define~\mbox{$\text{SNR} := \frac{\|x\|_2^2}{L \sigma^2}$}.
 
 \begin{figure}[!tb]
 %	\begin{subfigure}[ht]{0.30\columnwidth}
@@ -116,65 +116,65 @@ where \mbox{$\{\ell_i\}_{i=1}^{p} \in \{L + 1, \ldots, N-L\}$} are arbitrary tra
 		\includegraphics[width=\columnwidth]{figures/y_SNR01.pdf}
 		\caption{$\text{SNR} = 0.1$.}
 	\end{subfigure}
-	\caption{Two measurements at different noise levels:~\mbox{$\text{SNR} = 50$} (left);~\mbox{$\text{SNR} = 0.1$} (right). Each measurement contains multiple copies of the target signal. Our goal is to estimate the target signal directly from~$y$.}
+	\caption{Two measurements at different noise levels:~\mbox{$\text{SNR} = 50$} (left);~\mbox{$\text{SNR} = 0.1$} (right). Each measurement contains multiple copies of the target signal. In this work, our goal is to estimate the target signal directly from~$y$. We focus on the low SNR regime~(e.g., panel~(b)) in which the signal occurrences are swamped by the noise, and the locations of the signal occurrences cannot be detected reliably.}
 \label{fig:measurements}
 \end{figure}
 
-The MTD model serves as a mathematical abstraction of the cryo-electron microscopy~(\mbox{cryo-EM}) technology for macromolecular structure determination~\cite{henderson1995potential},~\cite{nogales2016development},~\cite{bai2015cryo}. In a \mbox{cryo-EM} experiment \cite{frank2006three}, biological macromolecules suspended in a liquid solution are rapidly frozen into a thin ice layer. An electron beam then passes through the sample, and a two-dimensional tomographic projection is recorded. Importantly, the \mbox{2-D} location and \mbox{3-D} orientation of particles within the ice are random and unknown. This measurement, called \textit{micrograph}, is further affected by high noise levels and the optical configuration of the microscope.
+The MTD model serves as a mathematical abstraction of the cryo-electron microscopy~(\mbox{cryo-EM}) technology for macromolecular structure determination~\cite{henderson1995potential},~\cite{nogales2016development},~\cite{bai2015cryo}. In a \mbox{cryo-EM} experiment \cite{frank2006three}, biological macromolecules suspended in a liquid solution are rapidly frozen into a thin ice layer. An electron beam then passes through the sample, and a two-dimensional tomographic projection is recorded. Importantly, the \mbox{2-D} location and \mbox{3-D} orientation of particles within the ice are random and unknown. This measurement is further affected by high noise levels and the optical configuration of the microscope.
 
-In the current analysis workflow of \mbox{cryo-EM} data \cite{bendory2020single}, \cite{scheres2012relion}, \cite{punjani2017cryosparc}, the~\mbox{2-D} projections are first detected and extracted from the micrograph, and later rotationally and translationally aligned to reconstruct the~\mbox{3-D} molecular structure. This approach fails for small molecules, which induce low contrast, and thus low SNR. This makes them difficult to detect and align~\cite{bendory2018toward}, \cite{henderson1995potential}, \cite{bendory2020single}, \cite{aguerrebere2016fundamental}, rendering current \mbox{cryo-EM} algorithmic pipeline ineffective. For example, in the limit~\mbox{$\text{SNR} \rightarrow 0$}, reliable detection of signals' locations within the measurement is impossible~\cite[Proposition~3.1]{bendory2018toward}. In this work, we focus on the low SNR regime~(e.g., panel~(b) in Figure~\ref{fig:measurements}) in which the signal occurrences are swamped by the noise, and the locations of the signal occurrences cannot be detected reliably.
+In the current analysis workflow of \mbox{cryo-EM} data \cite{bendory2020single}, \cite{scheres2012relion}, \cite{punjani2017cryosparc}, the~\mbox{2-D} projections are first detected and extracted from the micrograph, and later rotationally and translationally aligned to reconstruct the~\mbox{3-D} molecular structure. This approach fails for small molecules, which induce low contrast, and thus low SNR. This makes them difficult to detect and align~\cite{bendory2018toward}, \cite{henderson1995potential}, \cite{bendory2020single}, \cite{aguerrebere2016fundamental}, rendering current \mbox{cryo-EM} algorithmic pipeline ineffective. For example, in the limit~\mbox{$\text{SNR} \rightarrow 0$}, reliable detection of signals' locations within the measurement is impossible~\cite[Proposition~3.1]{bendory2018toward}.
 
 The MTD model was devised in \cite{bendory2018toward} in order to study the recovery of small molecules directly from the micrograph, below the current detection limit of \mbox{cryo-EM}~\cite{henderson1995potential},~\cite{d2021current}. An autocorrelation analysis technique (see Section~\ref{subsec:ac}) was implemented to recover \mbox{low-resolution}~\mbox{3-D} structures from noiseless simulated data under a simplified model. Autocorrelation analysis consists of finding a signal that best explains the empirical autocorrelations of the measurement,  by minimizing a {least-squares} (LS) objective. For any noise level, those autocorrelations can be estimated to any desired accuracy for sufficiently large~$N$. Computing the autocorrelations is straightforward and requires only one pass over the data, which is advantageous for massively large datasets, such as \mbox{cryo-EM} datasets~\cite{bendory2020single}.
 
-Autocorrelation analysis is a variation of the method of moment (MoM), which is a classical statistical inference technique, tracing back to 1894~\cite{pearson1894contributions}. This work studies the application of the \textit{generalized method of moments} (GMM)  application into the MTD problem. The GMM theory, which was first introduced in~\cite{Hansen1982}, shows that the GMM provides an optimal estimator, in comparison with other weighted LS objective function. Previous work shows that the GMM suggests a significant improvement, e.g., \cite{fan2018optimal}, \cite{roodman2009xtabond2}, and specifically in cryo-EM~\cite{abas2021generalized}.
+Autocorrelation analysis is a variation of the method of moment (MoM), which is a classical statistical inference technique, tracing back to 1894~\cite{pearson1894contributions}. This work studies the \textit{generalized method of moments} (GMM) and specifically its application to the MTD problem. The GMM theory, which was first introduced in~\cite{Hansen1982}, shows that the GMM provides an optimal estimator, in comparison with other weighted LS objective function. As shown in previous works~\cite{abas2021generalized}, \cite{fan2018optimal}, \cite{roodman2009xtabond2}, the GMM estimator suggests a significant improvement in the estimation error.
 
-The main contribution of this paper is in extending the MoM framework introduced in~\cite{bendory2019multi} by developing a GMM framework for the one-dimensional MTD problem. We devise an algorithm for the recovery of the target signal from a measurement, and demonstrate a successful reconstruction in noisy regimes~(see Section~\ref{sec:numerical}). Moreover, we conduct numerical experiments which demonstrate the algorithm superiority. It is thus a step towards efficiently estimating a molecular structure directly from a noisy \mbox{cryo-EM} micrograph~\cite{bendory2018toward}.
-%Moreover, we corroborate the theory and present superior results for the GMM estimator in comparison with the MoM estimator for the MTD model. It is thus a significant step towards efficiently estimating a molecular structure directly from a noisy \mbox{cryo-EM} micrograph~\cite{bendory2018toward}.
+The main contribution of this paper is in extending the MoM framework introduced in~\cite{bendory2019multi} by developing a GMM framework for the one-dimensional MTD problem. We devise an algorithm for the recovery of the target signal from a measurement, and demonstrate a successful reconstruction in noisy regimes~(see Section~\ref{sec:numerical}). Moreover, we corroborate the theory and present superior results for the GMM estimator in comparison with the MoM estimator for the MTD model. It is thus a significant step towards efficiently estimating a molecular structure directly from a noisy \mbox{cryo-EM} micrograph~\cite{bendory2018toward}.
 
 \section{Mathematical framework}
 \label{sec:math}
 \subsection{Autocorrelation analysis}
 \label{subsec:ac}
 The autocorrelation of order~$q$ of a signal~\mbox{$z \in \mathbb{R}^{N}$} is defined as
-\begin{equation*}
+\begin{equation}
 A_z^q[\ell_1, \ldots, \ell_{q-1}] := \mathbb{E}_z\Big[\frac{1}{N} \sum_{i \in \mathbb{Z}} z[i] z[i + \ell_1] \cdots z[i + \ell_{q-1}]\Big],
-\end{equation*}
+\end{equation}
 where~$\ell_1, \ldots, \ell_{q-1}$ are integer shifts. Indexing out of bounds is zero-padded, that is,~\mbox{$z[i] = 0$} out of the range~\mbox{$\{0, \ldots, {N-1}\}$}. In this work, we use the first three autocorrelations.
 
 As~$N$ grows indefinitely, the empirical autocorrelations of~$z$ almost surely (a.s.) converge to the population autocorrelations of~$z$:
-\begin{equation*}
+\begin{equation}
 \lim_{N \rightarrow \infty} \frac{1}{N} \sum_{i \in \mathbb{Z}^2} z[i] z[i + \ell_1] \cdots z[i + \ell_{q-1}] \stackrel{\text{a.s.}}{=}A_z^q[\ell_1, \ldots, \ell_{q-1}],
-\end{equation*}
+\end{equation}
 by the law of large numbers.
 
 Our goal is to relate the autocorrelations of the measurement with the target signal~$x$. In particular, the first-order autocorrelation is defined as
-\begin{equation*}
+\begin{equation}
 \label{eq:AM1}
 A_{y}^1 := \frac{1}{N} \sum_{i \in \mathbb{Z}} y[i].
-\end{equation*}
+\end{equation}
 This is the mean of the measurement. The second-order autocorrelation of~$y$, \mbox{$A_{y}^2: \mathbb{Z} \rightarrow \mathbb{R}$}, is defined by
-\begin{equation*}
+\begin{equation}
 \label{eq:AM2}
 A_{y}^2 [\ell_1] := \frac{1}{N} \sum_{i \in \mathbb{Z}} y[i] y[i + \ell_1],
-\end{equation*}
+\end{equation}
 and the third-order autocorrelation~\mbox{$A_{y}^3: \mathbb{Z} \times \mathbb{Z} \rightarrow \mathbb{R}$} by
-\begin{equation*}
+\begin{equation}
 \label{eq:AM3}
 A_{y}^3 [\ell_1, \ell_2] := \frac{1}{N} \sum_{i \in \mathbb{Z}} y[i] y[i + \ell_1] y[i + \ell_2].
-\end{equation*}
+\end{equation}
 
 
 \subsection{Autocorrelations under the well-separated model}
 \label{subsec:relations}
-We discuss the \mbox{well-separated} case of the MTD problem, which was studied in~\cite{bendory2019multi}. In this case, we assume that each occurrence of~$x$ in the measurement~$y$ is separated by at least a full signal length~$L$ from its neighbors. Specifically, we assume that
+We discuss the \mbox{well-separated} case of the MTD problem, which was studied in~\cite{bendory2019multi}. In this case, we assume that each signal in the measurement~$y$ is separated by at least a full signal length from its neighbors. Specifically, we assume that
 \begin{equation}
 \label{eq:sep}
 |\ell_{i_1} - \ell_{i_2}| \ge 2L - 1, \quad \text{ for all } i_1 \ne i_2.
 \end{equation}
 
 %Figure~\ref{fig:Micrograph_shifts}(a) presents an example of a measurement obeying the separation condition~(\ref{eq:sep}).
-To compute the third-order autocorrelation~(\ref{eq:AM3}), we compute the product of~$y$ with its two shifts. Importantly, for~\mbox{$\ell$-s} in the range~$\mathcal{L} = \{0, \ldots, {L - 1}\}$, any given occurrence of~$x$ in~$y$ is only ever correlated with itself, and never with another occurrence.\asafc{This section can be simply to something like: ''Under this condition, the autocorrelation analysis is simplified. Due to that, any given occurrence of~$x$ in~$y$ is only ever correlated with itself, and never with another occurrence. ''}
-In~\cite{bendory2019multi}, it was shown that under the well-separated condition~(\ref{eq:sep}), for any fixed level of noise~$\sigma^2$, density~$\gamma$ and signal length~$L$, in the limit~\mbox{$N \rightarrow \infty$} we have that
+To compute the third-order autocorrelation~(\ref{eq:AM3}), we compute the product of~$y$ with its two shifts. Importantly, for~\mbox{$\ell$-s} in the range~$\mathcal{L} = \{0, \ldots, {L - 1}\}$, any given occurrence of~$x$ in~$y$ is only ever correlated with itself, and never with another occurrence.
+
+In~\cite{bendory2019multi}, it was shown that under the separation condition~(\ref{eq:sep}), for any fixed level of noise~$\sigma^2$, density~$\gamma$ and signal length~$L$, in the limit~\mbox{$N \rightarrow \infty$} we have that
 \begin{align}
 \label{eq:well_separated_1st}
 A_{y}^1 &\stackrel{\text{a.s.}}{=} \gamma A_{x}^1, \\
@@ -183,35 +183,29 @@ A_{y}^2 [\ell_1] &\stackrel{\text{a.s.}}{=} \gamma A_{x}^2 [\ell_1] + \sigma^2\d
 \label{eq:well_separated_3rd}
 A_{y}^3 [\ell_1, \ell_2] &\stackrel{\text{a.s.}}{=} \gamma A_{x} [\ell_1, \ell_2] \nonumber \\&+ \gamma A_{x}^1 \sigma^2 (\delta[\ell_1] + \delta[\ell_2] + \delta[\ell_1 - \ell_2]),
 \end{align}
-for~$\ell_1, \ell_2 \in \mathcal{L}$, where
-\begin{equation*}
-%\label{eq:delta}
-\delta[\ell] = \begin{cases} 1 \text{ if } \ell = \vec{0}, \\ 0 \text{ otherwise}, \end{cases}
-\end{equation*}
-is the Kronecker delta function. Here,~$\gamma$ is the density of the target images in the measurement and is defined by
-\begin{equation*}
-\gamma = p \frac{L}{N}.
-\end{equation*}
-\asafc{I don't think that this equation worth ths space...}
+for~$\ell_1, \ell_2 \in \mathcal{L}$, where~$\delta[\ell] = \begin{cases} 1 \text{ if } \ell = \vec{0}, \\ 0 \text{ otherwise}, \end{cases}$ is the Kronecker delta function. Here,~$\gamma$ is the density of the target images in the measurement and is defined by
+\begin{equation}\gamma = p \frac{L}{N}.\end{equation}
 
-
-As such,~\mbox{(\ref{eq:well_separated_1st}) -~(\ref{eq:well_separated_3rd})} relate the autocorrelations of the measurement with those of the target signal~$x$. Importantly, the aforementioned relations between the autocorrelations of~$y$ and~$x$ do not directly depend on the location of individual signal occurrences in the measurement, but only through the density parameter~$\gamma$. Therefore, detecting the signal occurrences is not a prerequisite for signal recovery, and thus signal recovery is possible even in very low SNR regimes.
+Importantly, the relations between the autocorrelations of~$y$ and~$x$ do not directly depend on the location of individual signal occurrences in the measurement, but only through the density parameter~$\gamma$. Therefore, detecting the signal occurrences is not a prerequisite for signal recovery, and thus signal recovery is possible even in very low SNR regimes.
 
 Next, we introduce the following notations
 \begin{align}
 \A_y^1 &:= A_y^1, \quad \A_x^1 := \gamma A_x^1, \nonumber\quad
-	 \A_y^2 := \Big\{A_y^2[\ell]\Big\}_{\ell=0}^{L-1},\nonumber \\ 	\A_x^2 &:= \Big\{\gamma A_x^2[\ell]+ \sigma^2 \delta[\ell]\Big\}_{\ell=0}^{L-1},\nonumber\quad
+	 \A_y^2 := \Big\{A_y^2[\ell]\Big\}_{\ell=0}^{L-1},\nonumber
+\end{align}
+\begin{align}
+	\A_x^2 &:= \Big\{\gamma A_x^2[\ell]+ \sigma^2 \delta[\ell]\Big\}_{\ell=0}^{L-1},\nonumber\quad
 	\A_y^3 := \Big\{A_y^3[\ell_1, \ell_2]\Big\}_{\ell_1,\ell_2=0}^{L-1},\nonumber \\
 	\A_x^3 &:= \Big\{\gamma A_x^3[\ell_1, \ell_2] \nonumber\\&+ \gamma A_{x}^1 \sigma^2 (\delta[\ell_1] + \delta[\ell_2] + \delta[\ell_1 - \ell_2])\Big\}_{\ell_1,\ell_2=0}^{L-1}. \nonumber
 \end{align}
-Note, $\A_x^3$ and $\A_y^3$ are treated as vectors.
+
 \subsection{Signal recovery from autocorrelations}
-Following~\cite{bendory2019multi}, \cite{lan2020multi}, \cite{marshall2020image}, \cite{bendory2021multi}, \cite{kreymer2021two} and based on the notations presented above, we formulate a non-convex least squares problem for estimating the signal~$x$ and the density~$\gamma$ from the autocorrelations of the measurement~$y$:
+Following~\cite{bendory2019multi}, \cite{lan2020multi}, \cite{marshall2020image}, \cite{bendory2021multi}, \cite{kreymer2021two} and based on the notations presented above, we formulate a non-convex least squares problem for estimating the signal~$x$ from the autocorrelations of the measurement~$y$:
 \begin{align}
 \label{eq:optimization}
 \min_{x, \gamma > 0} &w_1 (\A_y^1 - \A_x^1)^2 \nonumber\\ +& w_2 \|\A_y^2 - \A_x^2\|_2^2 + w_3 \|\A_y^3 - \A_x^3\|_2^2,
 \end{align}
-where the weights were chosen such that each term is equally weighted, as suggested by~\cite{bendory2019multi}. This LS estimator serves as a benchmark to the GMM estimator.
+where the weights were chosen such that each term is equally weighted, as suggested by~\cite{bendory2019multi}. This LS estimator serves as a benchmark to the GMM estimator, which is developed in the following section.
 
 \subsection{Generalized method of moments}
 \label{gmm}
@@ -225,9 +219,9 @@ Let us define the \textit{moment function},~\mbox{$f(\theta, y)\colon \Theta \ti
 The moment function must satisfy this uniqueness condition~\eqref{Eq-GMM-1} and a few additional regularity conditions (which can be found in~\cite{Hansen1982}, \cite{abas2021generalized}). This flexibility enables the GMM to be applied to a wide range of problems, such as subspace estimation~\cite{fan2018optimal}.
 
 In order to define the moment function for the MTD problem, we first define the $i$-th observation from the signal~$y$ as follows:
-\begin{equation*}
+\begin{equation}
 	y_i := [y[i],\ldots, y[i+L]].
-\end{equation*}
+\end{equation}
 The choice of the moment function~$f(\cdot)$ must fulfill~(\ref{Eq-GMM-1}) using the defined samples~$y_i$. The natural choice of ~$f(\cdot)$ is
 \begin{equation} \label{Eq-GMM-2}
 	f(\theta,y_i) :=
@@ -275,41 +269,40 @@ The large sample properties of the GMM estimator were derived in~\cite{Hansen198
 		\item \label{Thm-2-5} \textnormal{(Optimal choice of a weighting matrix)} The minimum asymptotic variance of $\hat{\theta}_N$ is given by $(G_0^T S^{-1} G_0)^{-1}$ and is attained by $W = S^{-1}$.
 	\end{enumerate}
 \end{theorem}
-Theorem~\ref{Thm-2-6} provides a matrix~$W$ {that} guarantees a minimal asymptotic variance of the estimator’s error. The covariance matrix~$S$ {of~(\ref{eqn:cov_mat_S}), which plays a central role in Theorem~\ref{Thm-2-6},} is required to be a PD matrix. Therefore, the moment function must be chosen so that~$S$ is full-rank. As in~\cite{abas2021generalized},  we remove the repeating entries of~$f$ (that appear due to the inherent symmetries of the autocorrelations).
-
-It is important to note that in practice, the ground truth~$\theta_0$ is unknown a priori, so we cannot use the optimal weighting matrix. However as suggested in~\cite{abas2021generalized}, for our choice of the moment function~(\ref{Eq-GMM-2}), it is enough to apply the covariance on the empirical part,
-	\begin{equation*}
+Theorem~\ref{Thm-2-6} provides a matrix~$W$ {that} guarantees a minimal asymptotic variance of the estimator’s error. The covariance matrix~$S$ {of~(\ref{eqn:cov_mat_S}), which plays a central role in Theorem~\ref{Thm-2-6},} is required to be a PD matrix. Therefore, the moment function must be chosen so that~$S$ is full-rank. As in~\cite{abas2021generalized},  we remove the repeating entries of~$f$ (that appear due to the inherent symmetries of the autocorrelations). Moreover, in practice, the ground truth~$\theta_0$ is unknown a priori, so we cannot use the optimal weighting matrix. However as suggested in~\cite{abas2021generalized}, for our choice of the moment function~(\ref{Eq-GMM-2}), it is enough to apply the covariance on the empirical part,
+	\begin{equation}\label{Eq-2-7}
 		\Cov[g(\theta)] = \Cov\left[\left[A_{y_i}^1;\A_{y_i}^2;\A_{y_i}^3\right]\right].
-	\end{equation*}
+	\end{equation}
 
 \section{Numerical experiments}
 \label{sec:numerical}
-In this section, we present numerical comparisons for the estimators which was described in Section~\ref{sec:math}, the MoM and GMM estimators. The optimization problem~(\ref{eq:optimization}) was minimized using the~\mbox{Broyden-Fletcher-Goldfarb-Shanno}~(BFGS) algorithm, while ignoring the positivity constraint on~$\gamma$ (namely, treating it as an unconstrained problem).  We measure the estimation error by
-\begin{equation*}
+In this section, we present numerical comparisons for the estimators which were described in Section~\ref{sec:math}, the MoM and GMM estimators. The optimization problem~(\ref{eq:optimization}) was minimized using the~\mbox{Broyden-Fletcher-Goldfarb-Shanno}~(BFGS) algorithm, while ignoring the positivity constraint on~$\gamma$ (namely, treating it as an unconstrained problem).  We measure the estimation error by
+\begin{equation}
 \text{relative error}(x) = \frac{\|x - x^*\|_2}{\|x^*\|_2},
-\end{equation*}
-where~$x^*$ is the true signal, and~$x$ is the estimated signal. In all experiments, the measurements are generated according to~(\ref{eq:model}) with density~$\gamma = 0.2$. The target signals in the measurements are of length~\mbox{$L = 21$}. In addition, in each trail, we initiate the optimization from~$5$ random guesses and choose the one whose final objective function is minimal.  The code to reproduce all experiments is publicly available at~\url{https://github.com/krshay/MTD-GMM}.
+\end{equation}
+where~$x^*$ is the true signal, and~$x$ is the estimated signal. In each experiment, the measurements were generated according to~(\ref{eq:model}) with density~\mbox{$\gamma = 0.2$}, and the target signals in the measurements are of length~\mbox{$L = 21$}. We try to estimate the signal from~$5$ random initial guesses, and calculate the estimation error for the estimate whose final objective function is minimal. Then, we  calculate the median over \textbf{20} trials. The code to reproduce all experiments is publicly available at~\url{https://github.com/krshay/MTD-GMM}.
 
 
 \subsection{Recovery error as a function of the measurement length}
 \label{subsec:exp_size}
-Figure~\ref{fig:err_size_experiment} presents recovery error as a function of the measurement length, for a fixed noise level ($\text{SNR} = 50$). We preform~$20$ trails for each measurement length,. As expected from the law of large numbers, both estimators' errors  decay as~$N^{-1/2}$. In addition, Theorem~\ref{Thm-2-6} provides the optimality of the GMM estimator over the MoM estimator, and indeed the median error of the GMM estimator is smaller than the error of the MoM estimator for all sizes. \asafc{I'm not sure if it is relevant to talk about the optimality here}
+Figure~\ref{fig:err_size_experiment} presents recovery error as a function of the measurement size. We consider measurements with~\mbox{$\text{SNR} = 50$} in different sizes. As expected from the law of large numbers, both estimators' errors  decay as~$N^{-1/2}$. In addition, Theorem~\ref{Thm-2-6} provides the optimality of the GMM estimator over the MoM estimator, and indeed the median error of the GMM estimator is smaller than the error of the MoM estimator for all sizes.
 
 \begin{figure}[!tb]
 	\begin{subfigure}[ht]{\columnwidth}
 		\centering
-		\includegraphics[width=0.9\columnwidth]{figures/experiment_size_err.pdf}
+		\includegraphics[width=\columnwidth]{figures/experiment_size_err.pdf}
 	\end{subfigure}
 	\caption{The median estimation error of recovering the signal~$x$, as a function of the measurement length~$N$, by: (a)~the MoM estimator; (b)~the GMM estimator.}
 \label{fig:err_size_experiment}
 \end{figure}
 
 \subsection{Recovery error as a function of SNR}
-Next, we compared the recovery errors as a function of SNR, the results are in Figure~\ref{fig:err_noise_experiment}. The signal length~$y$ is fixed, $N = 10^6$. We  calculate the \textbf{median} over \textbf{20} trials.
+Figure~\ref{fig:err_noise_experiment} presents recovery error as a function of SNR. We consider measurements of length~$1 \cdot 10^6$ with different SNRs. For all levels of SNR, the recovery error using the GMM is smaller than the error using the regular MoM estimator.
+
 \begin{figure}[!tb]
 	\begin{subfigure}[ht]{\columnwidth}
 		\centering
-		\includegraphics[width=0.90\columnwidth]{figures/experiment_SNR_err.pdf}
+		\includegraphics[width=\columnwidth]{figures/experiment_SNR_err.pdf}
 	\end{subfigure}
 	\caption{Median estimation error of recovering the signal~$x$, as a function of SNR, by: (a)~the MoM estimator; (b)~the GMM estimator.}
 \label{fig:err_noise_experiment}
@@ -318,6 +311,7 @@ Next, we compared the recovery errors as a function of SNR, the results are in F
 \section{Conclusion}
 \label{sec:conclusion}
 This work in part as an on going research to improve the reconstruction results of cryo-EM, specifically without the need to locate the particles. Alongside with~\cite{bendory2018toward,abas2021generalized, kreymer2021two}, this work suggests a mathematical framework and a tempting estimator. In future work, we intend to apply the GMM of the 2D model of the problem in order to accelerate and improve the initial reconstruction phase.
+
 
 
 \vfill
