@@ -171,8 +171,7 @@ We discuss the \mbox{well-separated} case of the MTD problem, which was studied 
 |\ell_{i_1} - \ell_{i_2}| \ge 2L - 1, \quad \text{ for all } i_1 \ne i_2.
 \end{equation}
 
-%Figure~\ref{fig:Micrograph_shifts}(a) presents an example of a measurement obeying the separation condition~(\ref{eq:sep}).
-To compute the third-order autocorrelation~(\ref{eq:AM3}), we compute the product of~$y$ with its two shifts. Importantly, for~\mbox{$\ell$-s} in the range~$\mathcal{L} = \{0, \ldots, {L - 1}\}$, any given occurrence of~$x$ in~$y$ is only ever correlated with itself, and never with another occurrence.
+Importantly, under the well-separated model, for~\mbox{$\ell$-s} in the range~$\mathcal{L} = \{0, \ldots, {L - 1}\}$, any given occurrence of~$x$ in~$y$ is only ever correlated with itself, and never with another occurrence.
 
 In~\cite{bendory2019multi}, it was shown that under the separation condition~(\ref{eq:sep}), for any fixed level of noise~$\sigma^2$, density~$\gamma$ and signal length~$L$, in the limit~\mbox{$N \rightarrow \infty$} we have that
 \begin{align}
@@ -183,8 +182,14 @@ A_{y}^2 [\ell_1] &\stackrel{\text{a.s.}}{=} \gamma A_{x}^2 [\ell_1] + \sigma^2\d
 \label{eq:well_separated_3rd}
 A_{y}^3 [\ell_1, \ell_2] &\stackrel{\text{a.s.}}{=} \gamma A_{x} [\ell_1, \ell_2] \nonumber \\&+ \gamma A_{x}^1 \sigma^2 (\delta[\ell_1] + \delta[\ell_2] + \delta[\ell_1 - \ell_2]),
 \end{align}
-for~$\ell_1, \ell_2 \in \mathcal{L}$, where~$\delta[\ell] = \begin{cases} 1 \text{ if } \ell = \vec{0}, \\ 0 \text{ otherwise}, \end{cases}$ is the Kronecker delta function. Here,~$\gamma$ is the density of the target images in the measurement and is defined by
-\begin{equation}\gamma = p \frac{L}{N}.\end{equation}
+for~$\ell_1, \ell_2 \in \mathcal{L}$, where
+\begin{equation*}
+\delta[\ell] = \begin{cases} 1 \text{ if } \ell = \vec{0}, \\ 0 \text{ otherwise}, \end{cases}
+\end{equation*}
+is the Kronecker delta function. Here,~$\gamma$ is the density of the target images in the measurement and is defined by
+\begin{equation}
+\gamma = p \frac{L}{N}.
+\end{equation}
 
 Importantly, the relations between the autocorrelations of~$y$ and~$x$ do not directly depend on the location of individual signal occurrences in the measurement, but only through the density parameter~$\gamma$. Therefore, detecting the signal occurrences is not a prerequisite for signal recovery, and thus signal recovery is possible even in very low SNR regimes.
 
@@ -253,8 +258,6 @@ Before presenting the statistical properties of the GMM, we fix notation. We den
 \end{equation}
 be the covariance matrix of the estimated sample moment function~(\ref{Eq-2-5}) at the ground truth~$\theta_0$. We denote by $\{W_N\}_{N=1}^\infty$ a sequence of PSD matrices which converges almost surely to a positive definite (PD) matrix~$W$. Finally, the expectation of the Jacobian of the moment function at the ground truth~$\theta_0$ is denoted by $G_0 = \E\left[\partial f(\theta_0, y) / \partial \theta^T\right]$.
 
-%Following~\cite{Hansen1982}, the large sample properties of the GMM estimator under the uniqueness of the parameter set~\eqref{Eq-2-4} are \tamir{as follows.}
-
 The large sample properties of the GMM estimator were derived in~\cite{Hansen1982}, and are presented in the following theorem. The regularity conditions for this theorem can be found in~\cite{Hansen1982}, \cite{Hall2005}, \cite{abas2021generalized}.
 
 \begin{theorem}\label{Thm-2-6}
@@ -285,7 +288,8 @@ where~$x^*$ is the true signal, and~$x$ is the estimated signal. In each experim
 
 \subsection{Recovery error as a function of the measurement length}
 \label{subsec:exp_size}
-Figure~\ref{fig:err_size_experiment} presents recovery error as a function of the measurement size. We consider measurements with~\mbox{$\text{SNR} = 50$} in different sizes. As expected from the law of large numbers, both estimators' errors  decay as~$N^{-1/2}$. In addition, Theorem~\ref{Thm-2-6} provides the optimality of the GMM estimator over the MoM estimator, and indeed the median error of the GMM estimator is smaller than the error of the MoM estimator for all sizes.
+Figure~\ref{fig:err_size_experiment} presents recovery error as a function of the measurement size. We consider measurements with~\mbox{$\text{SNR} = 50$} in different lengths. As expected from the law of large numbers, both estimators' errors  decay as~$N^{-1/2}$, where~$N$ is the length of the measurement. In addition, for all measurements' lengths, the recovery error using the GMM is smaller than the error using the regular MoM estimator.
+%In addition, Theorem~\ref{Thm-2-6} provides the optimality of the GMM estimator over the MoM estimator, and indeed the median error of the GMM estimator is smaller than the error of the MoM estimator for all sizes.
 
 \begin{figure}[!tb]
 	\begin{subfigure}[ht]{\columnwidth}
@@ -310,12 +314,11 @@ Figure~\ref{fig:err_noise_experiment} presents recovery error as a function of S
 
 \section{Conclusion}
 \label{sec:conclusion}
-This work in part as an on going research to improve the reconstruction results of cryo-EM, specifically without the need to locate the particles. Alongside with~\cite{bendory2018toward,abas2021generalized, kreymer2021two}, this work suggests a mathematical framework and a tempting estimator. In future work, we intend to apply the GMM of the 2D model of the problem in order to accelerate and improve the initial reconstruction phase.
+This paper is motivated by the effort of reconstructing small~\mbox{3-D} molecular structures using \mbox{cryo-EM}, below the current detection limit. The main contribution of this study is in extending the MoM framework developed in~\cite{bendory2019multi}, by introducing a GMM framework for the \mbox{1-D} case of the MTD problem, following the foundations laid in~\cite{abas2021generalized}. The optimality of the GMM framework was presented in Theorem~\ref{Thm-2-6}, and corroborated by numerical experiments.
 
-
+Future work includes extending the GMM estimator to the~\mbox{2-D} and~\mbox{3-D} cases of the MTD problem. Furthermore, this work dealt only with the well-separated model of the MTD problem. Extending the GMM framework to the case of an arbitrary spacing distribution between signal and image occurrences~\cite{lan2020multi}, \cite{kreymer2021two} constitutes another possible future work.
 
 \vfill
-\newpage
 
 \bibliographystyle{IEEEbib}
 \bibliography{references}
