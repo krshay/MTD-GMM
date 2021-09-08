@@ -82,7 +82,7 @@ $^\ddagger$Department of Applied Mathematics, Tel Aviv University, Tel Aviv, Isr
 \maketitle
 %
 \begin{abstract}
-We consider the one-dimensional multi-target detection (MTD) problem of recovering a target signal from a noisy measurement that contains multiple copies of the signal, each randomly translated\asafc{is translated is the right word?}. Motivated by the structure reconstruction problem in single-particle cryo-electron microscopy, we focus on the high noise regime, where the noise hampers accurate detection of the signal occurrences\asafc{I don't think this the last sentance is a good desripition of the work. A more fitting one: ''The MTD problem is a simplified model of the tructure reconstruction problem in single-particle cryo-electron microscopy (cryo-EM), this work chief motivation.''}. We develop a generalized method of moments (GMM) framework to estimate the image directly from a measurement, and compare the framework to the method of moments through numerical experiments. We demonstrate signal recovery in highly noisy measurements, and prove numerically the optimality of the generalized method of moments.
+We consider the one-dimensional multi-target detection (MTD) problem of recovering a target signal from a noisy measurement that contains multiple copies of the signal at unknown locations. Motivated by the structure reconstruction problem in single-particle cryo-electron microscopy, we focus on the high noise regime, where the noise hampers accurate detection of the signal occurrences. We develop a generalized method of moments (GMM) framework to estimate the image directly from a measurement, and compare the framework to the method of moments through numerical experiments. We demonstrate signal recovery in highly noisy measurements, and prove numerically the optimality of the generalized method of moments.
 \end{abstract}
 %
 \begin{keywords}
@@ -206,7 +206,7 @@ Next, we introduce the following notations
 \end{align}
 Here, we treat~$\A_x^3$ and~$\A_y^3$ as vectors.
 \subsection{Signal recovery from autocorrelations}
-Following~\cite{bendory2019multi}, \cite{lan2020multi}, \cite{marshall2020image}, \cite{bendory2021multi}, \cite{kreymer2021two}\asafc{I feel that here we only should cite only works that do LS in 1D.} and based on the notations presented above, we formulate a non-convex least squares problem for estimating the signal~$x$ from the autocorrelations of the measurement~$y$:
+Following~\cite{bendory2019multi}, \cite{lan2020multi}, \cite{marshall2020image}, \cite{bendory2021multi}, \cite{kreymer2021two}, and based on the notations presented above, we formulate a non-convex least squares problem for estimating the signal~$x$ from the autocorrelations of the measurement~$y$:
 \begin{align}
 \label{eq:optimization}
 \min_{x, \gamma > 0} &w_1 (\A_y^1 - \A_x^1)^2 \nonumber\\ +& w_2 \|\A_y^2 - \A_x^2\|_2^2 + w_3 \|\A_y^3 - \A_x^3\|_2^2,
@@ -317,7 +317,7 @@ Figure~\ref{fig:err_noise_experiment} presents recovery error as a function of S
 \label{sec:conclusion}
 This paper is motivated by the effort of reconstructing small~\mbox{3-D} molecular structures using \mbox{cryo-EM}, below the current detection limit. The main contribution of this study is in extending the MoM framework developed in~\cite{bendory2019multi}, by introducing a GMM framework for the \mbox{1-D} case of the MTD problem, following the foundations laid in~\cite{abas2021generalized}. The optimality of the GMM framework was presented in Theorem~\ref{Thm-2-6}, and corroborated by numerical experiments.
 
-Future work includes extending the GMM estimator to the~\mbox{2-D} and~\mbox{3-D} cases of the MTD problem. Furthermore, this work dealt only with the well-separated model of the MTD problem. Extending the GMM framework to the case of an arbitrary spacing distribution between signal and image occurrences~\cite{lan2020multi}, \cite{kreymer2021two} constitutes another possible future work.
+Future work includes extending the GMM estimator to the~\mbox{2-D} and~\mbox{3-D} cases of the MTD problem. Furthermore, this work dealt only with the well-separated model of the MTD problem. Extending the GMM framework to the case of an arbitrary spacing distribution between signal and image occurrences~\cite{lan2020multi}, \cite{kreymer2021two}, constitutes another possible future work.
 
 \vfill
 
