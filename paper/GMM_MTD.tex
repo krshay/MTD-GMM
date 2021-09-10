@@ -117,32 +117,32 @@ The main contribution of this paper is in extending the MoM framework introduced
 \subsection{Autocorrelation analysis}
 \label{subsec:ac}
 The autocorrelation of order~$q$ of a signal~\mbox{$z \in \mathbb{R}^{N}$} is defined as
-\begin{equation*}
+\begin{equation}
 A_z^q[\ell_1, \ldots, \ell_{q-1}] := \mathbb{E}_z\Big[\frac{1}{N} \sum_{i \in \mathbb{Z}} z[i] z[i + \ell_1] \cdots z[i + \ell_{q-1}]\Big],
-\end{equation*}
+\end{equation}
 where~$\ell_1, \ldots, \ell_{q-1}$ are integer shifts. Indexing out of bounds is zero-padded, that is,~\mbox{$z[i] = 0$} out of the range~\mbox{$\{0, \ldots, {N-1}\}$}. In this work, we use the first three autocorrelations.
 
 As~$N$ grows indefinitely, the empirical autocorrelations of~$z$ almost surely (a.s.) converge to the population autocorrelations of~$z$:
-\begin{equation*}
+\begin{equation}
 \lim_{N \rightarrow \infty} \frac{1}{N} \sum_{i \in \mathbb{Z}^2} z[i] z[i + \ell_1] \cdots z[i + \ell_{q-1}] \stackrel{\text{a.s.}}{=}A_z^q[\ell_1, \ldots, \ell_{q-1}],
-\end{equation*}
+\end{equation}
 by the law of large numbers.
 
 Our goal is to relate the autocorrelations of the measurement with the target signal~$x$. In particular, the first-order autocorrelation is defined as
-\begin{equation*}
+\begin{equation}
 %\label{eq:AM1}
 A_{y}^1 := \frac{1}{N} \sum_{i \in \mathbb{Z}} y[i].
-\end{equation*}
+\end{equation}
 The first-order~$A_{y}^1$ is the mean of the measurement. The second-order autocorrelation of~$y$, \mbox{$A_{y}^2: \mathbb{Z} \rightarrow \mathbb{R}$}, is defined by
-\begin{equation*}
+\begin{equation}
 %\label{eq:AM2}
 A_{y}^2 [\ell_1] := \frac{1}{N} \sum_{i \in \mathbb{Z}} y[i] y[i + \ell_1],
-\end{equation*}
+\end{equation}
 and the third-order autocorrelation~\mbox{$A_{y}^3: \mathbb{Z} \times \mathbb{Z} \rightarrow \mathbb{R}$} by
-\begin{equation*}
+\begin{equation}
 %\label{eq:AM3}
 A_{y}^3 [\ell_1, \ell_2] := \frac{1}{N} \sum_{i \in \mathbb{Z}} y[i] y[i + \ell_1] y[i + \ell_2].
-\end{equation*}
+\end{equation}
 
 
 \subsection{Autocorrelations under the well-separated model}
@@ -156,22 +156,22 @@ We discuss the \mbox{well-separated} case of the MTD problem, which was studied 
 Importantly, under the well-separated case, for shifts in the range~$\mathcal{L} = \{0, \ldots, {L - 1}\}$, any given occurrence of~$x$ in~$y$ is only ever correlated with itself, and never with another occurrence.
 
 In~\cite{bendory2019multi}, it was shown that under the well-separated condition~(\ref{eq:sep}), for any fixed level of noise~$\sigma^2$, density~$\gamma$ and signal length~$L$, in the limit~\mbox{$N \rightarrow \infty$} we have that
-\begin{align*}
+\begin{align}
 %\label{eq:well_separated_1st}
 A_{y}^1 &\stackrel{\text{a.s.}}{=} \gamma A_{x}^1, \\
 %\label{eq:well_separated_2nd}
 A_{y}^2 [\ell_1] &\stackrel{\text{a.s.}}{=} \gamma A_{x}^2 [\ell_1] + \sigma^2\delta[\ell_1], \\
 %\label{eq:well_separated_3rd}
 A_{y}^3 [\ell_1, \ell_2] &\stackrel{\text{a.s.}}{=} \gamma A_{x}^3 [\ell_1, \ell_2] \nonumber \\&+ \gamma A_{x}^1 \sigma^2 (\delta[\ell_1] + \delta[\ell_2] + \delta[\ell_1 - \ell_2]),
-\end{align*}
+\end{align}
 for~$\ell_1, \ell_2 \in \mathcal{L}$, where
 \begin{equation*}
 \delta[\ell] = \begin{cases} 1 \text{ if } \ell = \vec{0}, \\ 0 \text{ otherwise}, \end{cases}
 \end{equation*}
 is the Kronecker delta function. Here,~$\gamma$ is the density of the target images in the measurement and is defined by
-\begin{equation*}
+\begin{equation}
 \gamma = p \frac{L}{N}.
-\end{equation*}
+\end{equation}
 
 Importantly, the relations between the autocorrelations of~$y$ and~$x$ do not directly depend on the location of individual signal occurrences in the measurement, but only through the density parameter~$\gamma$. Therefore, detecting the signal occurrences is not a prerequisite for signal recovery, and thus signal recovery is possible even in very low SNR regimes.
 
@@ -206,9 +206,9 @@ Let us define the \textit{moment function},~\mbox{$f(\theta, y)\colon \Theta \ti
 The moment function must satisfy this uniqueness condition~\eqref{Eq-GMM-1} and a few additional regularity conditions (which can be found in~\cite{Hansen1982}, \cite{Hall2005} \cite{abas2021generalized}). This flexibility enables the GMM to be applied to a wide range of problems, such as subspace estimation~\cite{fan2018optimal}.
 
 In order to define the moment function for the MTD problem, we first define the $i$-th observation from the measurement~$y$ as follows:
-\begin{equation*}
+\begin{equation}
 	y_i := [y[i],\ldots, y[i+L]].
-\end{equation*}
+\end{equation}
 This choice of the moment function~$f(\theta, y)$ must fulfill~\eqref{Eq-GMM-1} using the defined samples~$y_i$. The natural choice of ~$f(\cdot)$ is
 \begin{equation} \label{Eq-GMM-2}
 	f(\theta,y_i) :=
@@ -221,7 +221,7 @@ This choice of the moment function~$f(\theta, y)$ must fulfill~\eqref{Eq-GMM-1} 
 where $\theta := [x, \gamma]$.
 The estimated sample moment function is the average of~$f$ over~$N$ observations:
 \begin{equation}\label{Eq-2-5}
-	g_N(\theta) = \frac{1}{N} \sum_{i=1}^N f(\theta, y_i) = \begin{bmatrix}
+	g_N(\theta) = \frac{1}{N} \sum_{i = 0}^{N - 1} f(\theta, y_i) = \begin{bmatrix}
 		&\A_x^1 - \A_{y}^1\\
 		&\A_x^2 - \A_{y}^2 \\
 		&\A_x^3 - \A_{y}^3
@@ -256,7 +256,7 @@ The large sample properties of the GMM estimator were derived in~\cite{Hansen198
 \end{theorem}
 Theorem~\ref{Thm-2-6} provides a matrix~$W$ {that} guarantees a minimal asymptotic variance of the estimator’s error. The covariance matrix~$S$ {of~(\ref{eqn:cov_mat_S}), which plays a central role in Theorem~\ref{Thm-2-6},} is required to be a PD matrix. Therefore, the moment function must be chosen so that~$S$ is full-rank. As in~\cite{abas2021generalized},  we remove the repeating entries of~$f$ (that appear due to the inherent symmetries of the autocorrelations). Moreover, in practice, the ground truth~$\theta_0$ is unknown a priori, so we cannot use the optimal weighting matrix. However as suggested in~\cite{abas2021generalized}, for our choice of the moment function~(\ref{Eq-GMM-2}), it is enough to apply the covariance on the empirical part,
 	\begin{equation}\label{Eq-2-7}
-		\Cov[g(\theta)] = \Cov\left[\left[A_{y_i}^1;\A_{y_i}^2;\A_{y_i}^3\right]\right].
+		\Cov[g(\theta)] = \Cov\left[\left\{[A_{y_i}^1;\A_{y_i}^2;\A_{y_i}^3]\right\}_{i = 0}^{N - 1}\right].
 	\end{equation}
 
 \section{Numerical experiments}
@@ -265,7 +265,7 @@ In this section, we present numerical comparisons for the estimators which were 
 \begin{equation*}
 \text{error}(x) = \frac{\|x - x^*\|_2}{\|x^*\|_2},
 \end{equation*}
-where~$x^*$ is the true signal, and~$x$ is the estimated signal. In each experiment, the measurements were generated according to~(\ref{eq:model}) with density~\mbox{$\gamma = 0.2$}, and the target signals~$x$ are of length~\mbox{$L = 21$}. We try to estimate the signal from~$5$ random initial guesses, and calculate the estimation error for the estimate whose final objective function is minimal. Then, we  calculate the median  error over \textbf{20} trials. The code to reproduce all experiments is publicly available at~\url{https://github.com/krshay/MTD-GMM}.
+where~$x^*$ is the true signal, and~$x$ is the estimated signal. In each experiment, the measurements were generated according to~(\ref{eq:model}) with density~\mbox{$\gamma = 0.2$}, and the target signals~$x$ are of length~\mbox{$L = 21$}. We try to estimate the signal from~$5$ random initial guesses, and calculate the estimation error for the estimate whose final objective function is minimal. Then, we  calculate the median  error over 50 trials. The code to reproduce all experiments is publicly available at~\url{https://github.com/krshay/MTD-GMM}.
 
 
 \subsection{Recovery error as a function of the measurement length}

@@ -156,22 +156,22 @@ with plt.style.context('ieee'):
     # plt.savefig(r'C:/Users/kreym/Documents/GitHub/MTD-GMM/paper/figures/experiment_size_iters.pdf')
 
 filename=r'shelve_size_10092021.out'
-my_shelf = shelve.open(filename,'n') # 'n' for new
+# my_shelf = shelve.open(filename,'n') # 'n' for new
 
-for key in dir():
-    try:
-        my_shelf[key] = globals()[key]
-    except TypeError:
-        #
-        # __builtins__, my_shelf, and imported modules can not be shelved.
-        #
-        print('ERROR shelving: {0}'.format(key))
-    except AttributeError:
-        print('ERROR shelving: {0}'.format(key))
-my_shelf.close()
+# for key in dir():
+#     try:
+#         my_shelf[key] = globals()[key]
+#     except TypeError:
+#         #
+#         # __builtins__, my_shelf, and imported modules can not be shelved.
+#         #
+#         print('ERROR shelving: {0}'.format(key))
+#     except AttributeError:
+#         print('ERROR shelving: {0}'.format(key))
+# my_shelf.close()
 
 # %% load
-# my_shelf = shelve.open(filename)
-# for key in my_shelf:
-#     globals()[key]=my_shelf[key]
-# my_shelf.close()
+my_shelf = shelve.open(filename)
+for key in my_shelf:
+    globals()[key]=my_shelf[key]
+my_shelf.close()
