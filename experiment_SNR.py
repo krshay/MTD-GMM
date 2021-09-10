@@ -1,5 +1,12 @@
 # -*- coding: utf-8 -*-
 """
+Created on Sat Sep  4 18:54:21 2021
+
+@author: Shay Kreymer
+"""
+
+# -*- coding: utf-8 -*-
+"""
 Created on Fri Jul 30 18:08:24 2021
 
 @author: Shay Kreymer
@@ -29,7 +36,7 @@ shifts_3rd = utils.shifts_3rd_reduced(L)
 
 gamma0 = 0.18
 x_gamma0s = []
-Nguesses = 10
+Nguesses = 5
 for i in range(Nguesses):
     x0 = np.random.rand(L)
     x0 = x0 / np.linalg.norm(x0)
@@ -38,7 +45,7 @@ for i in range(Nguesses):
     x_gamma0s.append(x_gamma0)
 
 NSNRs = 8
-SNRs = np.logspace(-1.5, 2, num=NSNRs)
+SNRs = np.logspace(-1, 2, num=NSNRs)
 
 Niters = 50
 xs = []
@@ -118,7 +125,7 @@ for (idx, _) in enumerate(SNRs):
         times_final_mom[it, idx] = time_mom
         results_final_gmm[it, idx] = estimation_gmm
         times_final_gmm[it, idx] = time_gmm
-        
+ 
 errs_mom = np.zeros((Niters, NSNRs))
 Number_Iterations_mom = np.zeros((Niters, NSNRs))
 errs_gmm = np.zeros((Niters, NSNRs))
@@ -133,14 +140,14 @@ for (idx, _) in enumerate(SNRs):
 plt.close("all")
 with plt.style.context('ieee'):
     fig = plt.figure()
-    plt.loglog(SNRs[1:], np.median(errs_mom[:, 1:], axis=0), 'b', label=r'Method of Moments', lw=2)
-    plt.loglog(SNRs[1:], np.median(errs_gmm[:, 1:], axis=0), 'r', label=r'Generalized Method of Moments', lw=2)
+    plt.loglog(SNRs, np.median(errs_mom, axis=0), 'b', label=r'Method of Moments', lw=2)
+    plt.loglog(SNRs, np.median(errs_gmm, axis=0), 'r', label=r'Generalized Method of Moments', lw=2)
     plt.legend(loc=1, fontsize=6)
     plt.xlabel('SNR')
     plt.ylabel('Median estimation error')
     fig.tight_layout()
     plt.show()
-    plt.savefig(r'C:/Users/kreym/Documents/GitHub/MTD-GMM/paper/figures/experiment_SNR_err.pdf')
+    # plt.savefig(r'C:/Users/kreym/Documents/GitHub/MTD-GMM/paper/figures/experiment_size_err.pdf')
 
     # fig = plt.figure()
     # plt.semilogx(SNRs, np.median(Number_Iterations_mom, axis=0), label=r'Method of Moments', lw=2)
@@ -152,25 +159,25 @@ with plt.style.context('ieee'):
     # plt.show()
     # plt.savefig(r'C:/Users/kreym/Documents/GitHub/MTD-GMM/paper/figures/experiment_size_iters.pdf')
 
-filename=r'shelve_SNR_05092021.out'
+filename=r'shelve_SNR_10092021.out'
 
 
-# my_shelf = shelve.open(filename,'n') # 'n' for new
+my_shelf = shelve.open(filename,'n') # 'n' for new
 
-# for key in dir():
-#     try:
-#         my_shelf[key] = globals()[key]
-#     except TypeError:
-#         #
-#         # __builtins__, my_shelf, and imported modules can not be shelved.
-#         #
-#         print('ERROR shelving: {0}'.format(key))
-#     except AttributeError:
-#         print('ERROR shelving: {0}'.format(key))
-# my_shelf.close()
+for key in dir():
+    try:
+        my_shelf[key] = globals()[key]
+    except TypeError:
+        #
+        # __builtins__, my_shelf, and imported modules can not be shelved.
+        #
+        print('ERROR shelving: {0}'.format(key))
+    except AttributeError:
+        print('ERROR shelving: {0}'.format(key))
+my_shelf.close()
 
 # %% load
-my_shelf = shelve.open(filename)
-for key in my_shelf:
-    globals()[key]=my_shelf[key]
-my_shelf.close()
+# my_shelf = shelve.open(filename)
+# for key in my_shelf:
+#     globals()[key]=my_shelf[key]
+# my_shelf.close()
