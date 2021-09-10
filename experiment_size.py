@@ -37,10 +37,10 @@ for i in range(Nguesses):
     x_gamma0 = np.concatenate((x0, np.array([gamma0])))
     x_gamma0s.append(x_gamma0)
 
-Nsizes = 10
+Nsizes = 8
 sizes = np.logspace(4, 7.5, num=Nsizes)
 
-Niters = 20
+Niters = 50
 xs = []
 for it in range(Niters):
     x = np.random.rand(L)
@@ -139,7 +139,7 @@ with plt.style.context('ieee'):
     plt.loglog(sizes, np.median(errs_mom, axis=0)[0]*(sizes/sizes[0])**(-1/2), 'k--', lw=1)
     plt.loglog(sizes, np.median(errs_gmm, axis=0)[0]*(sizes/sizes[0])**(-1/2), 'k--', lw=1)
     plt.legend(loc=1, fontsize=6)
-    plt.xlabel('Measurement length')
+    plt.xlabel('Measurement length [pixels]')
     plt.ylabel('Median estimation error')
     fig.tight_layout()
     plt.show()
@@ -155,23 +155,23 @@ with plt.style.context('ieee'):
     # plt.show()
     # plt.savefig(r'C:/Users/kreym/Documents/GitHub/MTD-GMM/paper/figures/experiment_size_iters.pdf')
 
-filename=r'shelve_size.out'
-# my_shelf = shelve.open(filename,'n') # 'n' for new
+filename=r'shelve_size_10092021.out'
+my_shelf = shelve.open(filename,'n') # 'n' for new
 
-# for key in dir():
-#     try:
-#         my_shelf[key] = globals()[key]
-#     except TypeError:
-#         #
-#         # __builtins__, my_shelf, and imported modules can not be shelved.
-#         #
-#         print('ERROR shelving: {0}'.format(key))
-#     except AttributeError:
-#         print('ERROR shelving: {0}'.format(key))
-# my_shelf.close()
+for key in dir():
+    try:
+        my_shelf[key] = globals()[key]
+    except TypeError:
+        #
+        # __builtins__, my_shelf, and imported modules can not be shelved.
+        #
+        print('ERROR shelving: {0}'.format(key))
+    except AttributeError:
+        print('ERROR shelving: {0}'.format(key))
+my_shelf.close()
 
 # %% load
-my_shelf = shelve.open(filename)
-for key in my_shelf:
-    globals()[key]=my_shelf[key]
-my_shelf.close()
+# my_shelf = shelve.open(filename)
+# for key in my_shelf:
+#     globals()[key]=my_shelf[key]
+# my_shelf.close()
