@@ -1,11 +1,5 @@
 \begin{thebibliography}{10}
 
-\bibitem{bendory2018toward}
-Tamir Bendory, Nicolas Boumal, William Leeb, Eitan Levin, and Amit Singer,
-\newblock ``Toward single particle reconstruction without particle picking:
-  breaking the detection limit,''
-\newblock {\em arXiv preprint arXiv:1810.00226}, 2018.
-
 \bibitem{bendory2019multi}
 Tamir Bendory, Nicolas Boumal, William Leeb, Eitan Levin, and Amit Singer,
 \newblock ``Multi-target detection with application to cryo-electron
@@ -33,6 +27,12 @@ Tamir Bendory, Ti-Yen Lan, Nicholas~F Marshall, Iris Rukshin, and Amit Singer,
 Shay Kreymer and Tamir Bendory,
 \newblock ``Two-dimensional multi-target detection,''
 \newblock {\em arXiv preprint arXiv:2105.06765}, 2021.
+
+\bibitem{bendory2018toward}
+Tamir Bendory, Nicolas Boumal, William Leeb, Eitan Levin, and Amit Singer,
+\newblock ``Toward single particle reconstruction without particle picking:
+  breaking the detection limit,''
+\newblock {\em arXiv preprint arXiv:1810.00226}, 2018.
 
 \bibitem{henderson1995potential}
 Richard Henderson,
