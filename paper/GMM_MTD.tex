@@ -79,7 +79,7 @@ We study the multi-target detection (MTD) problem of estimating a target signal~
 \label{eq:model}
 y[\ell] = \sum_{i=1}^{p} x[\ell - \ell_i] + \varepsilon[\ell],
 \end{equation}
-where \mbox{$\{\ell_i\}_{i=1}^{p} \in \{L + 1, \ldots, N-L\}$} are arbitrary translations, and~$\varepsilon[\ell]\overset{i.i.d.}{\sim} \mathcal{N}(0,\sigma^2)$, and~$L \ll N$. The translations and the number of occurrences of~$x$ in~$y$,~$p$, are unknown. Figure~\ref{fig:measurements} presents examples of a measurement~$y$ at different signal-to-noise ratios (SNRs). We define~\mbox{$\text{SNR} := \frac{\|x\|_2^2}{L \sigma^2}$}.
+where \mbox{$\{\ell_i\}_{i=1}^{p} \in \{L + 1, \ldots, N-L\}$} are arbitrary translations, and~$\varepsilon[\ell]\overset{i.i.d.}{\sim} \mathcal{N}(0,\sigma^2)$. The translations and the number of occurrences of~$x$ in~$y$,~$p$, are unknown, and we assume~$L \ll N$. Figure~\ref{fig:measurements} presents examples of a measurement~$y$ at different signal-to-noise ratios (SNRs). We define~\mbox{$\text{SNR} := \frac{\|x\|_2^2}{L \sigma^2}$}.
 
 \begin{figure*}[!tb]
 	\begin{subfigure}[ht]{0.33\textwidth}
@@ -154,7 +154,7 @@ We discuss the \mbox{well-separated} case of the MTD problem, which was studied 
 \label{eq:sep}
 |\ell_{i_1} - \ell_{i_2}| \ge 2L - 1, \quad \text{ for all } i_1 \ne i_2.
 \end{equation}
-Importantly, under the well-separated case, for shifts in the range~$\mathcal{L} = \{0, \ldots, {L - 1}\}$, any given occurrence of~$x$ in~$y$ is only ever correlated with itself, and never with another occurrence.
+Importantly, under the well-separated case, for shifts in the range \mbox{$\mathcal{L} = \{0, \ldots, {L - 1}\}$}, any given occurrence of~$x$ in~$y$ is only ever correlated with itself, and never with another occurrence.
 
 In~\cite{bendory2019multi}, it was shown that under the well-separated condition~(\ref{eq:sep}), for any fixed level of noise~$\sigma^2$, density~$\gamma$ and signal length~$L$, in the limit~\mbox{$N \rightarrow \infty$} we have that
 \begin{align}
