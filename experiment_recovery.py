@@ -19,10 +19,12 @@ gamma = 0.2
 
 x = 0.25 * np.ones((L ,))
 x[2] = 0.5
-x[16] = 0.85
+x[14] = 0.97
+x[15] = 0.85
+x[16] = 0.55
 x[17] = 0.40
-x[2:16] = 1
-x = 10 * x / np.linalg.norm(x)
+x[2:14] = 1
+x = x / np.linalg.norm(x)
 y_clean = utils.generate_micrograph_1d(x, gamma, L, N)
 
 SNR = 0.1

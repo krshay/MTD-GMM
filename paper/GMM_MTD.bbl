@@ -105,6 +105,11 @@ Lars~Peter Hansen,
   estimators,''
 \newblock {\em Econometrica}, vol. 50, no. 4, pp. 1029, 1982.
 
+\bibitem{Hall2005}
+Alastair~R Hall,
+\newblock {\em Generalized method of moments},
+\newblock Oxford university press, 2005.
+
 \bibitem{abas2021generalized}
 Asaf Abas, Tamir Bendory, and Nir Sharon,
 \newblock ``The generalized method of moments for multi-reference alignment,''
@@ -115,16 +120,5 @@ Jianqing Fan and Yiqiao Zhong,
 \newblock ``Optimal subspace estimation using overidentifying vectors via
   generalized method of moments,''
 \newblock {\em arXiv preprint arXiv:1805.02826}, 2018.
-
-\bibitem{roodman2009xtabond2}
-David Roodman,
-\newblock ``How to do xtabond2: An introduction to difference and system {GMM}
-  in stata,''
-\newblock {\em The stata journal}, vol. 9, no. 1, pp. 86--136, 2009.
-
-\bibitem{Hall2005}
-Alastair~R Hall,
-\newblock {\em Generalized method of moments},
-\newblock Oxford university press, 2005.
 
 \end{thebibliography}

@@ -112,9 +112,9 @@ The MTD model was devised in \cite{bendory2018toward} in order to study the reco
 Autocorrelation analysis is a special case of the method of moment, which is a classical statistical inference technique, tracing back to 1894~\cite{pearson1894contributions}. This work studies the application of the generalized method of moments~\cite{Hansen1982}, or, more precisely, the \textit{generalized autocorrelation analysis}, to the MTD problem. In the classical autocorrelation analysis, we wish to find a signal whose autocorrelations match the observed autocorrelations. This is usually done by minimizing a LS objective. The generalized autocorrelation analysis suggests replacing the LS objective with a weighted LS, and provides a recipe of how to compute the optimal weights; see Section~\ref{subsec:generalized_ac}. The generalized method of moments has been proven to be highly effective in a variety of computational task, such as \textbf{Asaf, I guess you know what Tamir means here} [] % Add references from the economics literature
 We also mention that the framework can be formulated with other objective functions, rather than LS \textbf{and here.} [REF].
 
-The main contribution of this paper is extending the autocorrelation analysis framework introduced in~\cite{bendory2019multi} by developing a generalized autocorrelation analysis framework for the one-dimensional MTD problem. We devise an algorithm for the recovery of the target signal from a measurement, and demonstrate a successful reconstruction in noisy regimes~(see Section~\ref{sec:numerical}). \textbf{Moreover, we show that the GMM estimator outperforms the classical method of moments estimator in}. It is thus a first step towards applying the generalized method of moments to recovering small molecules from \mbox{cryo-EM} micrographs~\cite{bendory2018toward}.
+The main contribution of this paper is extending the autocorrelation analysis framework introduced in~\cite{bendory2019multi} by developing a generalized autocorrelation analysis framework for the one-dimensional MTD problem. We devise an algorithm for the recovery of the target signal from a measurement, and demonstrate a successful reconstruction in noisy regimes~(see Section~\ref{sec:numerical}). Moreover, we show that the generalized autocorrelation analysis estimator outperforms the classical estimator in different SNRs and measurement's lengths (see Section~\ref{sec:numerical}). It is thus a first step towards applying the generalized method of moments to recovering small molecules from \mbox{cryo-EM} micrographs~\cite{bendory2018toward}.
 
-\section{Mathematical framework}
+\section{Computational framework}
 \label{sec:math}
 \subsection{Autocorrelation analysis}
 \label{subsec:ac}
@@ -122,20 +122,18 @@ The autocorrelation of order~$q$ of a signal~\mbox{$z \in \mathbb{R}^{N}$} is de
 \begin{equation}
 A_z^q[\ell_1, \ldots, \ell_{q-1}] := \mathbb{E}_z\Big[\frac{1}{N} \sum_{i \in \mathbb{Z}} z[i] z[i + \ell_1] \cdots z[i + \ell_{q-1}]\Big],
 \end{equation}
-where~$\ell_1, \ldots, \ell_{q-1}$ are integer shifts. Indexing out of bounds is zero-padded, that is,~\mbox{$z[i] = 0$} out of the range~\mbox{$\{0, \ldots, {N-1}\}$}. In this work, we use the first three autocorrelations.
-
-As~$N$ grows indefinitely, the empirical autocorrelations of~$z$ almost surely (a.s.) converge to the population autocorrelations of~$z$:
+where~$\ell_1, \ldots, \ell_{q-1}$ are integer shifts. Indexing out of bounds is zero-padded, that is,~\mbox{$z[i] = 0$} out of the range~\mbox{$\{0, \ldots, {N-1}\}$}. In this work, we use the first three autocorrelations. As~$N$ grows indefinitely, the empirical autocorrelations of~$z$ almost surely (a.s.) converge to the population autocorrelations of~$z$:
 \begin{equation}
 \lim_{N \rightarrow \infty} \frac{1}{N} \sum_{i \in \mathbb{Z}^2} z[i] z[i + \ell_1] \cdots z[i + \ell_{q-1}] \stackrel{\text{a.s.}}{=}A_z^q[\ell_1, \ldots, \ell_{q-1}],
 \end{equation}
 by the law of large numbers.
 
-Our goal is to relate the autocorrelations of the measurement with the target signal~$x$. In particular, the first-order autocorrelation is defined as
+Our goal is to relate the autocorrelations of the measurement~$y$ with the target signal~$x$. In particular, the first-order autocorrelation is defined as
 \begin{equation}
 %\label{eq:AM1}
-A_{y}^1 := \frac{1}{N} \sum_{i \in \mathbb{Z}} y[i].
+A_{y}^1 := \frac{1}{N} \sum_{i \in \mathbb{Z}} y[i],
 \end{equation}
-The first-order~$A_{y}^1$ is the mean of the measurement. The second-order autocorrelation of~$y$, \mbox{$A_{y}^2: \mathbb{Z} \rightarrow \mathbb{R}$}, is defined by
+which is just the mean of the measurement. The second-order autocorrelation of~$y$, \mbox{$A_{y}^2: \mathbb{Z} \rightarrow \mathbb{R}$}, is defined by
 \begin{equation}
 %\label{eq:AM2}
 A_{y}^2 [\ell_1] := \frac{1}{N} \sum_{i \in \mathbb{Z}} y[i] y[i + \ell_1],
@@ -156,7 +154,7 @@ We discuss the \mbox{well-separated} case of the MTD problem, which was studied 
 \end{equation}
 Importantly, under the well-separated case, for shifts in the range \mbox{$\mathcal{L} = \{0, \ldots, {L - 1}\}$}, any given occurrence of~$x$ in~$y$ is only ever correlated with itself, and never with another occurrence.
 
-In~\cite{bendory2019multi}, it was shown that under the well-separated condition~(\ref{eq:sep}), for any fixed level of noise~$\sigma^2$, density~$\gamma$ and signal length~$L$, in the limit~\mbox{$N \rightarrow \infty$} we have that
+In~\cite{bendory2019multi}, it was shown that under the well-separated condition~(\ref{eq:sep}), for any fixed level of noise~$\sigma^2$, density~$\gamma$ and signal length~$L$, in the limit~\mbox{$N \rightarrow \infty$}, the autocorrelations of the measurements are equal, possibly up to some bias terms, to the autocorrelations of the signal times a density constant. Specifically, we have that
 \begin{align}
 %\label{eq:well_separated_1st}
 A_{y}^1 &\stackrel{\text{a.s.}}{=} \gamma A_{x}^1, \\
@@ -174,73 +172,59 @@ is the Kronecker delta function. Here,~$\gamma$ is the density of the target ima
 \gamma = p \frac{L}{N}.
 \end{equation}
 
-Importantly, the relations between the autocorrelations of~$y$ and~$x$ do not directly depend on the location of individual signal occurrences in the measurement, but only through the density parameter~$\gamma$. Therefore, detecting the signal occurrences is not a prerequisite for signal recovery, and thus signal recovery is possible even in very low SNR regimes.
+Notably, the relations between the autocorrelations of~$y$ and~$x$ do not directly depend on the location of individual signal occurrences in the measurement, but only through the density parameter~$\gamma$. Therefore, detecting the signal occurrences is not a prerequisite for signal recovery, and thus signal recovery is possible even in very low SNR regimes.
 
-Next, we introduce the following notations
-\begin{align}
-\A_y^1 &:= A_y^1, \quad \A_x^1 := \gamma A_x^1, \nonumber\quad
-	 \A_y^2 := \Big\{A_y^2[\ell]\Big\}_{\ell=0}^{L-1},\nonumber
-\end{align}
-\begin{align}
-	\A_x^2 &:= \Big\{\gamma A_x^2[\ell]+ \sigma^2 \delta[\ell]\Big\}_{\ell=0}^{L-1},\nonumber\quad
-	\A_y^3 := \Big\{A_y^3[\ell_1, \ell_2]\Big\}_{\ell_1,\ell_2=0}^{L-1},\nonumber \\
-	\A_x^3 &:= \Big\{\gamma A_x^3[\ell_1, \ell_2] \nonumber\\&+ \gamma A_{x}^1 \sigma^2 (\delta[\ell_1] + \delta[\ell_2] + \delta[\ell_1 - \ell_2])\Big\}_{\ell_1,\ell_2=0}^{L-1}. \nonumber
-\end{align}
-Here, we treat~$\A_x^3$ and~$\A_y^3$ as vectors.
 \subsection{Signal recovery from autocorrelations}
 \label{subsec:sig_recovery}
 Following~\cite{bendory2019multi}, \cite{lan2020multi}, \cite{marshall2020image}, \cite{bendory2021multi}, \cite{kreymer2021two}, and based on the notations presented above, we formulate a non-convex least squares problem for estimating the signal~$x$ from the autocorrelations of the measurement~$y$:
 \begin{align}
 \label{eq:optimization}
-\min_{x, \gamma > 0} &w_1 (\A_y^1 - \A_x^1)^2 \nonumber\\ +& w_2 \|\A_y^2 - \A_x^2\|_2^2 + w_3 \|\A_y^3 - \A_x^3\|_2^2,
+\min_{x, \gamma > 0} &w_1 (A_y^1 - \gamma A_x^1)^2 \nonumber\\ +& w_2 \sum_{\ell_1 = 0}^{L - 1} \|A_y^2[\ell_1] - \gamma A_x^2[\ell_1] - \sigma^2 \delta[\ell_1]\|_2^2\nonumber\\ +& w_3 \sum_{\ell_1 = 0}^{L - 1} \sum_{\ell_2 = 0}^{L - 1} \|A_y^3[\ell_1, \ell-2] - \gamma A_x^3[\ell_1, \ell_2] \nonumber\\ -& \gamma A_{x}^1 \sigma^2 (\delta[\ell_1] + \delta[\ell_2] + \delta[\ell_1 - \ell_2])\|_2^2,
 \end{align}
-where the weights were chosen such that each term is equally weighted, as suggested by~\cite{bendory2019multi}. This LS estimator serves as a benchmark to the GMM estimator. %which is developed in the following section.
+where the weights were chosen such that each term is equally weighted, as suggested by~\cite{bendory2019multi}. This LS estimator serves as a benchmark for the generalized autocorrelation analysis estimator.
 
-\subsection{Generalized method of moments}
+\subsection{The generalizes autocorrelation analysis}
 \label{subsec:generalized_ac}
-\subsubsection{The GMM framework}\label{gmm:framwork}
-In its most simplified form, the GMM generalizes~(\ref{eq:optimization}) by replacing the LS objective function with specific optimal weights. This choice guarantees favorable asymptotic statistical properties, such as {the} minimal asymptotic variance of the estimation error.
+\subsubsection{The generalized autocorrelation analysis framework}
+\label{gmm:framwork}
+In its most simplified form, the generalized autocorrelation analysis generalizes~(\ref{eq:optimization}) by replacing the LS objective function with specific optimal weights. This choice guarantees favorable asymptotic statistical properties, such as {the} minimal asymptotic variance of the estimation error.
 
 Let us define the \textit{moment function},~\mbox{$f(\theta, y)\colon \Theta \times \R^r \to \R^q$}. The moment function is chosen such that its expectation value is zero only at a single point~$\theta=\theta_0$, where~$\theta_0$ is the ground truth parameter set. Namely,
 \begin{equation}\label{Eq-GMM-1}
 	\E\left[f(\theta,y)\right] = 0 \quad \text{if and only if} \quad \theta = \theta_0.
 \end{equation}
-The moment function must satisfy this uniqueness condition~\eqref{Eq-GMM-1} and a few additional regularity conditions (which can be found in~\cite{Hansen1982}, \cite{Hall2005} \cite{abas2021generalized}). This flexibility enables the GMM to be applied to a wide range of problems, such as subspace estimation~\cite{fan2018optimal}.
+The moment function must satisfy this uniqueness condition~\eqref{Eq-GMM-1} and a few additional regularity conditions (which can be found in~\cite{Hansen1982}, \cite{Hall2005} \cite{abas2021generalized}). This flexibility enables the framework to be applied to a wide range of problems, such as subspace estimation~\cite{fan2018optimal}.
 
 In order to define the moment function for the MTD problem, we first define the $i$-th observation from the measurement~$y$ as follows:
 \begin{equation}
 	y_i := [y[i],\ldots, y[i+L]].
 \end{equation}
 This choice of the moment function~$f(\theta, y)$ must fulfill~\eqref{Eq-GMM-1} using the defined samples~$y_i$. The natural choice of ~$f(\cdot)$ is
-\begin{equation} \label{Eq-GMM-2}
-	f(\theta,y_i) :=
+\begin{multline} \label{Eq-GMM-2}
+	f(\theta, y_i) := \\
 	\begin{bmatrix}
-		&\A_x^1 - \A_{y_i}^1\\
-		&\A_x^2 - \A_{y_i}^2 \\
-		&\A_x^3 - \A_{y_i}^3
+		&\gamma A_x^1 - A_{y_i}^1\\
+		&\left\{\gamma A_x^2[\ell_1] + \sigma^2 \delta[\ell_1] - A_{y_i}^2 [\ell_1]\right\}_{\ell_1 =0}^{L-1} \\
+		&\left\{\gamma A_x^3[\ell_1, \ell_2] + \gamma B(x, \ell_1, \ell_2) - A_{y_i}^3[\ell_1, \ell_2]\right\}_{\ell_1, \ell_2 = 0}^{L-1}
 	\end{bmatrix},
-\end{equation}
-where $\theta := [x, \gamma]$.
-The estimated sample moment function is the average of~$f$ over~$N$ observations:
+\end{multline}
+where~$B(x, \ell_1, \ell_2) := A_{x}^1 \sigma^2 (\delta[\ell_1] + \delta[\ell_2] + \delta[\ell_1 - \ell_2])$, and~$\theta := [x, \gamma]$. The estimated sample moment function is the average of~$f$ over~$N$ observations:
 \begin{equation}\label{Eq-2-5}
-	g_N(\theta) = \frac{1}{N} \sum_{i = 0}^{N - 1} f(\theta, y_i) = \begin{bmatrix}
-		&\A_x^1 - \A_{y}^1\\
-		&\A_x^2 - \A_{y}^2 \\
-		&\A_x^3 - \A_{y}^3
-	\end{bmatrix}.
+	g_N(\theta) = \frac{1}{N} \sum_{i = 0}^{N - 1} f(\theta, y_i).
 \end{equation}
 The GMM estimator is defined as the minimizer of the weighted LS expression
 \begin{equation} \label{Eq-2-1}
 	\hat{\theta}_N = \arg\min_{\theta \in \Theta} \ g_N(\theta)^T W_N g_N(\theta).
 \end{equation}
-Here, $W_N$ is a fixed positive semi-definite (PSD) matrix. Note that the LS estimator~(\ref{eq:optimization}) is a special case of~(\ref{Eq-2-1}).
+Here, $W_N$ is a fixed positive semi-definite (PSD) matrix. Note that the LS estimator~(\ref{eq:optimization}) is a special case of~(\ref{Eq-2-1}), where~$W_N$ is the identity matrix.
 
-\subsubsection{Large Sample Properties}\label{gmm:large}
+\subsubsection{Large sample properties}
+\label{gmm:large}
 Before presenting the statistical properties of the GMM, we fix notation. We denote by $\overset{p}{\to}$ and $\overset{d}{\to}$ convergence in  probability and in distribution, respectively. Let
 \begin{equation} \label{eqn:cov_mat_S}
 	S := \lim_{N\to \infty}\Cov\left[\sqrt{N}g_N(\theta_0)\right],
 \end{equation}
-be the covariance matrix of the estimated sample moment function~(\ref{Eq-2-5}) at the ground truth~$\theta_0$. We denote by $\{W_N\}_{N=1}^\infty$ a sequence of PSD matrices which converges almost surely to a positive definite (PD) matrix~$W$. Finally, the expectation of the Jacobian of the moment function at the ground truth~$\theta_0$ is denoted by $G_0 = \E\left[\partial f(\theta_0, y) / \partial \theta^T\right]$.
+be the covariance matrix of the estimated sample moment function~(\ref{Eq-2-5}) at the ground truth~$\theta_0$. We denote by $\{W_N\}_{N=1}^\infty$ a sequence of PSD matrices which converges almost surely to a positive definite matrix~$W$. Finally, the expectation of the Jacobian of the moment function at the ground truth~$\theta_0$ is denoted by $G_0 = \E\left[\partial f(\theta_0, y) / \partial \theta^T\right]$.
 
 The large sample properties of the GMM estimator were derived in~\cite{Hansen1982}, and are presented in the following theorem. The regularity conditions for this theorem can be found in~\cite{Hansen1982}, \cite{Hall2005}, \cite{abas2021generalized}.
 
@@ -256,7 +240,7 @@ The large sample properties of the GMM estimator were derived in~\cite{Hansen198
 		\item \label{Thm-2-5} \textnormal{(Optimal choice of a weighting matrix)} The minimum asymptotic variance of $\hat{\theta}_N$ is given by $(G_0^T S^{-1} G_0)^{-1}$ and is attained by $W = S^{-1}$.
 	\end{enumerate}
 \end{theorem}
-Theorem~\ref{Thm-2-6} provides a matrix~$W$ {that} guarantees a minimal asymptotic variance of the estimator’s error. The covariance matrix~$S$ {of~(\ref{eqn:cov_mat_S}), which plays a central role in Theorem~\ref{Thm-2-6},} is required to be a PD matrix. Therefore, the moment function must be chosen so that~$S$ is full-rank. As in~\cite{abas2021generalized},  we remove the repeating entries of~$f$ (that appear due to the inherent symmetries of the autocorrelations). Moreover, in practice, the ground truth~$\theta_0$ is unknown a priori, so we cannot use the optimal weighting matrix. However as suggested in~\cite{abas2021generalized}, for our choice of the moment function~(\ref{Eq-GMM-2}), it is enough to apply the covariance on the empirical part,
+Theorem~\ref{Thm-2-6} provides a matrix~$W$ {that} guarantees a minimal asymptotic variance of the estimator’s error. The covariance matrix~$S$ {of~(\ref{eqn:cov_mat_S}), which plays a central role in Theorem~\ref{Thm-2-6},} is required to be a positive definite matrix. Therefore, the moment function must be chosen so that~$S$ is full-rank. As in~\cite{abas2021generalized},  we remove the repeating entries of~$f$ (that appear due to the inherent symmetries of the autocorrelations). Moreover, in practice, the ground truth~$\theta_0$ is unknown a priori, so we cannot use the optimal weighting matrix. However, for our choice of the moment function~(\ref{Eq-GMM-2}), the matrix~$S$ is independent of the parameters of interest, and thus can be computed from the data:
 	\begin{equation}\label{Eq-2-7}
 		\Cov[g(\theta)] = \Cov\left[\left\{[A_{y_i}^1;\A_{y_i}^2;\A_{y_i}^3]\right\}_{i = 0}^{N - 1}\right].
 	\end{equation}

@@ -16,16 +16,22 @@ L = 21
 N = 180
 gamma = 0.4
 
-x = np.random.rand(L)
+x = 0.25 * np.ones((L ,))
+x[2] = 0.5
+x[14] = 0.97
+x[15] = 0.85
+x[16] = 0.55
+x[17] = 0.40
+x[2:14] = 1
 x = x / np.linalg.norm(x)
 y_clean = utils.generate_micrograph_1d(x, gamma, L, N)
 
 SNR = 50
-sigma2 = 1 / (L * SNR)
+sigma2 = np.linalg.norm(x)**2 / (L * SNR)
 y1 = y_clean + np.random.normal(loc=0, scale=np.sqrt(sigma2), size=np.shape(y_clean))
 
 SNR = 0.1
-sigma2 = 1 / (L * SNR)
+sigma2 = np.linalg.norm(x)**2 / (L * SNR)
 y2 = y_clean + np.random.normal(loc=0, scale=np.sqrt(sigma2), size=np.shape(y_clean))
 
 plt.close("all")
