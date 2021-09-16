@@ -5,14 +5,6 @@ Created on Sat Sep  4 18:54:21 2021
 @author: Shay Kreymer
 """
 
-# -*- coding: utf-8 -*-
-"""
-Created on Fri Jul 30 18:08:24 2021
-
-@author: Shay Kreymer
-"""
-
-
 import numpy as np
 
 import time
@@ -140,8 +132,8 @@ for (idx, _) in enumerate(SNRs):
 plt.close("all")
 with plt.style.context('ieee'):
     fig = plt.figure()
-    plt.loglog(SNRs, np.median(errs_mom, axis=0), 'b', label=r'Method of Moments', lw=2)
-    plt.loglog(SNRs, np.median(errs_gmm, axis=0), 'r', label=r'Generalized Method of Moments', lw=2)
+    plt.loglog(SNRs, np.median(errs_mom, axis=0), 'b', label=r'Autocorrelation analysis', lw=2)
+    plt.loglog(SNRs, np.median(errs_gmm, axis=0), 'r', label=r'Generalized autocorrelation analysis', lw=2)
     plt.legend(loc=1, fontsize=6)
     plt.xlabel('SNR')
     plt.ylabel('Median estimation error')

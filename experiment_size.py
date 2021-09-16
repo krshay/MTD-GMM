@@ -134,8 +134,8 @@ for (idx, _) in enumerate(sizes):
 plt.close("all")
 with plt.style.context('ieee'):
     fig = plt.figure()
-    plt.loglog(sizes, np.median(errs_mom, axis=0), 'b', label=r'Method of Moments', lw=2)
-    plt.loglog(sizes, np.median(errs_gmm, axis=0), 'r', label=r'Generalized Method of Moments', lw=2)
+    plt.loglog(sizes, np.median(errs_mom, axis=0), 'b', label=r'Autocorrelation analysis', lw=2)
+    plt.loglog(sizes, np.median(errs_gmm, axis=0), 'r', label=r'Generalized autocorrelation analysis', lw=2)
     plt.loglog(sizes, np.median(errs_mom, axis=0)[0]*(sizes/sizes[0])**(-1/2), 'k--', lw=1)
     plt.loglog(sizes, np.median(errs_gmm, axis=0)[0]*(sizes/sizes[0])**(-1/2), 'k--', lw=1)
     plt.legend(loc=1, fontsize=6)

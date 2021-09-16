@@ -79,27 +79,27 @@ We study the multi-target detection (MTD) problem of estimating a target signal~
 \label{eq:model}
 y[\ell] = \sum_{i=1}^{p} x[\ell - \ell_i] + \varepsilon[\ell],
 \end{equation}
-where \mbox{$\{\ell_i\}_{i=1}^{p} \in \{L + 1, \ldots, N-L\}$} are arbitrary translations, and~$\varepsilon[\ell]\overset{i.i.d.}{\sim} \mathcal{N}(0,\sigma^2)$. The translations and the number of occurrences of~$x$ in~$y$,~$p$, are unknown, and we assume~$L \ll N$. Figure~\ref{fig:measurements} presents examples of a measurement~$y$ at different signal-to-noise ratios (SNRs). We define~\mbox{$\text{SNR} := \frac{\|x\|_2^2}{L \sigma^2}$}.
+where \mbox{$\{\ell_i\}_{i=1}^{p} \in \{L + 1, \ldots, N-L\}$} are arbitrary translations, and~$\varepsilon[\ell]\overset{\text{i.i.d.}}{\sim} \mathcal{N}(0,\sigma^2)$. The translations and the number of occurrences of~$x$ in~$y$,~$p$, are unknown, and we assume~$L \ll N$. Figure~\ref{fig:measurements} presents examples of a measurement~$y$ at different signal-to-noise ratios (SNRs). We define~\mbox{$\text{SNR} := \frac{\|x\|_2^2}{L \sigma^2}$}.
 
 \begin{figure*}[!tb]
 	\begin{subfigure}[ht]{0.33\textwidth}
 		\centering
-		\includegraphics[width=\columnwidth]{figures/y_clean.pdf}
+		\includegraphics[width=\columnwidth, height=110pt]{figures/y_clean.pdf}
 		\caption{No noise.}
 	\end{subfigure}
 	\hfill
 	\begin{subfigure}[ht]{0.33\textwidth}
 		\centering
-		\includegraphics[width=\columnwidth]{figures/y_SNR50.pdf}
+		\includegraphics[width=\columnwidth, height=110pt]{figures/y_SNR50.pdf}
 		\caption{$\text{SNR} = 50$.}
 	\end{subfigure}
 	\hfill
 	\begin{subfigure}[ht]{0.33\textwidth}
 		\centering
-		\includegraphics[width=\columnwidth]{figures/y_SNR01.pdf}
+		\includegraphics[width=\columnwidth, height=110pt]{figures/y_SNR01.pdf}
 		\caption{$\text{SNR} = 0.1$.}
 	\end{subfigure}
-	\caption{Three measurements at different noise levels: (a)~no noise; (b)~\mbox{$\text{SNR} = 50$}; (c)~\mbox{$\text{SNR} = 0.1$}. Each measurement contains three copies of the target signal. In this work, our goal is to estimate the target signal directly from~$y$. We focus on the low SNR regime~(e.g., panel~(c)) in which the signal occurrences are swamped by the noise, and the locations of the signal occurrences cannot be reliably detected.}
+	\caption{Three measurements at different noise levels: (a)~no noise; (b)~\mbox{$\text{SNR} = 50$}; (c)~\mbox{$\text{SNR} = 0.1$}. Each measurement contains four copies of the target signal. In this work, our goal is to estimate the target signal directly from~$y$. We focus on the low SNR regime~(e.g., panel~(c)) in which the signal occurrences are swamped by the noise, and the locations of the signal occurrences cannot be reliably detected.}
 \label{fig:measurements}
 \end{figure*}
 
@@ -145,6 +145,7 @@ A_{y}^3 [\ell_1, \ell_2] := \frac{1}{N} \sum_{i \in \mathbb{Z}} y[i] y[i + \ell_
 \end{equation}
 
 
+
 \subsection{Autocorrelations under the well-separated model}
 \label{subsec:relations}
 We discuss the \mbox{well-separated} case of the MTD problem, which was studied in~\cite{bendory2019multi}. In this case, we assume that each signal in the measurement~$y$ is separated by at least a full signal length from its neighbors. Specifically, we assume that
@@ -179,7 +180,7 @@ Notably, the relations between the autocorrelations of~$y$ and~$x$ do not direct
 Following~\cite{bendory2019multi}, \cite{lan2020multi}, \cite{marshall2020image}, \cite{bendory2021multi}, \cite{kreymer2021two}, and based on the notations presented above, we formulate a non-convex least squares problem for estimating the signal~$x$ from the autocorrelations of the measurement~$y$:
 \begin{align}
 \label{eq:optimization}
-\min_{x, \gamma > 0} &w_1 (A_y^1 - \gamma A_x^1)^2 \nonumber\\ +& w_2 \sum_{\ell_1 = 0}^{L - 1} \|A_y^2[\ell_1] - \gamma A_x^2[\ell_1] - \sigma^2 \delta[\ell_1]\|_2^2\nonumber\\ +& w_3 \sum_{\ell_1 = 0}^{L - 1} \sum_{\ell_2 = 0}^{L - 1} \|A_y^3[\ell_1, \ell-2] - \gamma A_x^3[\ell_1, \ell_2] \nonumber\\ -& \gamma A_{x}^1 \sigma^2 (\delta[\ell_1] + \delta[\ell_2] + \delta[\ell_1 - \ell_2])\|_2^2,
+\min_{x, \gamma > 0} &w_1 (A_y^1 - \gamma A_x^1)^2 \nonumber\\ +& w_2 \sum_{\ell_1 = 0}^{L - 1} \|A_y^2[\ell_1] - \gamma A_x^2[\ell_1] - \sigma^2 \delta[\ell_1]\|_2^2\nonumber\\ +& w_3 \sum_{\ell_1 = 0}^{L - 1} \sum_{\ell_2 = 0}^{L - 1} \|A_y^3[\ell_1, \ell_2] - \gamma A_x^3[\ell_1, \ell_2] \nonumber\\ -& \gamma A_{x}^1 \sigma^2 (\delta[\ell_1] + \delta[\ell_2] + \delta[\ell_1 - \ell_2])\|_2^2,
 \end{align}
 where the weights were chosen such that each term is equally weighted, as suggested by~\cite{bendory2019multi}. This LS estimator serves as a benchmark for the generalized autocorrelation analysis estimator.
 
@@ -245,46 +246,79 @@ Theorem~\ref{Thm-2-6} provides a matrix~$W$ {that} guarantees a minimal asymptot
 		\Cov[g(\theta)] = \Cov\left[\left\{[A_{y_i}^1;\A_{y_i}^2;\A_{y_i}^3]\right\}_{i = 0}^{N - 1}\right].
 	\end{equation}
 
+
 \section{Numerical experiments}
 \label{sec:numerical}
 This section compares the numerical performance of the generalized autocorrelation analysis and the classical autocorrelation analysis. The optimization problem~(\ref{eq:optimization}) was minimized using the~\mbox{Broyden-Fletcher-Goldfarb-Shanno}~(BFGS) algorithm, while ignoring the positivity constraint on~$\gamma$ (namely, treating it as an unconstrained problem).  We measure the estimation error by
 \begin{equation*}
 \text{error}(x) = \frac{\|x - x^*\|_2}{\|x^*\|_2},
 \end{equation*}
-where~$x^*$ is the true signal, and~$x$ is the estimated signal. In each experiment, the measurements were generated according to~(\ref{eq:model}) with density~\mbox{$\gamma = 0.2$}, and the target signals~$x$ are of length~\mbox{$L = 21$}. We try to estimate the signal from~$5$ random initial guesses, and calculate the estimation error for the estimate whose final objective function is minimal. Then, we  calculate the median  error over 50 trials. The code to reproduce all experiments is publicly available at~\url{https://github.com/krshay/MTD-GMM}.
+where~$x^*$ is the true signal, and~$x$ is the estimated signal. In experiments~\ref{subsec:exp_size} and~\ref{subsec:exp_SNR}, the measurements were generated according to~(\ref{eq:model}) with density~\mbox{$\gamma = 0.2$}, and the target signals~$x$ are of length~\mbox{$L = 21$}. Each entry in the signals was generated by~$x[i] \overset{\text{i.i.d.}}{\sim} \Unif[0, 1)$, and the target signals were normalized such that~$\|x\|_2  =1$. We try to estimate the signal from~$5$ random initial guesses for~$x$ and from~$\gamma_{\text{init}} = 0.18$, and calculate the estimation error for the estimate whose final objective function is minimal. Figures~\ref{fig:err_size_experiment} and~\ref{fig:err_noise_experiment} present the median error over 50 trial. The code to reproduce all experiments is publicly available at~\url{https://github.com/krshay/MTD-GMM}.
 
+\subsection{Recovery from a noisy measurement}
+\label{subsec:exp_recovery}
+In Figure~\ref{fig:recoveries} we present a successful recovery of a target signal of length~\mbox{$L = 11$} from a noisy measurement with~\mbox{$\text{SNR} = 1$} and~\mbox{$\gamma = 0.2$}, using autocorrelation analysis and the generalized autocorrelation analysis. The noise level is visualized in Figure~\ref{fig:measurements}. As expected, the recovery error degrades as the measurement's length increases.
+
+\begin{figure*}[!tb]
+	\begin{subfigure}[ht]{0.245\textwidth}
+		\centering
+		\includegraphics[width=\columnwidth]{figures/y_clean.pdf}
+		\caption{$N = 1.5 \cdot 10^5$.}
+	\end{subfigure}
+	\hfill
+	\begin{subfigure}[ht]{0.245\textwidth}
+		\centering
+		\includegraphics[width=\columnwidth]{figures/y_SNR50.pdf}
+		\caption{$N = 10^7$.}
+	\end{subfigure}
+	\hfill
+	\begin{subfigure}[ht]{0.245\textwidth}
+		\centering
+		\includegraphics[width=\columnwidth]{figures/y_SNR01.pdf}
+		\caption{$N = 1.5 \cdot 10^8$.}
+	\end{subfigure}
+	\hfill
+	\begin{subfigure}[ht]{0.245\textwidth}
+		\centering
+		\includegraphics[width=\columnwidth]{figures/y_SNR01.pdf}
+		\caption{Recovery errors.}
+	\end{subfigure}
+	\caption{The recovery of the target signal~$x$, as a longer and longer subset of~$y$ is observed, using autocorrelation analysis and the generalized autocorrelation analysis. Panel (d) presents the recovery errors using both methods, as a function of the measurement's length.}
+\label{fig:recoveries}
+\end{figure*}
 
 \subsection{Recovery error as a function of the measurement length}
 \label{subsec:exp_size}
-Figure~\ref{fig:err_size_experiment} presents recovery error as a function of the measurement size. We consider measurements with~\mbox{$\text{SNR} = 50$} in different lengths. As expected from the law of large numbers, both estimators' errors  decay as~$N^{-1/2}$, where~$N$ is the length of the measurement. In addition, for all measurements' lengths, the recovery error using the GMM is smaller than the error using the regular MoM estimator.
-%In addition, Theorem~\ref{Thm-2-6} provides the optimality of the GMM estimator over the MoM estimator, and indeed the median error of the GMM estimator is smaller than the error of the MoM estimator for all sizes.
+Figure~\ref{fig:err_size_experiment} presents recovery error as a function of the measurement length~$N$. We set~\mbox{$\text{SNR} = 50$}. As expected from the law of large numbers, the recovery error of both estimators decays as~$N^{-1/2}$, where~$N$ is the length of the measurement. Evidently, the generalized autocorrelation analysis significantly outperforms the classical autocorrelation analysis for all~$N$.
 
 \begin{figure}[!tb]
 	\begin{subfigure}[ht]{\columnwidth}
 		\centering
 		\includegraphics[width=\columnwidth]{figures/experiment_size_err.pdf}
 	\end{subfigure}
-	\caption{The median estimation error of recovering the signal~$x$, as a function of the measurement length~$N$, by: (a)~the MoM estimator; (b)~the GMM estimator.}
+	\caption{The median estimation error of recovering the signal~$x$, as a function of the measurement length~$N$, by: (a)~the autocorrelation analysis estimator; (b)~the generalized autocorrelation analysis estimator. Evidently, the generalized autocorrelation analysis significantly outperforms the classical autocorrelation analysis for all~$N$.}
 \label{fig:err_size_experiment}
 \end{figure}
 
 \subsection{Recovery error as a function of SNR}
-Figure~\ref{fig:err_noise_experiment} presents recovery error as a function of SNR. We consider a fixed length of the measurements~$N = 10^6$. For all levels of SNR, the recovery error using the GMM is smaller than the error using the regular MoM estimator.
+\label{subsec:exp_SNR}
+Figure~\ref{fig:err_noise_experiment} presents recovery error as a function of SNR, for~$N = 10^6$. For all levels of SNR, the recovery error using the GMM is smaller than the error using the regular MoM estimator. In addition, the slope of the error curve increases dramatically at low SNR, which is a known phenomenon in the \mbox{cryo-EM} literature, see for example~\cite{sigworth1998maximum}, \cite{abbe2018multireference}, \cite{perry2019sample}.
 
 \begin{figure}[!tb]
 	\begin{subfigure}[ht]{\columnwidth}
 		\centering
 		\includegraphics[width=\columnwidth]{figures/experiment_SNR_err.pdf}
 	\end{subfigure}
-	\caption{Median estimation error of recovering the signal~$x$, as a function of SNR, by: (a)~the MoM estimator; (b)~the GMM estimator.}
+	\caption{The median estimation error of recovering the signal~$x$, as a function of SNR, by: (a)~the autocorrelation analysis estimator; (b)~the generalized autocorrelation analysis estimator.}
 \label{fig:err_noise_experiment}
 \end{figure}
 
 \section{Conclusion}
 \label{sec:conclusion}
-This paper is motivated by the effort of reconstructing small~\mbox{3-D} molecular structures using \mbox{cryo-EM}, below the current detection limit. The main contribution of this study is in extending the MoM framework developed in~\cite{bendory2019multi}, by introducing a GMM framework for the \mbox{1-D} case of the MTD problem, following the foundations laid in~\cite{abas2021generalized}. The optimality of the GMM framework was presented in Theorem~\ref{Thm-2-6}, and corroborated by numerical experiments.
+This paper is motivated by the effort of reconstructing small~\mbox{3-D} molecular structures using \mbox{cryo-EM}, below the current detection limit. The main contribution of this study is incorporating the generalized method of moments into the computational framework proposed in~\cite{bendory2018toward} for the MTD problem. The optimality of the generalized framework was presented in Theorem~\ref{Thm-2-6}, and corroborated by numerical experiments. Previous numerical experiments~\cite{kreymer2021two} suggest that naive detection, extraction and averaging fails for low SNR regimes, such that study of methods that do not require accurate detection of signal occurrences is of significance to the problem on hand.
 
-Future work includes extending the GMM estimator to the~\mbox{2-D} and~\mbox{3-D} cases of the MTD problem. Furthermore, this work dealt only with the well-separated model of the MTD problem. Extending the GMM framework to the case of an arbitrary spacing distribution between signal and image occurrences~\cite{lan2020multi}, \cite{kreymer2021two}, constitutes another possible future work.
+Future work includes extending the generalized autocorrelation analysis estimator to the~\mbox{2-D} and~\mbox{3-D} cases of the MTD problem, and extending the framework to the case of an arbitrary spacing distribution between signal and image occurrences~\cite{lan2020multi}, \cite{kreymer2021two}. Designing other inference techniques, such as maximum likelihood estimators~\cite{lan2020multi}, for the two-dimensional MTD problem is also a possible future research direction.
+
 
 \vfill
 

@@ -121,4 +121,26 @@ Jianqing Fan and Yiqiao Zhong,
   generalized method of moments,''
 \newblock {\em arXiv preprint arXiv:1805.02826}, 2018.
 
+\bibitem{sigworth1998maximum}
+Fred~J Sigworth,
+\newblock ``A maximum-likelihood approach to single-particle image
+  refinement,''
+\newblock {\em Journal of structural biology}, vol. 122, no. 3, pp. 328--339,
+  1998.
+
+\bibitem{abbe2018multireference}
+Emmanuel Abbe, Tamir Bendory, William Leeb, Jo{\~a}o~M Pereira, Nir Sharon, and
+  Amit Singer,
+\newblock ``Multireference alignment is easier with an aperiodic translation
+  distribution,''
+\newblock {\em IEEE Transactions on Information Theory}, vol. 65, no. 6, pp.
+  3565--3584, 2018.
+
+\bibitem{perry2019sample}
+Amelia Perry, Jonathan Weed, Afonso~S Bandeira, Philippe Rigollet, and Amit
+  Singer,
+\newblock ``The sample complexity of multireference alignment,''
+\newblock {\em SIAM Journal on Mathematics of Data Science}, vol. 1, no. 3, pp.
+  497--517, 2019.
+
 \end{thebibliography}
