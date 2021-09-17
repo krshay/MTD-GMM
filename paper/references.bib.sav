@@ -679,7 +679,14 @@ doi = {10.1016/j.jsb.2008.12.008}
   volume  = {15},
 }
 
-@Article{,
+@Article{akbar2016more,
+  author    = {Akbar, Saeed and Poletti-Hughes, Jannine and El-Faitouri, Ramadan and Shah, Syed Zulfiqar Ali},
+  journal   = {Research in International Business and Finance},
+  title     = {More on the relationship between corporate governance and firm performance in the UK: Evidence from the application of generalized method of moments estimation},
+  year      = {2016},
+  pages     = {417--429},
+  volume    = {38},
+  publisher = {Elsevier},
 }
 
 @Comment{jabref-meta: databaseType:bibtex;}
