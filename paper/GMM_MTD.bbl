@@ -105,21 +105,47 @@ Lars~Peter Hansen,
   estimators,''
 \newblock {\em Econometrica}, vol. 50, no. 4, pp. 1029, 1982.
 
-\bibitem{Hall2005}
-Alastair~R Hall,
-\newblock {\em Generalized method of moments},
-\newblock Oxford university press, 2005.
+\bibitem{wooldridge2001applications}
+Jeffrey~M Wooldridge,
+\newblock ``Applications of generalized method of moments estimation,''
+\newblock {\em Journal of Economic perspectives}, vol. 15, no. 4, pp. 87--100,
+  2001.
 
-\bibitem{abas2021generalized}
-Asaf Abas, Tamir Bendory, and Nir Sharon,
-\newblock ``The generalized method of moments for multi-reference alignment,''
-\newblock {\em arXiv preprint arXiv:2103.02215}, 2021.
+\bibitem{akbar2016more}
+Saeed Akbar, Jannine Poletti-Hughes, Ramadan El-Faitouri, and Syed Zulfiqar~Ali
+  Shah,
+\newblock ``More on the relationship between corporate governance and firm
+  performance in the uk: Evidence from the application of generalized method of
+  moments estimation,''
+\newblock {\em Research in International Business and Finance}, vol. 38, pp.
+  417--429, 2016.
 
 \bibitem{fan2018optimal}
 Jianqing Fan and Yiqiao Zhong,
 \newblock ``Optimal subspace estimation using overidentifying vectors via
   generalized method of moments,''
 \newblock {\em arXiv preprint arXiv:1805.02826}, 2018.
+
+\bibitem{roodman2009xtabond2}
+David Roodman,
+\newblock ``How to do xtabond2: An introduction to difference and system {GMM}
+  in stata,''
+\newblock {\em The stata journal}, vol. 9, no. 1, pp. 86--136, 2009.
+
+\bibitem{abas2021generalized}
+Asaf Abas, Tamir Bendory, and Nir Sharon,
+\newblock ``The generalized method of moments for multi-reference alignment,''
+\newblock {\em arXiv preprint arXiv:2103.02215}, 2021.
+
+\bibitem{de2002properties}
+Robert De~Jong and Chirok Han,
+\newblock ``The properties of lp-{GMM} estimators,''
+\newblock {\em Econometric Theory}, vol. 18, no. 2, pp. 491--504, 2002.
+
+\bibitem{Hall2005}
+Alastair~R Hall,
+\newblock {\em Generalized method of moments},
+\newblock Oxford university press, 2005.
 
 \bibitem{sigworth1998maximum}
 Fred~J Sigworth,
