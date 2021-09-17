@@ -127,20 +127,20 @@ where~$\ell_1, \ldots, \ell_{q-1}$ are integer shifts. Indexing out of bounds is
 by the law of large numbers.
 
 Our goal is to relate the autocorrelations of the measurement~$y$ with the target signal~$x$. In particular, the first-order autocorrelation is defined as
-\begin{equation}
+\begin{equation*}
 %\label{eq:AM1}
 A_{y}^1 := \frac{1}{N} \sum_{i \in \mathbb{Z}} y[i],
-\end{equation}
+\end{equation*}
 which is just the mean of the measurement. The second-order autocorrelation of~$y$, \mbox{$A_{y}^2: \mathbb{Z} \rightarrow \mathbb{R}$}, is defined by
-\begin{equation}
+\begin{equation*}
 %\label{eq:AM2}
 A_{y}^2 [\ell_1] := \frac{1}{N} \sum_{i \in \mathbb{Z}} y[i] y[i + \ell_1],
-\end{equation}
+\end{equation*}
 and the third-order autocorrelation~\mbox{$A_{y}^3: \mathbb{Z} \times \mathbb{Z} \rightarrow \mathbb{R}$} by
-\begin{equation}
+\begin{equation*}
 %\label{eq:AM3}
 A_{y}^3 [\ell_1, \ell_2] := \frac{1}{N} \sum_{i \in \mathbb{Z}} y[i] y[i + \ell_1] y[i + \ell_2].
-\end{equation}
+\end{equation*}
 
 
 \subsection{Autocorrelations under the well-separated model}
@@ -202,7 +202,7 @@ This choice of the moment function~$f(\theta, y)$ must fulfill~\eqref{Eq-GMM-1} 
 	f(\theta, y_i) := \\
 	\begin{bmatrix}
 		&\gamma A_x^1 - A_{y_i}^1\\
-		&\left\{\gamma A_x^2[\ell_1] + \sigma^2 \delta[\ell_1] - A_{y_i}^2 [\ell_1]\right\}_{\ell_1 =0}^{L-1} \\
+		&\left\{\gamma A_x^2[\ell] + \sigma^2 \delta[\ell] - A_{y_i}^2 [\ell]\right\}_{\ell  =0}^{L-1} \\
 		&\left\{\gamma A_x^3[\ell_1, \ell_2] + \gamma B(x, \ell_1, \ell_2) - A_{y_i}^3[\ell_1, \ell_2]\right\}_{\ell_1, \ell_2 = 0}^{L-1}
 	\end{bmatrix},
 \end{multline}
@@ -214,7 +214,7 @@ The GMM estimator is defined as the minimizer of the weighted LS expression
 \begin{equation} \label{Eq-2-1}
 	\hat{\theta}_N = \arg\min_{\theta \in \Theta} \ g_N(\theta)^T W_N g_N(\theta).
 \end{equation}
-Here, $W_N$ is a fixed positive semi-definite (PSD) matrix. Note that the LS estimator~(\ref{eq:optimization}) is a special case of~(\ref{Eq-2-1}), where~$W_N$ is the identity matrix.
+Here, $W_N$ is a fixed positive semi-definite (PSD) matrix. Note that the LS estimator~(\ref{eq:optimization}) is a special case of~(\ref{Eq-2-1}), where~$W_N$ is the diagonal matrix with the weights from~\eqref{eq:optimization}.
 
 \subsubsection{Large sample properties}
 \label{gmm:large}
@@ -293,7 +293,7 @@ Figure~\ref{fig:err_size_experiment} presents recovery error as a function of th
 		\centering
 		\includegraphics[width=\columnwidth]{figures/experiment_size_err.pdf}
 	\end{subfigure}
-	\caption{The median estimation error of recovering the signal~$x$, as a function of the measurement length~$N$, by: (a)~the autocorrelation analysis estimator; (b)~the generalized autocorrelation analysis estimator. Evidently, the generalized autocorrelation analysis significantly outperforms the classical autocorrelation analysis for all~$N$.}
+	\caption{\asafc{without pixels, maybe $L$}The median estimation error of recovering the signal~$x$, as a function of the measurement length~$N$, by: (a)~the autocorrelation analysis estimator; (b)~the generalized autocorrelation analysis estimator. Evidently, the generalized autocorrelation analysis significantly outperforms the classical autocorrelation analysis for all~$N$.}
 \label{fig:err_size_experiment}
 \end{figure}
 
