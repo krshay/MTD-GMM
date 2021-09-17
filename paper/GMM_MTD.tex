@@ -49,7 +49,7 @@
 \ninept
 % Title.
 % ------
-\title{Generalized autocorrelation analysis for multi-target detection}
+\title{The generalized method of moments for multi-target detection}
 %
 % Single address.
 % ---------------
@@ -109,8 +109,8 @@ In the current analysis workflow of \mbox{cryo-EM} data \cite{bendory2020single}
 
 The MTD model was devised in \cite{bendory2018toward} in order to study the recovery of small molecules directly from the micrograph, below the current detection limit of \mbox{cryo-EM}~\cite{henderson1995potential},~\cite{d2021current}. An autocorrelation analysis technique (see Section~\ref{subsec:ac}) was implemented to recover \mbox{low-resolution}~\mbox{3-D} structures from noiseless simulated data under a simplified model. Autocorrelation analysis consists of finding a signal that best explains the empirical autocorrelations of the measurement, for example by minimizing a {least-squares} (LS) objective~(see Section~\ref{subsec:sig_recovery}). For any noise level, those autocorrelations can be estimated to any desired accuracy for sufficiently large~$N$. Computing the autocorrelations is straightforward and requires only one pass over the data, which is advantageous for massively large datasets, such as \mbox{cryo-EM} datasets~\cite{bendory2020single}.
 
-Autocorrelation analysis is a special case of the method of moment, which is a classical statistical inference technique, tracing back to 1894~\cite{pearson1894contributions}. This work studies the application of the generalized method of moments~\cite{Hansen1982}, or, more precisely, the \textit{generalized autocorrelation analysis}, to the MTD problem. In the classical autocorrelation analysis, we wish to find a signal whose autocorrelations match the observed autocorrelations. This is usually done by minimizing a LS objective. The generalized autocorrelation analysis suggests replacing the LS objective with a weighted LS, and provides a recipe of how to compute the optimal weights; see Section~\ref{subsec:generalized_ac}. The generalized method of moments has been proven to be highly effective in a variety of computational task, such as \textbf{Asaf, I guess you know what Tamir means here} [] % Add references from the economics literature
-We also mention that the framework can be formulated with other objective functions, rather than LS \textbf{and here.} [REF].
+Autocorrelation analysis is a special case of the method of moment, which is a classical statistical inference technique, tracing back to 1894~\cite{pearson1894contributions}. This work studies the application of the generalized method of moments, or, more precisely, the \textit{generalized autocorrelation analysis}, to the MTD problem~\cite{Hansen1982}. In the classical autocorrelation analysis, we wish to find a signal whose autocorrelations match the observed autocorrelations. This is usually done by minimizing a LS objective. The generalized autocorrelation analysis suggests replacing the LS objective with a weighted LS, and provides a recipe of how to compute the optimal weights; see Section~\ref{subsec:generalized_ac}. The generalized method of moments has been proven to be highly effective in a variety of computational task, such as~\cite{wooldridge2001applications,akbar2016more,fan2018optimal,roodman2009xtabond2, abas2021generalized}.
+We also mention that the framework can be formulated with other objective functions, rather than LS~\cite{Jong2002}.
 
 The main contribution of this paper is extending the autocorrelation analysis framework introduced in~\cite{bendory2019multi} by developing a generalized autocorrelation analysis framework for the one-dimensional MTD problem. We devise an algorithm for the recovery of the target signal from a measurement, and demonstrate a successful reconstruction in noisy regimes~(see Section~\ref{sec:numerical}). Moreover, we show that the generalized autocorrelation analysis estimator outperforms the classical estimator in different SNRs and measurement's lengths (see Section~\ref{sec:numerical}). It is thus a first step towards applying the generalized method of moments to recovering small molecules from \mbox{cryo-EM} micrographs~\cite{bendory2018toward}.
 
@@ -124,7 +124,7 @@ A_z^q[\ell_1, \ldots, \ell_{q-1}] := \mathbb{E}_z\Big[\frac{1}{N} \sum_{i \in \m
 \end{equation}
 where~$\ell_1, \ldots, \ell_{q-1}$ are integer shifts. Indexing out of bounds is zero-padded, that is,~\mbox{$z[i] = 0$} out of the range~\mbox{$\{0, \ldots, {N-1}\}$}. In this work, we use the first three autocorrelations. As~$N$ grows indefinitely, the empirical autocorrelations of~$z$ almost surely (a.s.) converge to the population autocorrelations of~$z$:
 \begin{equation}
-\lim_{N \rightarrow \infty} \frac{1}{N} \sum_{i \in \mathbb{Z}^2} z[i] z[i + \ell_1] \cdots z[i + \ell_{q-1}] \stackrel{\text{a.s.}}{=}A_z^q[\ell_1, \ldots, \ell_{q-1}],
+\lim_{N \rightarrow \infty} \frac{1}{N} \sum_{i \in \mathbb{Z}} z[i] z[i + \ell_1] \cdots z[i + \ell_{q-1}] \stackrel{\text{a.s.}}{=}A_z^q[\ell_1, \ldots, \ell_{q-1}],
 \end{equation}
 by the law of large numbers.
 
@@ -169,9 +169,9 @@ for~$\ell_1, \ell_2 \in \mathcal{L}$, where
 \delta[\ell] = \begin{cases} 1 \text{ if } \ell = \vec{0}, \\ 0 \text{ otherwise}, \end{cases}
 \end{equation*}
 is the Kronecker delta function. Here,~$\gamma$ is the density of the target images in the measurement and is defined by
-\begin{equation}
+\begin{equation*}
 \gamma = p \frac{L}{N}.
-\end{equation}
+\end{equation*}
 
 Notably, the relations between the autocorrelations of~$y$ and~$x$ do not directly depend on the location of individual signal occurrences in the measurement, but only through the density parameter~$\gamma$. Therefore, detecting the signal occurrences is not a prerequisite for signal recovery, and thus signal recovery is possible even in very low SNR regimes.
 
@@ -209,6 +209,7 @@ This choice of the moment function~$f(\theta, y)$ must fulfill~\eqref{Eq-GMM-1} 
 		&\left\{\gamma A_x^3[\ell_1, \ell_2] + \gamma B(x, \ell_1, \ell_2) - A_{y_i}^3[\ell_1, \ell_2]\right\}_{\ell_1, \ell_2 = 0}^{L-1}
 	\end{bmatrix},
 \end{multline}
+\asafc{I think it is unreadable}
 where~$B(x, \ell_1, \ell_2) := A_{x}^1 \sigma^2 (\delta[\ell_1] + \delta[\ell_2] + \delta[\ell_1 - \ell_2])$, and~$\theta := [x, \gamma]$. The estimated sample moment function is the average of~$f$ over~$N$ observations:
 \begin{equation}\label{Eq-2-5}
 	g_N(\theta) = \frac{1}{N} \sum_{i = 0}^{N - 1} f(\theta, y_i).
@@ -217,7 +218,7 @@ The GMM estimator is defined as the minimizer of the weighted LS expression
 \begin{equation} \label{Eq-2-1}
 	\hat{\theta}_N = \arg\min_{\theta \in \Theta} \ g_N(\theta)^T W_N g_N(\theta).
 \end{equation}
-Here, $W_N$ is a fixed positive semi-definite (PSD) matrix. Note that the LS estimator~(\ref{eq:optimization}) is a special case of~(\ref{Eq-2-1}), where~$W_N$ is the identity matrix.
+Here, $W_N$ is a fixed positive semi-definite (PSD) matrix. Note that the LS estimator~\eqref{eq:optimization} is a special case of~\eqref{Eq-2-1}, where~$W_N$ is the diagonal matrix with the weights from~\eqref{eq:optimization}
 
 \subsubsection{Large sample properties}
 \label{gmm:large}
@@ -249,7 +250,7 @@ Theorem~\ref{Thm-2-6} provides a matrix~$W$ {that} guarantees a minimal asymptot
 
 \section{Numerical experiments}
 \label{sec:numerical}
-This section compares the numerical performance of the generalized autocorrelation analysis and the classical autocorrelation analysis. The optimization problem~(\ref{eq:optimization}) was minimized using the~\mbox{Broyden-Fletcher-Goldfarb-Shanno}~(BFGS) algorithm, while ignoring the positivity constraint on~$\gamma$ (namely, treating it as an unconstrained problem).  We measure the estimation error by
+This section compares the numerical performance of the generalized method of moments and the classical autocorrelation analysis. The optimization problem~(\ref{eq:optimization}) was minimized using the~\mbox{Broyden-Fletcher-Goldfarb-Shanno}~(BFGS) algorithm, while ignoring the positivity constraint on~$\gamma$ (namely, treating it as an unconstrained problem).  We measure the estimation error by
 \begin{equation*}
 \text{error}(x) = \frac{\|x - x^*\|_2}{\|x^*\|_2},
 \end{equation*}
