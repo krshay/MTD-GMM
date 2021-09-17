@@ -12,15 +12,11 @@ import utils
 
 np.random.seed(10)
 
-L = 11
-N = 120
+L = 8
+N = 200
 gamma = 0.4
 
-x = np.zeros((L ,))
-x = np.zeros((L ,))
-x[0] = 0.5; x[1] = 0.7; x[2] = 0.2; x[3] = 0.5; x[4] = 1; x[5] = 0.25; x[6] = 1; x[7] = 0.85; x[8] = 0.2; x[9] = 0.55; x[10] = 0.1
-
-x = x / np.linalg.norm(x)
+x = np.random.rand(L)
 x = x / np.linalg.norm(x)
 y_clean = utils.generate_micrograph_1d(x, gamma, L, N)
 

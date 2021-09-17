@@ -96,9 +96,9 @@ where \mbox{$\{\ell_i\}_{i=1}^{p} \in \{L + 1, \ldots, N-L\}$} are arbitrary tra
 	\begin{subfigure}[ht]{0.33\textwidth}
 		\centering
 		\includegraphics[width=\columnwidth, height=100pt]{figures/y_SNR01.pdf}
-		\caption{$\text{SNR} = 0.1$.}
+		\caption{$\text{SNR} = 0.5$.}
 	\end{subfigure}
-	\caption{Three measurements at different noise levels: (a)~no noise; (b)~\mbox{$\text{SNR} = 50$}; (c)~\mbox{$\text{SNR} = 0.1$}. Each measurement contains four copies of the target signal. In this work, our goal is to estimate the target signal directly from~$y$. We focus on the low SNR regime~(e.g., panel~(c)) in which the signal occurrences are swamped by the noise, and the locations of the signal occurrences cannot be reliably detected.}
+	\caption{Three measurements at different noise levels: (a)~no noise; (b)~\mbox{$\text{SNR} = 50$}; (c)~\mbox{$\text{SNR} = 0.5$}. Each measurement contains multiple copies of the target signal. In this work, our goal is to estimate the target signal directly from~$y$. We focus on the low SNR regime~(e.g., panel~(c)) in which the signal occurrences are swamped by the noise, and the locations of the signal occurrences cannot be reliably detected.}
 \label{fig:measurements}
 \end{figure*}
 
@@ -242,28 +242,28 @@ The large sample properties of the GMM estimator were derived in~\cite{Hansen198
 \begin{figure*}[!tb]
 	\begin{subfigure}[ht]{0.245\textwidth}
 		\centering
-		\includegraphics[width=\columnwidth]{figures/y_clean.pdf}
-		\caption{$N = 1.5 \cdot 10^5$.}
+		\includegraphics[width=\columnwidth]{figures/recovery_1.pdf}
+		\caption{$N = 10^5$.}
 	\end{subfigure}
 	\hfill
 	\begin{subfigure}[ht]{0.245\textwidth}
 		\centering
-		\includegraphics[width=\columnwidth]{figures/y_SNR50.pdf}
+		\includegraphics[width=\columnwidth]{figures/recovery_2.pdf}
+		\caption{$N = 10^6$.}
+	\end{subfigure}
+	\hfill
+	\begin{subfigure}[ht]{0.245\textwidth}
+		\centering
+		\includegraphics[width=\columnwidth]{figures/recovery_3.pdf}
 		\caption{$N = 10^7$.}
 	\end{subfigure}
 	\hfill
 	\begin{subfigure}[ht]{0.245\textwidth}
 		\centering
-		\includegraphics[width=\columnwidth]{figures/y_SNR01.pdf}
-		\caption{$N = 1.5 \cdot 10^8$.}
-	\end{subfigure}
-	\hfill
-	\begin{subfigure}[ht]{0.245\textwidth}
-		\centering
-		\includegraphics[width=\columnwidth]{figures/y_SNR01.pdf}
+		\includegraphics[width=\columnwidth]{figures/recovery_errs.pdf}
 		\caption{Recovery errors.}
 	\end{subfigure}
-	\caption{The recovery of the target signal~$x$, as a longer and longer subset of~$y$ is observed, using autocorrelation analysis and the generalized autocorrelation analysis. Panel (d) presents the recovery errors using both methods, as a function of the measurement's length.}
+	\caption{The recovery of the target signal~$x$, as a longer and longer subset of~$y$ with~\mbox{$\text{SNR} = 0.5$} is observed, using autocorrelation analysis and the generalized autocorrelation analysis. Panel (d) presents the recovery errors using both methods, as a function of the measurement's length.}
 \label{fig:recoveries}
 \end{figure*}
 Theorem~\ref{Thm-2-6} provides a matrix~$W$ {that} guarantees a minimal asymptotic variance of the estimator’s error. The covariance matrix~$S$ {of~(\ref{eqn:cov_mat_S}), which plays a central role in Theorem~\ref{Thm-2-6},} is required to be a positive definite matrix. Therefore, the moment function must be chosen so that~$S$ is full-rank. As in~\cite{abas2021generalized},  we remove the repeating entries of~$f$ (that appear due to the inherent symmetries of the autocorrelations). Moreover, in practice, the ground truth~$\theta_0$ is unknown a priori, so we cannot use the optimal weighting matrix. However, for our choice of the moment function~(\ref{Eq-GMM-2}), the matrix~$S$ is independent of the parameters of interest, and thus can be computed from the data:
@@ -282,7 +282,7 @@ where~$x^*$ is the true signal, and~$x$ is the estimated signal. In experiments~
 
 \subsection{Recovery from a noisy measurement}
 \label{subsec:exp_recovery}
-In Figure~\ref{fig:recoveries} we present a successful recovery of a target signal of length~\mbox{$L = 11$} from a noisy measurement with~\mbox{$\text{SNR} = 1$} and~\mbox{$\gamma = 0.2$}, using autocorrelation analysis and the generalized autocorrelation analysis. The noise level is visualized in Figure~\ref{fig:measurements}. As expected, the recovery error degrades as the measurement's length increases.
+In Figure~\ref{fig:recoveries} we present a successful recovery of a target signal of length~\mbox{$L = 11$} from a noisy measurement with~\mbox{$\text{SNR} = 0.5$} and~\mbox{$\gamma = 0.2$}, using autocorrelation analysis and the generalized autocorrelation analysis. The noise level is visualized in Figure~\ref{fig:measurements}. As expected, the recovery error degrades as the measurement's length increases.
 
 \subsection{Recovery error as a function of the measurement length}
 \label{subsec:exp_size}
