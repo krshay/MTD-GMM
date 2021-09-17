@@ -1,0 +1,14 @@
+\BOOKMARK [1][-]{section.1}{ Introduction}{}% 1
+\BOOKMARK [1][-]{section.2}{ Computational framework}{}% 2
+\BOOKMARK [2][-]{subsection.2.1}{ Autocorrelation analysis}{section.2}% 3
+\BOOKMARK [2][-]{subsection.2.2}{ Autocorrelations under the well-separated model}{section.2}% 4
+\BOOKMARK [2][-]{subsection.2.3}{ Signal recovery from autocorrelations}{section.2}% 5
+\BOOKMARK [2][-]{subsection.2.4}{ The generalized autocorrelation analysis}{section.2}% 6
+\BOOKMARK [3][-]{subsubsection.2.4.1}{ The GMM framework}{subsection.2.4}% 7
+\BOOKMARK [3][-]{subsubsection.2.4.2}{ Large sample properties}{subsection.2.4}% 8
+\BOOKMARK [1][-]{section.3}{ Numerical experiments}{}% 9
+\BOOKMARK [2][-]{subsection.3.1}{ Recovery from a noisy measurement}{section.3}% 10
+\BOOKMARK [2][-]{subsection.3.2}{ Recovery error as a function of the measurement length}{section.3}% 11
+\BOOKMARK [2][-]{subsection.3.3}{ Recovery error as a function of SNR}{section.3}% 12
+\BOOKMARK [1][-]{section.4}{ Conclusion}{}% 13
+\BOOKMARK [1][-]{section.5}{ References}{}% 14
