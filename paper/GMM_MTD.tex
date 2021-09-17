@@ -83,19 +83,19 @@ where \mbox{$\{\ell_i\}_{i=1}^{p} \in \{L + 1, \ldots, N-L\}$} are arbitrary tra
 \begin{figure*}[!tb]
 	\begin{subfigure}[ht]{0.33\textwidth}
 		\centering
-		\includegraphics[width=\columnwidth, height=100pt]{figures/y_clean.pdf}
+		\includegraphics[width=\columnwidth]{figures/y_clean.pdf}
 		\caption{No noise.}
 	\end{subfigure}
 	\hfill
 	\begin{subfigure}[ht]{0.33\textwidth}
 		\centering
-		\includegraphics[width=\columnwidth, height=100pt]{figures/y_SNR50.pdf}
+		\includegraphics[width=\columnwidth]{figures/y_SNR50.pdf}
 		\caption{$\text{SNR} = 50$.}
 	\end{subfigure}
 	\hfill
 	\begin{subfigure}[ht]{0.33\textwidth}
 		\centering
-		\includegraphics[width=\columnwidth, height=100pt]{figures/y_SNR01.pdf}
+		\includegraphics[width=\columnwidth]{figures/y_SNR01.pdf}
 		\caption{$\text{SNR} = 0.5$.}
 	\end{subfigure}
 	\caption{Three measurements at different noise levels: (a)~no noise; (b)~\mbox{$\text{SNR} = 50$}; (c)~\mbox{$\text{SNR} = 0.5$}. Each measurement contains multiple copies of the target signal. In this work, our goal is to estimate the target signal directly from~$y$. We focus on the low SNR regime~(e.g., panel~(c)) in which the signal occurrences are swamped by the noise, and the locations of the signal occurrences cannot be reliably detected.}
@@ -108,7 +108,7 @@ In the current analysis workflow of \mbox{cryo-EM} data \cite{bendory2020single}
 
 The MTD model was devised in \cite{bendory2018toward} in order to study the recovery of small molecules directly from the micrograph, below the current detection limit of \mbox{cryo-EM}~\cite{henderson1995potential},~\cite{d2021current}. An autocorrelation analysis technique (see Section~\ref{subsec:ac}) was implemented to recover \mbox{low-resolution}~\mbox{3-D} structures from noiseless simulated data under a simplified model. Autocorrelation analysis consists of finding a signal that best explains the empirical autocorrelations of the measurement, for example by minimizing a {least-squares} (LS) objective~(see Section~\ref{subsec:sig_recovery}). For any noise level, those autocorrelations can be estimated to any desired accuracy for sufficiently large~$N$. Computing the autocorrelations is straightforward and requires only one pass over the data, which is advantageous for massively large datasets, such as \mbox{cryo-EM} datasets~\cite{bendory2020single}.
 
-Autocorrelation analysis is a special case of the method of moment, which is a classical statistical inference technique, tracing back to 1894~\cite{pearson1894contributions}. This work studies the application of the generalized method of moments (GMM), or, more precisely, the \textit{generalized autocorrelation analysis}, to the MTD problem~\cite{Hansen1982}. In the classical autocorrelation analysis, we wish to find a signal whose autocorrelations match the observed autocorrelations. This is usually done by minimizing a LS objective. The generalized autocorrelation analysis suggests replacing the LS objective with a weighted LS, and provides a recipe of how to compute the optimal weights; see Section~\ref{subsec:generalized_ac}. The generalized method of moments has been proven to be highly effective in a variety of computational task, such as~\cite{wooldridge2001applications}, \cite{akbar2016more}, \cite{fan2018optimal}, \cite{roodman2009xtabond2}, \cite{abas2021generalized}. We also mention that the framework can be formulated with other objective functions, rather than LS~\cite{de2002properties}.
+Autocorrelation analysis is a special case of the method of moment, which is a classical statistical inference technique, tracing back to 1894~\cite{pearson1894contributions}. This work studies the application of the generalized method of moments (GMM)~\cite{Hansen1982}, or, more precisely, the \textit{generalized autocorrelation analysis}, to the MTD problem. The generalized autocorrelation analysis suggests replacing the LS objective of autocorrelation analysis with a weighted LS, and provides a recipe of how to compute the optimal weights; see Section~\ref{subsec:generalized_ac}. GMM has been proven to be highly effective in a variety of computational tasks, such as~\cite{wooldridge2001applications}, \cite{akbar2016more}, \cite{fan2018optimal}, \cite{roodman2009xtabond2}, \cite{abas2021generalized}. We also mention that the framework can be formulated with other objective functions, rather than LS~\cite{de2002properties}.
 
 The main contribution of this paper is extending the autocorrelation analysis framework introduced in~\cite{bendory2019multi} by developing a generalized autocorrelation analysis framework for the one-dimensional MTD problem. We devise an algorithm for the recovery of the target signal from a measurement, and demonstrate a successful reconstruction in noisy regimes~(see Section~\ref{sec:numerical}). Moreover, we show that the generalized autocorrelation analysis estimator outperforms the classical estimator in different SNRs and measurement's lengths (see Section~\ref{sec:numerical}). It is thus a first step towards applying the generalized method of moments to recovering small molecules from \mbox{cryo-EM} micrographs~\cite{bendory2018toward}.
 
@@ -293,7 +293,7 @@ Figure~\ref{fig:err_size_experiment} presents recovery error as a function of th
 		\centering
 		\includegraphics[width=\columnwidth]{figures/experiment_size_err.pdf}
 	\end{subfigure}
-	\caption{\asafc{without pixels, maybe $L$}The median estimation error of recovering the signal~$x$, as a function of the measurement length~$N$, by: (a)~the autocorrelation analysis estimator; (b)~the generalized autocorrelation analysis estimator. Evidently, the generalized autocorrelation analysis significantly outperforms the classical autocorrelation analysis for all~$N$.}
+	\caption{The median estimation error of recovering the signal~$x$, as a function of the measurement length~$N$, by: (a)~the autocorrelation analysis estimator; (b)~the generalized autocorrelation analysis estimator. Evidently, the generalized autocorrelation analysis significantly outperforms the classical autocorrelation analysis for all~$N$.}
 \label{fig:err_size_experiment}
 \end{figure}
 
