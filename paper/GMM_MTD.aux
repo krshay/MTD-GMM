@@ -62,7 +62,6 @@
 \citation{bendory2021multi}
 \citation{kreymer2021two}
 \citation{bendory2019multi}
-\citation{Hansen1982}
 \@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces Three MTD measurements\nobreakspace  {}\textup  {\hbox {\mathsurround \z@ \normalfont  (\ignorespaces \ref  {eq:model}\unskip \@@italiccorr )}} at different noise levels: (a)\nobreakspace  {}no noise; (b)\nobreakspace  {}\unhbox \voidb@x \hbox {$\text  {SNR} = 50$}; (c)\nobreakspace  {}\unhbox \voidb@x \hbox {$\text  {SNR} = 0.5$}. Each measurement contains six copies of the target signal. Our goal is to estimate the target signal directly from\nobreakspace  {}$y$. We focus on the low SNR regime\nobreakspace  {}(e.g., panel\nobreakspace  {}(c)) in which the signal occurrences are swamped by the noise, and the locations of the signal occurrences cannot be reliably detected.\relax }}{2}{figure.caption.1}}
 \providecommand*\caption@xref[2]{\@setref\relax\@undefined{#1}}
 \newlabel{fig:measurements}{{1}{2}{Three MTD measurements~\eqref {eq:model} at different noise levels: (a)~no noise; (b)~\mbox {$\text {SNR} = 50$}; (c)~\mbox {$\text {SNR} = 0.5$}. Each measurement contains six copies of the target signal. Our goal is to estimate the target signal directly from~$y$. We focus on the low SNR regime~(e.g., panel~(c)) in which the signal occurrences are swamped by the noise, and the locations of the signal occurrences cannot be reliably detected.\relax }{figure.caption.1}{}}
@@ -71,11 +70,15 @@
 \@writefile{toc}{\contentsline {subsection}{\numberline {2.1} Autocorrelation analysis}{2}{subsection.2.1}}
 \newlabel{subsec:ac}{{2.1}{2}{Autocorrelation analysis}{subsection.2.1}{}}
 \newlabel{eq:genericAC}{{4}{2}{Autocorrelation analysis}{equation.2.4}{}}
-\newlabel{subsec:sig_recovery}{{2.1}{2}{Autocorrelation analysis}{equation.2.7}{}}
+\newlabel{eq:well_separated_1st}{{5}{2}{Autocorrelation analysis}{equation.2.5}{}}
+\newlabel{eq:well_separated_2nd}{{6}{2}{Autocorrelation analysis}{equation.2.6}{}}
+\newlabel{eq:well_separated_3rd}{{7}{2}{Autocorrelation analysis}{equation.2.7}{}}
 \newlabel{eq:optimization}{{8}{2}{Autocorrelation analysis}{equation.2.8}{}}
+\citation{Hansen1982}
 \citation{Hansen1982}
 \citation{Hall2005}
 \citation{abas2021generalized}
+\citation{blundell2000gmm}
 \citation{fan2018optimal}
 \citation{Hansen1982}
 \citation{Hansen1982}
@@ -85,6 +88,7 @@
 \@writefile{toc}{\contentsline {subsection}{\numberline {2.2} A generalized autocorrelation analysis}{3}{subsection.2.2}}
 \newlabel{subsec:generalized_ac}{{2.2}{3}{A generalized autocorrelation analysis}{subsection.2.2}{}}
 \newlabel{Eq-GMM-1}{{9}{3}{A generalized autocorrelation analysis}{equation.2.9}{}}
+\newlabel{eq:sample}{{10}{3}{A generalized autocorrelation analysis}{equation.2.10}{}}
 \newlabel{Eq-GMM-2}{{11}{3}{A generalized autocorrelation analysis}{equation.2.11}{}}
 \newlabel{Eq-2-5}{{12}{3}{A generalized autocorrelation analysis}{equation.2.12}{}}
 \newlabel{Eq-2-1}{{13}{3}{A generalized autocorrelation analysis}{equation.2.13}{}}
@@ -98,8 +102,6 @@
 \newlabel{Eq-2-7}{{15}{3}{Large sample properties}{equation.2.15}{}}
 \@writefile{toc}{\contentsline {section}{\numberline {3} Numerical experiments}{3}{section.3}}
 \newlabel{sec:numerical}{{3}{3}{Numerical experiments}{section.3}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.1} Recovery from a noisy measurement}{3}{subsection.3.1}}
-\newlabel{subsec:exp_recovery}{{3.1}{3}{Recovery from a noisy measurement}{subsection.3.1}{}}
 \citation{sigworth1998maximum}
 \citation{abbe2018multireference}
 \citation{perry2019sample}
@@ -107,22 +109,23 @@
 \citation{kreymer2021two}
 \citation{lan2020multi}
 \citation{kreymer2021two}
-\citation{lan2020multi}
+\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces TPanels (a), (b), and (c) present signal estimates using autocorrelation analysis (in red) and generalized autocorrelation analysis (in blue) with different measurement's length. Panel (d) presents the recovery error using both methods, as a function of the measurement's length.\relax }}{4}{figure.caption.2}}
+\newlabel{fig:recoveries}{{2}{4}{TPanels (a), (b), and (c) present signal estimates using autocorrelation analysis (in red) and generalized autocorrelation analysis (in blue) with different measurement's length. Panel (d) presents the recovery error using both methods, as a function of the measurement's length.\relax }{figure.caption.2}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces The median estimation error as a function of the measurement length\nobreakspace  {}$N$ with $\text  {SNR}=50$, by: (a)\nobreakspace  {}the autocorrelation analysis estimator; (b)\nobreakspace  {}the generalized autocorrelation analysis estimator. Evidently, the generalized autocorrelation analysis estimator significantly outperforms classical autocorrelation analysis for all\nobreakspace  {}$N$.\relax }}{4}{figure.caption.3}}
+\newlabel{fig:err_size_experiment}{{3}{4}{The median estimation error as a function of the measurement length~$N$ with $\text {SNR}=50$, by: (a)~the autocorrelation analysis estimator; (b)~the generalized autocorrelation analysis estimator. Evidently, the generalized autocorrelation analysis estimator significantly outperforms classical autocorrelation analysis for all~$N$.\relax }{figure.caption.3}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.1} Recovery from a noisy measurement}{4}{subsection.3.1}}
+\newlabel{subsec:exp_recovery}{{3.1}{4}{Recovery from a noisy measurement}{subsection.3.1}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.2} Recovery error as a function of the measurement length}{4}{subsection.3.2}}
+\newlabel{subsec:exp_size}{{3.2}{4}{Recovery error as a function of the measurement length}{subsection.3.2}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces The median estimation error as a function of SNR, by: (a)\nobreakspace  {}the autocorrelation analysis estimator; (b)\nobreakspace  {}the generalized autocorrelation analysis estimator.\relax }}{4}{figure.caption.4}}
+\newlabel{fig:err_noise_experiment}{{4}{4}{The median estimation error as a function of SNR, by: (a)~the autocorrelation analysis estimator; (b)~the generalized autocorrelation analysis estimator.\relax }{figure.caption.4}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.3} Recovery error as a function of SNR}{4}{subsection.3.3}}
+\newlabel{subsec:exp_SNR}{{3.3}{4}{Recovery error as a function of SNR}{subsection.3.3}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {4} Conclusion}{4}{section.4}}
+\newlabel{sec:conclusion}{{4}{4}{Conclusion}{section.4}{}}
 \bibstyle{IEEEbib}
 \bibdata{references}
 \bibcite{bendory2019multi}{1}
-\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces The recovery of the target signal\nobreakspace  {}$x$, as a longer and longer subset of\nobreakspace  {}$y$ with\nobreakspace  {}\unhbox \voidb@x \hbox {$\text  {SNR} = 0.5$} is observed, using autocorrelation analysis and the generalized autocorrelation analysis. Panel (d) presents the recovery errors using both methods, as a function of the measurement's length.\relax }}{4}{figure.caption.2}}
-\newlabel{fig:recoveries}{{2}{4}{The recovery of the target signal~$x$, as a longer and longer subset of~$y$ with~\mbox {$\text {SNR} = 0.5$} is observed, using autocorrelation analysis and the generalized autocorrelation analysis. Panel (d) presents the recovery errors using both methods, as a function of the measurement's length.\relax }{figure.caption.2}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces The median estimation error of recovering the signal\nobreakspace  {}$x$, as a function of the measurement length\nobreakspace  {}$N$, by: (a)\nobreakspace  {}the autocorrelation analysis estimator; (b)\nobreakspace  {}the generalized autocorrelation analysis estimator. Evidently, the generalized autocorrelation analysis significantly outperforms the classical autocorrelation analysis for all\nobreakspace  {}$N$.\relax }}{4}{figure.caption.3}}
-\newlabel{fig:err_size_experiment}{{3}{4}{The median estimation error of recovering the signal~$x$, as a function of the measurement length~$N$, by: (a)~the autocorrelation analysis estimator; (b)~the generalized autocorrelation analysis estimator. Evidently, the generalized autocorrelation analysis significantly outperforms the classical autocorrelation analysis for all~$N$.\relax }{figure.caption.3}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.2} Recovery error as a function of the measurement length}{4}{subsection.3.2}}
-\newlabel{subsec:exp_size}{{3.2}{4}{Recovery error as a function of the measurement length}{subsection.3.2}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.3} Recovery error as a function of SNR}{4}{subsection.3.3}}
-\newlabel{subsec:exp_SNR}{{3.3}{4}{Recovery error as a function of SNR}{subsection.3.3}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces The median estimation error of recovering the signal\nobreakspace  {}$x$, as a function of SNR, by: (a)\nobreakspace  {}the autocorrelation analysis estimator; (b)\nobreakspace  {}the generalized autocorrelation analysis estimator.\relax }}{4}{figure.caption.4}}
-\newlabel{fig:err_noise_experiment}{{4}{4}{The median estimation error of recovering the signal~$x$, as a function of SNR, by: (a)~the autocorrelation analysis estimator; (b)~the generalized autocorrelation analysis estimator.\relax }{figure.caption.4}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {4} Conclusion}{4}{section.4}}
-\newlabel{sec:conclusion}{{4}{4}{Conclusion}{section.4}{}}
 \bibcite{lan2020multi}{2}
 \bibcite{marshall2020image}{3}
 \bibcite{bendory2021multi}{4}
@@ -133,9 +136,9 @@
 \bibcite{bai2015cryo}{9}
 \bibcite{frank2006three}{10}
 \bibcite{bendory2020single}{11}
-\bibcite{scheres2012relion}{12}
-\bibcite{punjani2017cryosparc}{13}
-\bibcite{singer2020computational}{14}
+\bibcite{singer2020computational}{12}
+\bibcite{scheres2012relion}{13}
+\bibcite{punjani2017cryosparc}{14}
 \bibcite{aguerrebere2016fundamental}{15}
 \bibcite{d2021current}{16}
 \bibcite{pearson1894contributions}{17}
@@ -147,7 +150,8 @@
 \bibcite{abas2021generalized}{23}
 \bibcite{de2002properties}{24}
 \bibcite{Hall2005}{25}
-\bibcite{sigworth1998maximum}{26}
-\bibcite{abbe2018multireference}{27}
-\bibcite{perry2019sample}{28}
+\bibcite{blundell2000gmm}{26}
+\bibcite{sigworth1998maximum}{27}
+\bibcite{abbe2018multireference}{28}
+\bibcite{perry2019sample}{29}
 \@writefile{toc}{\contentsline {section}{\numberline {5} References}{5}{section.5}}

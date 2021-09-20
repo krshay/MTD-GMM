@@ -67,6 +67,13 @@ Tamir Bendory, Alberto Bartesaghi, and Amit Singer,
 \newblock {\em IEEE Signal Processing Magazine}, vol. 37, no. 2, pp. 58--76,
   2020.
 
+\bibitem{singer2020computational}
+Amit Singer and Fred~J Sigworth,
+\newblock ``Computational methods for single-particle electron
+  cryomicroscopy,''
+\newblock {\em Annual Review of Biomedical Data Science}, vol. 3, pp. 163--190,
+  2020.
+
 \bibitem{scheres2012relion}
 Sjors~HW Scheres,
 \newblock ``{RELION}: implementation of a {B}ayesian approach to cryo-{EM}
@@ -79,13 +86,6 @@ Ali Punjani, John~L Rubinstein, David~J Fleet, and Marcus~A Brubaker,
 \newblock ``cryo{SPARC}: algorithms for rapid unsupervised cryo-{EM} structure
   determination,''
 \newblock {\em Nature methods}, vol. 14, no. 3, pp. 290--296, 2017.
-
-\bibitem{singer2020computational}
-Amit Singer and Fred~J Sigworth,
-\newblock ``Computational methods for single-particle electron
-  cryomicroscopy,''
-\newblock {\em Annual Review of Biomedical Data Science}, vol. 3, pp. 163--190,
-  2020.
 
 \bibitem{aguerrebere2016fundamental}
 Cecilia Aguerrebere, Mauricio Delbracio, Alberto Bartesaghi, and Guillermo
@@ -153,6 +153,12 @@ Robert De~Jong and Chirok Han,
 Alastair~R Hall,
 \newblock {\em Generalized method of moments},
 \newblock Oxford university press, 2005.
+
+\bibitem{blundell2000gmm}
+Richard Blundell and Stephen Bond,
+\newblock ``Gmm estimation with persistent panel data: an application to
+  production functions,''
+\newblock {\em Econometric reviews}, vol. 19, no. 3, pp. 321--340, 2000.
 
 \bibitem{sigworth1998maximum}
 Fred~J Sigworth,
