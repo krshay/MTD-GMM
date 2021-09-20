@@ -118,6 +118,8 @@ with plt.style.context('ieee'):
     plt.loglog(sizes, errs_mom, 'ro-', lw=2, label='Autocorrelation analysis')
     plt.loglog(sizes, errs_gmm, 'bo--', lw=2, label='Generalized autocorrelation analysis')
     plt.xticks(sizes)
+    plt.xlabel('N')
+    plt.ylabel('recovery error')
     plt.legend(loc=1, fontsize=6)
     fig.tight_layout()
     plt.show()
