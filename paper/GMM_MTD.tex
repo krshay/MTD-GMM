@@ -185,7 +185,7 @@ Since the moment function need only to satisfy the uniqueness condition~\eqref{E
 
 In order to define the moment function for the MTD problem, we first define the $i$-th observation from the measurement~$y$ as follows:
 \begin{equation}\label{eq:sample}
-	y_i := [y[i],\ldots, y[i+L]].
+	y_i := [y[i],\ldots, y[i+L-1]].
 \end{equation}
 The natural choice \rev{of a} moment function~$f(\theta, y_i)$, for~$y_i$ from~\eqref{eq:sample}, \rev{is the discrepancy between the autocorrelations of~$y_i$ and the population autocorrelations}:
 \begin{multline} \label{Eq-GMM-2}
@@ -269,7 +269,7 @@ This section compares the numerical performance of the generalized autocorrelati
 \begin{equation*}
 \text{error}(x) = \frac{\|x - x^*\|_2}{\|x^*\|_2},
 \end{equation*}
-where~$x^*$ is the true signal, and~$x$ is the estimated signal. In the experiments presented in Sections~\ref{subsec:exp_size} and~\ref{subsec:exp_SNR}, the measurements were generated according to~(\ref{eq:model}) with density~\mbox{$\gamma = 0.2$}, and the target signals are of length~\mbox{$L = 21$}. Each entry of the signals was drawn i.i.d from a uniform distribution in~$[0,1]$, and the target signals were normalized such that~$\|x\|_2  =1$. We estimated the signal from~$5$ random initial guesses \rev{that were generated similarly to the ground truth signal} and from~\mbox{$\gamma_{\text{init}} = 0.18$}, and calculated the estimation error of the \rev{signal} estimate whose final objective function is minimal. Figures~\ref{fig:err_size_experiment} and~\ref{fig:err_noise_experiment} present the median error over~$50$ trials. The code to reproduce all experiments is publicly available at~\url{https://github.com/krshay/MTD-GMM}.
+where~$x^*$ is the true signal, and~$x$ is the estimated signal. In the experiments presented in Sections~\ref{subsec:exp_size} and~\ref{subsec:exp_SNR}, the measurements were generated according to~(\ref{eq:model}) with density~\mbox{$\gamma = 0.2$}, and the target signals are of length~\mbox{$L = 21$}. Each entry of the signals was drawn i.i.d from a uniform distribution in~$[0,1]$, and the target signals were normalized such that~$\|x\|_2  =1$. We estimated the signal from~$5$ random initial guesses \rev{of the signal that were generated similarly to the ground truth signal} and~\mbox{$\gamma_{\text{init}} = 0.18$}, and calculated the estimation error of the \rev{signal} estimate whose final objective function is minimal. Figures~\ref{fig:err_size_experiment} and~\ref{fig:err_noise_experiment} present the median error over~$50$ trials. The code to reproduce all experiments is publicly available at~\url{https://github.com/krshay/MTD-GMM}.
 
 \subsection{Recovery from a noisy measurement}
 \label{subsec:exp_recovery}
