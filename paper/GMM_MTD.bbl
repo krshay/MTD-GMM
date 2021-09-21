@@ -100,11 +100,30 @@ Edoardo D'Imprima and Werner K{\"u}hlbrandt,
   single-particle cryo{EM},''
 \newblock {\em Quarterly Reviews of Biophysics}, vol. 54, 2021.
 
-\bibitem{pearson1894contributions}
-Karl Pearson,
-\newblock ``Contributions to the mathematical theory of evolution,''
-\newblock {\em Philosophical Transactions of the Royal Society of London. A},
-  vol. 185, pp. 71--110, 1894.
+\bibitem{kam1980reconstruction}
+Zvi Kam,
+\newblock ``The reconstruction of structure from electron micrographs of
+  randomly oriented particles,''
+\newblock {\em Journal of Theoretical Biology}, vol. 82, no. 1, pp. 15--39,
+  1980.
+
+\bibitem{bhamre2015orthogonal}
+Tejal Bhamre, Teng Zhang, and Amit Singer,
+\newblock ``Orthogonal matrix retrieval in cryo-electron microscopy,''
+\newblock in {\em 2015 IEEE 12th International Symposium on Biomedical Imaging
+  (ISBI)}. IEEE, 2015, pp. 1048--1052.
+
+\bibitem{bhamre2017anisotropic}
+Tejal Bhamre, Teng Zhang, and Amit Singer,
+\newblock ``Anisotropic twicing for single particle reconstruction using
+  autocorrelation analysis,''
+\newblock {\em arXiv preprint arXiv:1704.07969}, 2017.
+
+\bibitem{levin20183d}
+Eitan Levin, Tamir Bendory, Nicolas Boumal, Joe Kileel, and Amit Singer,
+\newblock ``3{D} ab initio modeling in cryo-{EM} by autocorrelation analysis,''
+\newblock in {\em 2018 IEEE 15th International Symposium on Biomedical Imaging
+  (ISBI 2018)}. IEEE, 2018, pp. 1569--1573.
 
 \bibitem{Hansen1982}
 Lars~Peter Hansen,
@@ -149,6 +168,19 @@ Robert De~Jong and Chirok Han,
 \newblock ``The properties of lp-{GMM} estimators,''
 \newblock {\em Econometric Theory}, vol. 18, no. 2, pp. 491--504, 2002.
 
+\bibitem{beinert2018enforcing}
+Robert Beinert and Gerlind Plonka,
+\newblock ``Enforcing uniqueness in one-dimensional phase retrieval by
+  additional signal information in time domain,''
+\newblock {\em Applied and Computational Harmonic Analysis}, vol. 45, no. 3,
+  pp. 505--525, 2018.
+
+\bibitem{bendory2017fourier}
+Tamir Bendory, Robert Beinert, and Yonina~C Eldar,
+\newblock ``Fourier phase retrieval: Uniqueness and algorithms,''
+\newblock in {\em Compressed Sensing and its Applications}, pp. 55--91.
+  Springer, 2017.
+
 \bibitem{Hall2005}
 Alastair~R Hall,
 \newblock {\em Generalized method of moments},
@@ -156,7 +188,7 @@ Alastair~R Hall,
 
 \bibitem{blundell2000gmm}
 Richard Blundell and Stephen Bond,
-\newblock ``Gmm estimation with persistent panel data: an application to
+\newblock ``{GMM} estimation with persistent panel data: an application to
   production functions,''
 \newblock {\em Econometric reviews}, vol. 19, no. 3, pp. 321--340, 2000.
 
