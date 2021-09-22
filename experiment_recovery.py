@@ -6,15 +6,13 @@ Created on Fri Jul 23 20:03:45 2021
 """
 
 import numpy as np
-
 import matplotlib.pyplot as plt
-
 import utils
 
 np.random.seed(10)
 
 L = 8
-N = 1.23*10**7
+N = 1.23 * 10**7
 N = int(N)
 gamma = 0.2
 
@@ -91,7 +89,6 @@ with plt.style.context('ieee'):
     plt.xlim((0, 7))
     fig.tight_layout()
     plt.show()
-    plt.savefig(r'C:\Users\kreym\Documents\GitHub\MTD-GMM\paper\figures/recovery_1.pdf')
 
     fig = plt.figure()
     plt.plot(x, label='Ground truth')
@@ -103,7 +100,6 @@ with plt.style.context('ieee'):
     plt.xlim((0, 7))
     fig.tight_layout()
     plt.show()
-    plt.savefig(r'C:\Users\kreym\Documents\GitHub\MTD-GMM\paper\figures/recovery_2.pdf')
     
     fig = plt.figure()
     plt.plot(x, label='Ground truth')
@@ -115,7 +111,6 @@ with plt.style.context('ieee'):
     plt.xlim((0, 7))
     fig.tight_layout()
     plt.show()
-    plt.savefig(r'C:\Users\kreym\Documents\GitHub\MTD-GMM\paper\figures/recovery_3.pdf')
     
     fig = plt.figure()
     plt.loglog(sizes, errs_mom, 'ro-', lw=2, label='Autocorrelation analysis')
@@ -126,5 +121,4 @@ with plt.style.context('ieee'):
     plt.legend(loc=1, fontsize=6)
     fig.tight_layout()
     plt.show()
-    plt.savefig(r'C:\Users\kreym\Documents\GitHub\MTD-GMM\paper\figures/recovery_errs.pdf')
     

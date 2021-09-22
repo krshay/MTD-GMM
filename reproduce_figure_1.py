@@ -6,7 +6,6 @@ Created on Fri Jul 23 20:03:45 2021
 """
 
 import numpy as np
-
 import matplotlib.pyplot as plt
 import utils
 
@@ -32,16 +31,13 @@ plt.close("all")
 with plt.style.context('ieee'):
     fig = plt.figure()
     plt.plot(y_clean, 'k')
-    plt.xlim((0, 120))
+    plt.xlim((0, N))
     fig.tight_layout()
-    plt.savefig(r'paper/figures\y_clean.pdf')
     fig = plt.figure()
     plt.plot(y1, 'k')
-    plt.xlim((0, 120))
+    plt.xlim((0, N))
     fig.tight_layout()
-    plt.savefig(r'paper/figures\y_SNR50.pdf')
     fig = plt.figure()
     plt.plot(y2, 'k')
-    plt.xlim((0, 120))
+    plt.xlim((0, N))
     fig.tight_layout()
-    plt.savefig(r'paper/figures\y_SNR01.pdf')

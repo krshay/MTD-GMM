@@ -7,16 +7,11 @@ Created on Fri Jul 30 18:08:24 2021
 
 
 import numpy as np
-
 import time
-
 import matplotlib.pyplot as plt
-
 import utils
-
 import scipy.optimize as optimize
 
-import shelve
 
 np.random.seed(1)
 
@@ -58,11 +53,9 @@ results_final_gmm = np.zeros((Niters, Nsizes), dtype=optimize.optimize.OptimizeR
 times_final_mom = np.zeros((Niters, Nsizes, Nguesses))
 times_final_gmm = np.zeros((Niters, Nsizes, Nguesses))
 for it in range(Niters):
-    print(it)
     x = xs[it]
     for (idx, N) in enumerate(sizes):
         N = int(N)
-        print(N)
 
         y_clean = utils.generate_micrograph_1d(x, gamma, L, N)
         y = y_clean + np.random.normal(loc=0, scale=np.sqrt(sigma2), size=np.shape(y_clean))
@@ -143,35 +136,4 @@ with plt.style.context('ieee'):
     plt.ylabel('Median estimation error')
     fig.tight_layout()
     plt.show()
-    plt.savefig(r'C:/Users/kreym/Documents/GitHub/MTD-GMM/paper/figures/experiment_size_err.pdf')
-
-    # fig = plt.figure()
-    # plt.semilogx(sizes, np.median(Number_Iterations_mom, axis=0), label=r'Method of Moments', lw=2)
-    # plt.semilogx(sizes, np.median(Number_Iterations_gmm, axis=0), label=r'Generalized Method of Moments', lw=2)
-    # plt.xlabel('Measurement length [pixels]')
-    # plt.ylabel('Median number of iterations')
-    # plt.yticks(list(range(0,650,100)))
-    # fig.tight_layout()
-    # plt.show()
-    # plt.savefig(r'C:/Users/kreym/Documents/GitHub/MTD-GMM/paper/figures/experiment_size_iters.pdf')
-
-filename=r'shelve_size_10092021.out'
-# my_shelf = shelve.open(filename,'n') # 'n' for new
-
-# for key in dir():
-#     try:
-#         my_shelf[key] = globals()[key]
-#     except TypeError:
-#         #
-#         # __builtins__, my_shelf, and imported modules can not be shelved.
-#         #
-#         print('ERROR shelving: {0}'.format(key))
-#     except AttributeError:
-#         print('ERROR shelving: {0}'.format(key))
-# my_shelf.close()
-
-# %% load
-my_shelf = shelve.open(filename)
-for key in my_shelf:
-    globals()[key]=my_shelf[key]
-my_shelf.close()
+    

@@ -100,7 +100,7 @@ We study the multi-target detection (MTD) problem of estimating a target signal~
 \label{eq:model}
 y[\ell] = \sum_{i=1}^{p} x[\ell - \ell_i] + \varepsilon[\ell],
 \end{equation}
-where \mbox{$\{\ell_i\}_{i=1}^{p} \in \{L + 1, \ldots, N-L\}$} are translations  and~$\varepsilon[\ell]\overset{\text{i.i.d.}}{\sim} \mathcal{N}(0,\sigma^2)$. The translations and the number of occurrences of~$x$ in~$y$, denoted by~$p$, are unknown. {We assume that the translations are sufficiently separated from each other. Specifically}, each translation is separated by at least a full signal length from its neighbors, {namely},
+where \mbox{$\{\ell_i\}_{i=1}^{p} \in \{L + 1, \ldots, N-L\}$} are translations and$\varepsilon[\ell]\overset{\text{i.i.d.}}{\sim} \mathcal{N}(0,\sigma^2)$. The translations and the number of occurrences of~$x$ in~$y$, denoted by~$p$, are unknown. {We assume that the translations are sufficiently separated from each other. Specifically}, each translation is separated by at least a full signal length from its neighbors, {namely},
 \begin{equation}
 	\label{eq:sep}
 	|\ell_{i_1} - \ell_{i_2}| \ge 2L - 1, \quad \text{ for all } i_1 \ne i_2.
@@ -179,9 +179,9 @@ A_{y}^2 [\ell_1] &\stackrel{\text{a.s.}}{=} \gamma A_{x}^2 [\ell_1] + \sigma^2\d
 \label{eq:well_separated_3rd}
 A_{y}^3 [\ell_1, \ell_2] &\stackrel{\text{a.s.}}{=} \gamma A_{x}^3 [\ell_1, \ell_2]  + \gamma A_{x}^1 B[\ell_1, \ell_2],
 \end{align}
-for~$\ell_1, \ell_2 \in \mathcal{L}$, {where~\mbox{$B[\ell_1, \ell_2] := \sigma^2 (\delta[\ell_1] + \delta[\ell_2] + \delta[\ell_1 - \ell_2])$}}, and $\delta$ 
-is the Kronecker delta function defined by $\delta[0]=1$ and $\delta[\ell\neq 0]=0$. 
-%~$\delta[\ell] = \begin{cases} 1 \text{ if } \ell = 0, \\ 0 \text{ otherwise}, \end{cases}$ is the Kronecker delta function. 
+for~$\ell_1, \ell_2 \in \mathcal{L}$, {where~\mbox{$B[\ell_1, \ell_2] := \sigma^2 (\delta[\ell_1] + \delta[\ell_2] + \delta[\ell_1 - \ell_2])$}}, and $\delta$
+is the Kronecker delta function defined by $\delta[0]=1$ and $\delta[\ell\neq 0]=0$.
+%~$\delta[\ell] = \begin{cases} 1 \text{ if } \ell = 0, \\ 0 \text{ otherwise}, \end{cases}$ is the Kronecker delta function.
 Here,~$\gamma$ is the density of the target images in the measurement and is defined by
 \begin{equation}
 \gamma = p \frac{L}{N}.
@@ -202,7 +202,7 @@ where the weights~$w_2$ and~$w_3$ were chosen such that each term is equally wei
 The generalized autocorrelation analysis framework is a special case of the GMM.  In its most simplified form, the GMM generalizes the method of moments by replacing the LS objective function by  weighted LS with  optimal weights. A specific  choice of weights guarantees favorable asymptotic statistical properties, such as  minimal asymptotic variance of the estimation error~\cite{Hansen1982} {(see Section~\ref{gmm:large})}. In this work, we adapt the GMM to autocorrelation analysis and term the method generalized autocorrelation analysis.
 
 %Let us define the moment function~\mbox{$f(\theta, y)\colon \Theta \times \R^r \to \R^q$}, {where~$\Theta$ is a compact parameter space}.
-Let us define the moment function~$f(\theta, y)$  for $\theta\in\Theta$, where $\Theta$ is a compact parameter space. 
+Let us define the moment function~$f(\theta, y)$  for $\theta\in\Theta$, where $\Theta$ is a compact parameter space.
  The moment function is chosen such that its expectation is zero only at a single point~$\theta=\theta_0$, where~$\theta_0$ is the ground truth parameter (in our case, the target signal~$x$ and the density parameter~$\gamma$). Namely,
 \begin{equation}\label{Eq-GMM-1}
 	\E\left[f(\theta,y)\right] = 0 \quad \text{if and only if} \quad \theta = \theta_0.
@@ -301,7 +301,7 @@ where~$x^*$ is the true signal, and~$x$ is the estimated signal. In the experime
 
 \subsection{Recovery from a noisy measurement}
 \label{subsec:exp_recovery}
-In Figure~\ref{fig:recoveries} we present a successful recovery of a target signal of length~\mbox{$L = 8$} from a noisy measurement with~\mbox{$\text{SNR} = 0.5$} and~\mbox{$\gamma = 0.2$}, using autocorrelation analysis and generalized autocorrelation analysis. The noise level is visualized in Figure~\ref{fig:measurements}. 
+In Figure~\ref{fig:recoveries} we present a successful recovery of a target signal of length~\mbox{$L = 8$} from a noisy measurement with~\mbox{$\text{SNR} = 0.5$} and~\mbox{$\gamma = 0.2$}, using autocorrelation analysis and generalized autocorrelation analysis. The noise level is visualized in Figure~\ref{fig:measurements}.
 As expected, the recovery error decreases  as the measurement length increases. Remarkably, for all measurement lengths~$N$, the generalized autocorrelation analysis framework shows superior numerical performance.
 
 \subsection{Recovery error as a function of the measurement length}

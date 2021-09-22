@@ -13,10 +13,20 @@ from scipy.optimize import minimize
 
 
 def generate_micrograph_1d(x, gamma, L, N):
+    """ Generates a 1-D measurement
+    Args:
+        x: the target signal
+        gamma: density of the target signal in the measurement
+        L: target signal length
+        N: measurement length
+    
+    Returns:
+        y: the measurement
+    """
     y = np.zeros((N, ))
     
     number_of_signals = int(gamma * N / L)
-    zero_num = N - number_of_signals * (2 * L - 1) #the number of free zeroes that can be used
+    zero_num = N - number_of_signals * (2 * L - 1) # the number of free zeroes that can be used
     total_num_of_blocks = number_of_signals + zero_num # the total number of space we can use while building the array
     x_modified = np.zeros((L + L - 1))
     x_modified[ :L] = x
@@ -39,9 +49,24 @@ def generate_micrograph_1d(x, gamma, L, N):
     return y
 
 def ac1(z):
+    """ Calculates first-order autocorrelation of a signal
+    Args:
+        z: a signal
+    
+    Returns:
+        the signal's first-order autocorrelation
+    """
     return np.mean(z)
 
 def ac2(z, shift):
+    """ Calculates second-order autocorrelation of a signal
+    Args:
+        z: a signal
+        shift: a shift for autocorrelation calculation
+    
+    Returns:
+        the second-order autocorrelation of the signal z at shift "shift"
+    """
     l = len(z)
     z_shifted = np.zeros((l + shift, ))
     z_shifted[shift: shift + l] = z
@@ -49,6 +74,14 @@ def ac2(z, shift):
     return np.sum(z * z_shifted) / l
 
 def dac2(z, shift):
+    """ Calculates the gradient of the second-order autocorrelation of a signal
+    Args:
+        z: a signal
+        shift: a shift for autocorrelation calculation
+    
+    Returns:
+        the gradient of the second-order autocorrelation of the signal z at shift "shift"
+    """
     l = len(z)
     z_shifted = np.zeros((l + shift, ))
     z_shifted[shift: shift + l] = z
@@ -61,6 +94,15 @@ def dac2(z, shift):
     return dac2
 
 def ac3(z, shift1, shift2):
+    """ Calculates third-order autocorrelation of a signal
+    Args:
+        z: a signal
+        shift1: a shift for autocorrelation calculation
+        shift2: a shift for autocorrelation calculation
+    
+    Returns:
+        the third-order autocorrelation of the signal z at shifts shift1 and shift2
+    """
     l = len(z)
     z_shifted1 = np.zeros((l + shift1, ))
     z_shifted1[shift1: shift1 + l] = z
@@ -71,6 +113,15 @@ def ac3(z, shift1, shift2):
     return np.sum(z * z_shifted1 * z_shifted2) / l
 
 def dac3(z, shift1, shift2):
+    """ Calculates the gradient of the third-order autocorrelation of a signal
+    Args:
+        z: a signal
+        shift1: a shift for autocorrelation calculation
+        shift2: a shift for autocorrelation calculation
+    
+    Returns:
+        the gradient of the third-order autocorrelation of the signal z at shifts shift1 and shift2
+    """
     l = len(z)
     z_shifted1 = np.zeros((l + np.maximum(shift1, shift2), ))
     z_shifted1[shift1: shift1 + l] = z
@@ -85,30 +136,95 @@ def dac3(z, shift1, shift2):
     return dac3
 
 def shifts_2nd(L):
+    """ Calculates the set of second-order shifts
+    Args:
+        L: the target signal length
+    
+    Returns:
+        the set of second-order shifts
+    """
     return list(np.arange(L))
 
 def shifts_3rd(L):
+    """ Calculates the set of third-order shifts
+    Args:
+        L: the target signal length
+    
+    Returns:
+        the set of third-order shifts
+    """
     return list(itertools.product(np.arange(L), np.arange(L)))
 
 def shifts_3rd_reduced(L):
+    """ Reduces the set of third-order shifts to account for symmetries
+    Args:
+        L: the target signal length
+    
+    Returns:
+        the reduced set of third-order shifts
+    """
     return list(itertools.combinations(np.arange(L), r=2)) + [(np.arange(L)[i], np.arange(L)[i]) for i in range(L)]
 
 def sample(y, L):
+    """ Calculates the samples from the measurement
+    Args:
+        L: the target signal length
+        y: the measurement
+    
+    Returns:
+        the samples
+    """
     samples = np.zeros((L, len(y) - L + 1))
     for i in range(len(y) - L + 1):
         samples[ :, i] = y[i: i + L]
     return samples
 
 def calcM1(samples):
+    """ Calculates first-order moment function
+    Args:
+        samples: the samples from the measurement
+    
+    Returns:
+        the first-order moment function
+    """
     return samples[0, :]
 
 def calcM2(samples, shift):
+    """ Calculates second-order moment function
+    Args:
+        samples: the samples from the measurement
+        shift: a shift for moment function calculation
+    
+    Returns:
+        the second-order moment function at shift "shift"
+    """
     return samples[0, :] * samples[shift, :]
 
 def calcM3(samples, shift1, shift2):
+    """ Calculates third-order moment function
+    Args:
+        samples: the samples from the measurement
+        shift1: a shift for moment function calculation
+        shift2: a shift for moment function calculation
+    
+    Returns:
+        the third-order moment function at shifts shift1 and shift2
+    """
     return samples[0, :] * samples[shift1, :] * samples[shift2, :]
 
 def calc_function_gmm(samples, gamma, x, shifts_2nd, shifts_3rd, sigma2):
+    """ Calculates the moment function
+    Args:
+        samples: the samples from the measurement
+        gamma: density of the target signals in the measurment
+        x: the target signal
+        shifts_2nd: the set of second-order shifts
+        shifts_3rd: the set of third-order shifts
+        sigma2: the variance of the noise
+    
+    Returns:
+        the moment function
+    """
     Nsamples = np.shape(samples)[1]
     L2 = len(shifts_2nd)
     L3 = len(shifts_3rd)
@@ -129,6 +245,20 @@ def calc_function_gmm(samples, gamma, x, shifts_2nd, shifts_3rd, sigma2):
     return f_gmm
     
 def calc_g_dg(ac1_y, ac2_y, ac3_y, gamma, x, shifts_2nd, shifts_3rd, sigma2):
+    """ Calculates the function g and its gradient
+    Args:
+        ac1_y: first-order autocorrelation of the measurement
+        ac2_y: second-order autocorrelations of the measurement
+        ac3_y: third-order autocorrelations of the measurement
+        gamma: density of the target signals in the measurment
+        x: the target signal
+        shifts_2nd: the set of second-order shifts
+        shifts_3rd: the set of third-order shifts
+        sigma2: the variance of the noise
+    
+    Returns:
+        the function g and its gradient
+    """
     L = len(x)
     L2 = len(shifts_2nd)
     L3 = len(shifts_3rd)
@@ -162,6 +292,14 @@ def calc_g_dg(ac1_y, ac2_y, ac3_y, gamma, x, shifts_2nd, shifts_3rd, sigma2):
     return g, dg
 
 def calc_W_heuristic(shifts_2nd, shifts_3rd):
+    """ Calculates the weighting matrix for the classical autocorrelation analysis
+    Args:
+        shifts_2nd: the set of second-order shifts
+        shifts_3rd: the set of third-order shifts
+    
+    Returns:
+        the weighting matrix
+    """
     L2 = len(shifts_2nd)
     L3 = len(shifts_3rd)
     W = np.ones((1 + L2 + L3, ))
@@ -170,6 +308,21 @@ def calc_W_heuristic(shifts_2nd, shifts_3rd):
     return np.diag(W)
 
 def calc_f_df(x_gamma, ac1_y, ac2_y, ac3_y, shifts_2nd, shifts_3rd, sigma2, W):
+    """ Calculates the objective function f and its gradient
+    Args:
+        ac1_y: first-order autocorrelation of the measurement
+        ac2_y: second-order autocorrelations of the measurement
+        ac3_y: third-order autocorrelations of the measurement
+        gamma: density of the target signals in the measurment
+        x: the target signal
+        shifts_2nd: the set of second-order shifts
+        shifts_3rd: the set of third-order shifts
+        sigma2: the variance of the noise
+        W: weighting matrix
+    
+    Returns:
+        the objective function f and its gradient
+    """
     gamma = x_gamma[-1]
     x = x_gamma[ :-1]
     g, dg = calc_g_dg(ac1_y, ac2_y, ac3_y, gamma, x, shifts_2nd, shifts_3rd, sigma2)
@@ -178,8 +331,30 @@ def calc_f_df(x_gamma, ac1_y, ac2_y, ac3_y, shifts_2nd, shifts_3rd, sigma2, W):
     return f, df
 
 def opt(x_gamma0, ac1_y, ac2_y, ac3_y, shifts_2nd, shifts_3rd, sigma2, W, gtol=1e-12):
+    """ Optimizes the objective function f with respect to x and gamma
+    Args:
+        x_gamma0: initial guesses for the optimization
+        ac1_y: first-order autocorrelation of the measurement
+        ac2_y: second-order autocorrelations of the measurement
+        ac3_y: third-order autocorrelations of the measurement
+        shifts_2nd: the set of second-order shifts
+        shifts_3rd: the set of third-order shifts
+        sigma2: the variance of the noise
+        W: weighting matrix
+    
+    Returns:
+        the optimizer
+    """
     return minimize(fun=calc_f_df, x0=x_gamma0, method='BFGS', jac=True, options={'disp':False, 'gtol': gtol, 'maxiter':500}, args = (ac1_y, ac2_y, ac3_y, shifts_2nd, shifts_3rd, sigma2, W))
 
 def calc_err(x, x_est):
+    """ Calculates the recovery error
+    Args:
+        x: ground truth signal
+        x_est: estimated signal
+    
+    Returns:
+        the recovery error
+    """
     return np.linalg.norm(x - x_est) / np.linalg.norm(x)
     

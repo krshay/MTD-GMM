@@ -6,16 +6,10 @@ Created on Sat Sep  4 18:54:21 2021
 """
 
 import numpy as np
-
 import time
-
 import matplotlib.pyplot as plt
-
 import utils
-
 import scipy.optimize as optimize
-
-import shelve
 
 np.random.seed(1)
 
@@ -56,11 +50,9 @@ results_final_gmm = np.zeros((Niters, NSNRs), dtype=optimize.optimize.OptimizeRe
 times_final_mom = np.zeros((Niters, NSNRs, Nguesses))
 times_final_gmm = np.zeros((Niters, NSNRs, Nguesses))
 for it in range(Niters):
-    print(f'iter #{it}')
     x = xs[it]
     y_clean = utils.generate_micrograph_1d(x, gamma, L, N)
     for (idx, SNR) in enumerate(SNRs):
-        print(f'SNR = {SNR}')
         sigma2 = (np.linalg.norm(x) ** 2) / (L * SNR)
 
         y = y_clean + np.random.normal(loc=0, scale=np.sqrt(sigma2), size=np.shape(y_clean))
@@ -139,37 +131,3 @@ with plt.style.context('ieee'):
     plt.ylabel('Median estimation error')
     fig.tight_layout()
     plt.show()
-    plt.savefig(r'C:/Users/kreym/Documents/GitHub/MTD-GMM/paper/figures/experiment_SNR_err.pdf')
-
-    # fig = plt.figure()
-    # plt.semilogx(SNRs, np.median(Number_Iterations_mom, axis=0), label=r'Method of Moments', lw=2)
-    # plt.semilogx(SNRs, np.median(Number_Iterations_gmm, axis=0), label=r'Generalized Method of Moments', lw=2)
-    # plt.xlabel('Measurement length [pixels]')
-    # plt.ylabel('Median number of iterations')
-    # plt.yticks(list(range(0,650,100)))
-    # fig.tight_layout()
-    # plt.show()
-    # plt.savefig(r'C:/Users/kreym/Documents/GitHub/MTD-GMM/paper/figures/experiment_size_iters.pdf')
-
-filename=r'shelve_SNR_10092021.out'
-
-
-# my_shelf = shelve.open(filename,'n') # 'n' for new
-
-# for key in dir():
-#     try:
-#         my_shelf[key] = globals()[key]
-#     except TypeError:
-#         #
-#         # __builtins__, my_shelf, and imported modules can not be shelved.
-#         #
-#         print('ERROR shelving: {0}'.format(key))
-#     except AttributeError:
-#         print('ERROR shelving: {0}'.format(key))
-# my_shelf.close()
-
-# %% load
-my_shelf = shelve.open(filename)
-for key in my_shelf:
-    globals()[key]=my_shelf[key]
-my_shelf.close()
