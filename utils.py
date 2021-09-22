@@ -6,9 +6,7 @@ Created on Fri Jul 23 19:53:50 2021
 """
 
 import numpy as np
-
 import itertools
-
 from scipy.optimize import minimize
 
 
