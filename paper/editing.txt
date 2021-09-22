@@ -1,0 +1,24 @@
+editorial modifications:
+
+% spacing above/below equations
+\setlength{\abovedisplayskip}{2pt}
+\setlength{\belowdisplayskip}{2pt}
+
+% spacing below figures
+\usepackage{setspace}
+\onehalfspacing
+\captionsetup{belowskip=-10pt}
+
+% spacing between bibliography items
+\let\oldthebibliography=\thebibliography
+\let\endoldthebibliography=\endthebibliography
+\renewenvironment{thebibliography}[1]{%
+	\begin{oldthebibliography}{#1}%
+		\setlength{\itemsep}{-0.35ex}%
+	}%
+	{%
+	\end{oldthebibliography}%
+}
+
+
+resized figures
