@@ -100,7 +100,7 @@ We study the multi-target detection (MTD) problem of estimating a target signal~
 \label{eq:model}
 y[\ell] = \sum_{i=1}^{p} x[\ell - \ell_i] + \varepsilon[\ell],
 \end{equation}
-where \mbox{$\{\ell_i\}_{i=1}^{p} \in \{L + 1, \ldots, N-L\}$} are translations and$\varepsilon[\ell]\overset{\text{i.i.d.}}{\sim} \mathcal{N}(0,\sigma^2)$. The translations and the number of occurrences of~$x$ in~$y$, denoted by~$p$, are unknown. {We assume that the translations are sufficiently separated from each other. Specifically}, each translation is separated by at least a full signal length from its neighbors, {namely},
+where \mbox{$\{\ell_i\}_{i=1}^{p} \in \{L + 1, \ldots, N-L\}$} are translations and $\varepsilon[\ell]\overset{\text{i.i.d.}}{\sim} \mathcal{N}(0,\sigma^2)$. The translations and the number of occurrences of~$x$ in~$y$, denoted by~$p$, are unknown. {We assume that the translations are sufficiently separated from each other. Specifically}, each translation is separated by at least a full signal length from its neighbors, {namely},
 \begin{equation}
 	\label{eq:sep}
 	|\ell_{i_1} - \ell_{i_2}| \ge 2L - 1, \quad \text{ for all } i_1 \ne i_2.
