@@ -33,11 +33,9 @@
 \newtheorem{lemma}[assumption]{Lemma}
 
 \DeclareMathOperator{\Unif}{Unif}
+\DeclareMathOperator*{\argmin}{arg\,min}
 
 \usepackage{hyperref}
-\newcommand{\asaf}[1]{{\color{blue}{#1}}}
-\newcommand{\asafc}[1]{{\color{cyan}{[Asaf: #1]}}}
-\newcommand{\rev}[1]{{\color{magenta}{#1}}}
 
 \newcommand{\A}[0]{\mathcal{A}}
 \newcommand{\Var}[0]{\operatorname{Var}}
@@ -129,15 +127,15 @@ where \mbox{$\{\ell_i\}_{i=1}^{p} \in \{L + 1, \ldots, N-L\}$} are translations 
 \label{fig:measurements}
 \end{figure*}
 
-The MTD model serves as a mathematical abstraction of the cryo-electron microscopy~(\mbox{cryo-EM}) technology for macromolecular structure determination~\cite{henderson1995potential,nogales2016development,bai2015cryo}. In a \mbox{cryo-EM} experiment \cite{frank2006three}, biological macromolecules suspended in a liquid solution are rapidly frozen into a thin ice layer. An electron beam then passes through the sample, and a two-dimensional tomographic projection is recorded\asaf{, the image is known as micrograph}\asafc{We didn't define it and we use te term later}. Importantly, the \mbox{2-D} location and \mbox{3-D} orientation of particles within the ice are random and unknown. This measurement is further affected by high noise levels and the optical configuration of the microscope.
+The MTD model serves as a mathematical abstraction of the cryo-electron microscopy~(\mbox{cryo-EM}) technology for macromolecular structure determination~\cite{henderson1995potential,nogales2016development,bai2015cryo}. In a \mbox{cryo-EM} experiment \cite{frank2006three}, biological macromolecules suspended in a liquid solution are rapidly frozen into a thin ice layer. An electron beam then passes through the sample, and a two-dimensional tomographic projection is recorded. Importantly, the \mbox{2-D} location and \mbox{3-D} orientation of particles within the ice are random and unknown. This measurement is further affected by high noise levels and the optical configuration of the microscope.
 
-In the current analysis workflow of \mbox{cryo-EM} data \cite{bendory2020single,singer2020computational,scheres2012relion,punjani2017cryosparc}, the~\mbox{2-D} projections are first detected and extracted from the micrograph, and later rotationally and translationally aligned to reconstruct the~\mbox{3-D} molecular structure. This approach fails for small molecules, which induce low contrast, and thus low SNR. This makes them difficult to detect and align~\cite{bendory2018toward,singer2020computational,henderson1995potential,aguerrebere2016fundamental}, rendering current \mbox{cryo-EM} algorithmic pipeline ineffective. For example, in the limit~\mbox{$\text{SNR} \rightarrow 0$}, reliable detection of signals' locations within the measurement is impossible~\cite[Proposition~3.1]{bendory2018toward}.
+In the current analysis workflow of \mbox{cryo-EM} data \cite{bendory2020single,singer2020computational,scheres2012relion,punjani2017cryosparc}, the~\mbox{2-D} projections are first detected and extracted from the measurement, and later rotationally and translationally aligned to reconstruct the~\mbox{3-D} molecular structure. This approach fails for small molecules, which induce low contrast, and thus low SNR. This makes them difficult to detect and align~\cite{bendory2018toward,singer2020computational,henderson1995potential,aguerrebere2016fundamental}, rendering current \mbox{cryo-EM} algorithmic pipeline ineffective. For example, in the limit~\mbox{$\text{SNR} \rightarrow 0$}, reliable detection of signals' locations within the measurement is impossible~\cite[Proposition~3.1]{bendory2018toward}.
 
-The MTD model was devised in \cite{bendory2018toward} in order to study the recovery of small molecules directly from the micrograph, below the current detection limit of \mbox{cryo-EM}~\cite{henderson1995potential,d2021current}. An autocorrelation analysis technique (see Section~\ref{subsec:ac}) was implemented to recover \mbox{low-resolution}~\mbox{3-D} structures from noiseless simulated data under a simplified model. In order to further investigate the method from analytical and computational perspectives, the MTD model was studied in~\cite{bendory2019multi} for one-dimensional signals  under the assumption that the signal occurrences are either {well-separated} or follow a Poisson distribution. In~\cite{lan2020multi}, the mathematical framework was extended to account for arbitrary spacing of signal occurrences. In~\cite{marshall2020image,bendory2021multi}, the authors studied the MTD problem in two dimensions, where the sought images are arbitrarily rotated, but still \mbox{well-separated}, and in~\cite{kreymer2021two} the framework was extended  to an arbitrary spacing distribution of image occurrences.
+The MTD model was devised in \cite{bendory2018toward} in order to study the recovery of small molecules directly from the measurement, below the current detection limit of \mbox{cryo-EM}~\cite{henderson1995potential,d2021current}. An autocorrelation analysis technique (see Section~\ref{subsec:ac}) was implemented to recover \mbox{low-resolution}~\mbox{3-D} structures from noiseless simulated data under a simplified model. In order to further investigate the method from analytical and computational perspectives, the MTD model was studied in~\cite{bendory2019multi} for one-dimensional signals  under the assumption that the signal occurrences are either {well-separated} or follow a Poisson distribution. In~\cite{lan2020multi}, the mathematical framework was extended to account for arbitrary spacing of signal occurrences. In~\cite{marshall2020image,bendory2021multi}, the authors studied the MTD problem in two dimensions, where the sought images are arbitrarily rotated, but still \mbox{well-separated}, and in~\cite{kreymer2021two} the framework was extended  to an arbitrary spacing distribution of image occurrences.
 
-Autocorrelation analysis is a special case of the method of moments, a classical statistical inference technique, {and was first proposed for cryo-EM data in~\cite{kam1980reconstruction}; see also~\cite{bhamre2015orthogonal,bhamre2017anisotropic,levin20183d}}. It consists of finding a signal that best matches the empirical autocorrelations of the measurement, {usually} by minimizing a least-squares (LS) objective~(see Section~\ref{subsec:ac}). For any noise level, the empirical autocorrelations can be estimated to any desired accuracy for sufficiently large~$N$. Computing the autocorrelations is straightforward and requires only one pass over the data, which is advantageous for massively large datasets, such as \mbox{cryo-EM} datasets~\cite{bendory2020single}. This work studies the application of a \textit{generalized autocorrelation analysis} to the MTD problem. The generalized autocorrelation analysis framework, which is a special case of the generalized method of moments (GMM)~\cite{Hansen1982}, suggests replacing the LS objective of autocorrelation analysis with a weighted LS, and provides a recipe of how to compute the optimal weights; see Section~\ref{subsec:generalized_ac}. \asaf{The} GMM has been proven to be highly effective in a variety of computational tasks, see for example~\cite{wooldridge2001applications,akbar2016more,fan2018optimal,roodman2009xtabond2,abas2021generalized}. We {mention in passing} that the framework can be formulated with other objective functions, rather than LS~\cite{de2002properties}.
+Autocorrelation analysis is a special case of the method of moments, a classical statistical inference technique, {and was first proposed for cryo-EM data in~\cite{kam1980reconstruction}; see also~\cite{bhamre2015orthogonal,bhamre2017anisotropic,levin20183d}}. It consists of finding a signal that best matches the empirical autocorrelations of the measurement, {usually} by minimizing a least-squares (LS) objective~(see Section~\ref{subsec:ac}). For any noise level, the empirical autocorrelations can be estimated to any desired accuracy for sufficiently large~$N$. Computing the autocorrelations is straightforward and requires only one pass over the data, which is advantageous for massively large datasets, such as \mbox{cryo-EM} datasets~\cite{bendory2020single}. This work studies the application of a \textit{generalized autocorrelation analysis} to the MTD problem. The generalized autocorrelation analysis framework, which is a special case of the generalized method of moments (GMM)~\cite{Hansen1982}, suggests replacing the LS objective of autocorrelation analysis with a weighted LS, and provides a recipe of how to compute the optimal weights; see Section~\ref{subsec:generalized_ac}. The GMM has been proven to be highly effective in a variety of computational tasks, see for example~\cite{wooldridge2001applications,akbar2016more,fan2018optimal,roodman2009xtabond2,abas2021generalized}. We {mention in passing} that the framework can be formulated with other objective functions, rather than LS~\cite{de2002properties}.
 
-The main contribution of this paper is extending the autocorrelation analysis framework introduced in~\cite{bendory2019multi} by developing a generalized autocorrelation analysis framework for the MTD problem. We develop an algorithm for recovering the target signal from a measurement, and demonstrate successful reconstructions in noisy regimes~(see Section~\ref{sec:numerical}). Moreover, we show that the generalized autocorrelation analysis estimator outperforms the classical autocorrelation analysis estimator in {a wide range of} SNRs and measurement lengths. It is thus 
+The main contribution of this paper is extending the autocorrelation analysis framework introduced in~\cite{bendory2019multi} by developing a generalized autocorrelation analysis framework for the MTD problem. We develop an algorithm for recovering the target signal from a measurement, and demonstrate successful reconstructions in noisy regimes~(see Section~\ref{sec:numerical}). Moreover, we show that the generalized autocorrelation analysis estimator outperforms the classical autocorrelation analysis estimator in {a wide range of} SNRs and measurement lengths. It is thus
 a first step towards applying a generalized autocorrelation analysis to recovering small molecules from \mbox{cryo-EM} {experimental datasets}~\cite{bendory2018toward}.
 
 \section{Computational framework}
@@ -194,7 +192,7 @@ Notably, the relations between the autocorrelations of~$y$ and~$x$ do not direct
 In \cite{bendory2019multi,lan2020multi,marshall2020image,bendory2021multi,kreymer2021two}, it was suggested to find the signal that best matches the observable autocorrelations by minimizing a LS objective. Specifically, using~\eqref{eq:well_separated_1st} - \eqref{eq:well_separated_3rd} the LS reads
 \begin{align}
 \label{eq:optimization}
-\asaf{\arg} \min_{x\asaf{\in\R^L}, \gamma > 0} & (A_y^1 - \gamma A_x^1)^2  + w_2 \sum_{\ell_1 = 0}^{L - 1} \|A_y^2[\ell_1] - \gamma A_x^2[\ell_1] - \sigma^2 \delta[\ell_1]\|_2^2\nonumber\\ +& w_3 \sum_{\ell_1 = 0}^{L - 1} \sum_{\ell_2 = 0}^{L - 1} \|A_y^3[\ell_1, \ell_2] - \gamma A_x^3[\ell_1, \ell_2] - \gamma A_{x}^1 B[\ell_1, \ell_2]\|_2^2,
+\argmin_{x\in\mathbb{R}^L, \gamma > 0} & (A_y^1 - \gamma A_x^1)^2  + w_2 \sum_{\ell_1 = 0}^{L - 1} \|A_y^2[\ell_1] - \gamma A_x^2[\ell_1] - \sigma^2 \delta[\ell_1]\|_2^2\nonumber\\ +& w_3 \sum_{\ell_1 = 0}^{L - 1} \sum_{\ell_2 = 0}^{L - 1} \|A_y^3[\ell_1, \ell_2] - \gamma A_x^3[\ell_1, \ell_2] - \gamma A_{x}^1 B[\ell_1, \ell_2]\|_2^2,
 \end{align}
 where the weights~$w_2$ and~$w_3$ were chosen such that each term is equally weighted, as suggested by~\cite{bendory2019multi}, and $B[\ell_1, \ell_2]$ is defined in~\eqref{eq:well_separated_3rd}. We note that the optimization problem is non-convex, and thus there is no guarantee to converge to a global optimum. Nevertheless, similarly to previous papers on MTD, our numerical results (see Section~\ref{sec:numerical}) suggest that standard gradient-based methods succeed in recovering~$x$ from only a few random initial guesses.
 
@@ -202,7 +200,6 @@ where the weights~$w_2$ and~$w_3$ were chosen such that each term is equally wei
 \label{subsec:generalized_ac}
 The generalized autocorrelation analysis framework is a special case of the GMM.  In its most simplified form, the GMM generalizes the method of moments by replacing the LS objective function by  weighted LS with  optimal weights. A specific  choice of weights guarantees favorable asymptotic statistical properties, such as  minimal asymptotic variance of the estimation error~\cite{Hansen1982} {(see Section~\ref{gmm:large})}. In this work, we adapt the GMM to autocorrelation analysis and term the method generalized autocorrelation analysis.
 
-%Let us define the moment function~\mbox{$f(\theta, y)\colon \Theta \times \R^r \to \R^q$}, {where~$\Theta$ is a compact parameter space}.
 Let us define the moment function~$f(\theta, y)$  for $\theta\in\Theta$, where $\Theta$ is a compact parameter space.
  The moment function is chosen such that its expectation is zero only at a single point~$\theta=\theta_0$, where~$\theta_0$ is the ground truth parameter (in our case, the target signal~$x$ and the density parameter~$\gamma$). Namely,
 \begin{equation}\label{Eq-GMM-1}
@@ -270,7 +267,7 @@ Before presenting the statistical properties of the generalized autocorrelation 
 \end{equation}
 be the covariance matrix of the estimated sample moment function~(\ref{Eq-2-5}) at the ground truth~$\theta_0$. We denote by $\{W_N\}_{N=1}^\infty$ a sequence of PSD matrices which converges almost surely to a positive definite matrix~$W$. The expectation of the Jacobian of the moment function at the ground truth~$\theta_0$ is denoted by $G_0 = \E\left[\partial f(\theta_0, y) / \partial \theta^T\right]$.
 
-The large sample properties of the GMM estimator, and thus also of the generalized autocorrelation estimator,  were derived in~\cite{Hansen1982}, and are presented in the following theorem. %The regularity conditions for this theorem can be found in~\cite{Hansen1982,Hall2005,abas2021generalized}.
+The large sample properties of the GMM estimator, and thus also of the generalized autocorrelation estimator,  were derived in~\cite{Hansen1982}, and are presented in the following theorem.
 
 \begin{theorem}\label{Thm-2-6}
 	{Under condition~(\ref{Eq-GMM-1}) and a few additional mild regularity conditions that can be found in~\cite{Hansen1982,abas2021generalized,Hall2005}}, the GMM estimator (and thus also the generalized autocorrelation analysis estimator) satisfies:
@@ -285,12 +282,10 @@ The large sample properties of the GMM estimator, and thus also of the generaliz
 	\end{enumerate}
 \end{theorem}
 
-
-Theorem~\ref{Thm-2-6} {shows that the matrix~$W = S^{-1}$ guarantees} a minimal asymptotic variance of the estimator’s error. The covariance matrix~$S$ {of~(\ref{eqn:cov_mat_S}), which plays a central role in Theorem~\ref{Thm-2-6},} is required to be a positive definite matrix. Therefore, the moment function must be chosen so that~$S$ is full-rank. Empirically, in our case the matrix~$S$ is indeed full-rank when removing repeating entries of $f$ that appear due to  inherent symmetries of the autocorrelations~\cite{abas2021generalized}. We note that in general the matrix~$W$ depends on the ground truth~$\theta_0$, and thus cannot be computed from the data. {Therefore, it is common to use iterative methods that alternate between optimizing~(\ref{eq:opt_theta}) given~$W$, and computing~$W$ given the current estimate of~$\theta$}. However, for our specific choice of moment function~(\ref{Eq-GMM-2}), the matrix~$S$ is independent of the parameters of interest~\cite{abas2021generalized}, and thus can be computed directly from the data: %in a single pass:
-\begin{multline*}%\label{Eq-2-7}
+Theorem~\ref{Thm-2-6} {shows that the matrix~$W = S^{-1}$ guarantees} a minimal asymptotic variance of the estimator’s error. The covariance matrix~$S$ {of~(\ref{eqn:cov_mat_S}), which plays a central role in Theorem~\ref{Thm-2-6},} is required to be a positive definite matrix. Therefore, the moment function must be chosen so that~$S$ is full-rank. Empirically, in our case the matrix~$S$ is indeed full-rank when removing repeating entries of $f$ that appear due to  inherent symmetries of the autocorrelations~\cite{abas2021generalized}. We note that in general the matrix~$W$ depends on the ground truth~$\theta_0$, and thus cannot be computed from the data. {Therefore, it is common to use iterative methods that alternate between optimizing~(\ref{eq:opt_theta}) given~$W$, and computing~$W$ given the current estimate of~$\theta$}. However, for our specific choice of moment function~(\ref{Eq-GMM-2}), the matrix~$S$ is independent of the parameters of interest~\cite{abas2021generalized}, and thus can be computed directly from the data:
+\begin{multline*}
 	\Cov[g(\theta)] = \\ \Cov\left[\left\{[A_{y_i}^1;\left\{A_{y_i}^2[\ell_1]\right\}_{\ell_1=0}^{L-1};\left\{A_{y_i}^3[\ell_1, \ell_2]\right\}_{\ell_1, \ell_2 = 0}^{L-1}]\right\}_{i = 0}^{N - 1}\right].
 \end{multline*}
-%{Namely, the optimal weighting matrix can be computed using a single pass over the data.}
 
 \section{Numerical experiments}
 \label{sec:numerical}
@@ -309,15 +304,6 @@ As expected, the recovery error decreases  as the measurement length increases. 
 \label{subsec:exp_size}
 Figure~\ref{fig:err_size_experiment} presents recovery error as a function of the measurement length~$N$. We set~\mbox{$\text{SNR} = 50$}, demonstrating a high SNR environment. As expected by the law of large numbers, the recovery error of both estimators decays as~$N^{-1/2}$. Evidently, the generalized autocorrelation analysis estimator significantly outperforms {the} classical autocorrelation analysis estimator for all~$N$.
 
-%\begin{figure}[!tb]
-%	\begin{subfigure}[ht]{\columnwidth}
-%		\centering
-%		\includegraphics[width=0.95\columnwidth, keepaspectratio]{figures/experiment_size_err.pdf}
-%	\end{subfigure}
-%	\caption{The median estimation error as a function of the measurement length~$N$ with $\text{SNR}=50$, by: (a)~the autocorrelation analysis estimator; (b)~the generalized autocorrelation analysis estimator. \rev{The black dashed lines illustrates a slope of~$-1/2$, as predicted by the law of large numbers.}}
-%\label{fig:err_size_experiment}
-%\end{figure}
-
 \begin{figure}[!tb]
 	\begin{subfigure}[ht]{\columnwidth}
 		\centering
@@ -330,15 +316,6 @@ Figure~\ref{fig:err_size_experiment} presents recovery error as a function of th
 \subsection{Recovery error as a function of the SNR}
 \label{subsec:exp_SNR}
 Figure~\ref{fig:err_noise_experiment} presents recovery error as a function of {the} SNR, for a fixed measurement length~$N = 10^6$. For all levels of SNR, the recovery error using  generalized autocorrelation analysis  is smaller than the error of standard autocorrelation analysis. In addition, the slope of the error curve increases dramatically at low SNR, around~\mbox{$\text{SNR} \approx 1$}, which is a known phenomenon in the \mbox{cryo-EM} literature, see for example~\cite{sigworth1998maximum,abbe2018multireference,perry2019sample}.
-
-%\begin{figure}[!tb]
-%	\begin{subfigure}[ht]{\columnwidth}
-%		\centering
-%		\includegraphics[width=0.95\columnwidth, keepaspectratio]{figures/experiment_SNR_err.pdf}
-%	\end{subfigure}
-%	\caption{The median estimation error as a function of SNR, for measurements with length~\mbox{$N = 10^6$}, by: (a)~the autocorrelation analysis estimator; (b)~the generalized autocorrelation analysis estimator. Evidently, the generalized autocorrelation analysis estimator outperforms classical autocorrelation analysis for all SNR levels.}
-%\label{fig:err_noise_experiment}
-%\end{figure}
 
 \begin{figure}[!tb]
 	\begin{subfigure}[ht]{\columnwidth}
