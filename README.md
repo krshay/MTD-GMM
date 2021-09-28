@@ -1,5 +1,5 @@
 # MTD-GMM
-Code for the paper "Generalized autocorrelation analysis for multi-target detection" by Ye'Ela Shalit, Ran Weber, Asaf Abas, Shay Kreymer and Tamir Bendory.
+Code for the paper ["Generalized autocorrelation analysis for multi-target detection"](https://arxiv.org/abs/2109.11813) by Ye'Ela Shalit, Ran Weber, Asaf Abas, Shay Kreymer and Tamir Bendory.
 
 # Paper reproduction:
 To reproduce the experiment from Section 3.1, run the script experiment_recovery.py
